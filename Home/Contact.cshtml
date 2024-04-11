@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_ClearLayout.cshtml";
+}
+
+<style>
+    /* CSS for banner area */
+    .banner-area {
+        position: relative;
+    }
+
+        .banner-area .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #919191;
+        }
+
+        .banner-area .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .banner-area .about-content {
+            text-align: center;
+        }
+
+        .banner-area h1 {
+            color: #fff;
+        }
+
+        .banner-area p {
+            color: #fff;
+        }
+
+    /* CSS for contact page area */
+    .contact-page-area {
+        padding: 80px 0;
+    }
+
+        .contact-page-area .contact-btns {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+
+            .contact-page-area .contact-btns .left-icon {
+                margin-right: 15px;
+            }
+
+            .contact-page-area .contact-btns .arrow-right {
+                margin-left: 15px;
+            }
+
+            .contact-page-area .contact-btns .text {
+                flex: 1;
+            }
+
+                .contact-page-area .contact-btns .text h4 {
+                    margin-bottom: 5px;
+                }
+
+                .contact-page-area .contact-btns .text span {
+                    font-size: 14px;
+                    color: #777;
+                }
+
+            .contact-page-area form .common-input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 20px;
+            }
+
+            .contact-page-area form .common-textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 20px;
+                resize: vertical;
+                min-height: 150px;
+            }
+
+            .contact-page-area form .animation-btn {
+                background-color: #000;
+                color: #fff;
+                padding: 10px 30px;
+                border: none;
+                cursor: pointer;
+            }
+
+        .contact-page-area .alert-msg {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        /* CSS for map */
+        .contact-page-area iframe {
+            margin-top: 60px;
+        }
+</style>
+<!-- Start banner Area -->
+<section class="banner-area relative" id="home">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    <span>Contact</span>
+                </h1>
+                <p class="text-white"><a href="/"><span>Home</span> </a> / <span class="lnr lnr-arrow-right"></span>  <a href="#"><span>Contact</span></a></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End banner Area -->
+<!-- Start contact-page Area -->
+<section class="contact-page-area section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 d-flex flex-column">
+                <a class="contact-btns" href="#">
+                    <i class="fa-regular fa-file left-icon"></i>
+                    <div class="text">
+                        <h4>Sản Phẩm</h4>
+                        <span>304 Available Jobs</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-right"></i>
+                </a>
+                <a class="contact-btns" href="#">
+                    <i class="fa-solid fa-newspaper left-icon"></i>
+                    <div class="text">
+                        <h4>Người Dùng</h4>
+                        <span>304 Available Jobs</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-right"></i>
+                </a>
+                <a class="contact-btns" href="#">
+                    <i class="fa-solid fa-user left-icon"></i>
+                    <div class="text">
+                        <h4>Thể Loại</h4>
+                        <span>304 Available Jobs</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-lg-8">
+                <form class="form-area " id="myForm" action="../assets/user/mail.php" method="post" class="contact-form text-right">
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <!-- missing code -->
+                            <input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" required="" type="text">
+                            <input name="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="common-input mb-20 form-control" required="" type="email">
+                            <input name="subject" placeholder="Enter your subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your subject'" class="common-input mb-20 form-control" required="" type="text">
+                            <textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                            <button class="animation-btn mt-20 text-white" style="float: right;">Send Message</button>
+                            <div class="mt-20 alert-msg" style="text-align: left;"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>        <!-- Start map-->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.2456990199935!2d105.64289911020275!3d21.02285278054414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134512bbe5baab7%3A0x6195ecacc2336c44!2zQ2jDuWEgVGjhuqd5!5e0!3m2!1svi!2s!4v1704167916118!5m2!1svi!2s" width="100%" height="600" style="margin-top: 60px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- End map -->
+    </div>
+</section>
+<!-- End contact-page Area -->

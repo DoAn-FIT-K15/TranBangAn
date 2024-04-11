@@ -1,0 +1,57 @@
+﻿@model IEnumerable<FashionGo.Models.Entities.Order>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Đơn Hàng Đã Mua</h2>
+<div class="box">
+    <table class="table table-bordered table-striped datatable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReceiveName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReceivePhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalOrder)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderStatus.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReceiveName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReceivePhone)
+                    </td>
+                    <td>
+                        @Html.FormatValue(item.TotalOrder, "{0:0,0}")
+                    </td>
+                    <td>
+                        <p class="label label-success">@Html.DisplayFor(modelItem => item.OrderStatus.Name)</p>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Chi Tiết", "Detail", new { id = item.Id }, new { @class = "btn btn-xs" }) |
+                        @Html.ActionLink("Hủy Đơn", "Delete", new { id = item.Id }, new { @class = "btn btn-xs", onclick = "return confirm('Bạn có chắc muốn xóa?')" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

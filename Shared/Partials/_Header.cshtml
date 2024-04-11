@@ -1,0 +1,272 @@
+﻿@using FashionGo.Models.Entities
+@using FashionGo.Models
+@model IEnumerable<FashionGo.Models.Entities.Product>
+
+<!-- Banner Top -->
+@if (ViewBag.BannerTop != null)
+{
+    <div id="BannerTop" class="text-center">
+        @Html.Raw(ViewBag.BannerTop.Content)
+    </div>
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" type="text/css" />
+<style>
+    .hidesearch{
+        display:none;
+    }
+    .unsearch{
+        display:none;
+    }
+    .search-container {
+        display: none;
+    }
+    .height0{
+        height:0;
+    }
+    
+</style>
+
+
+<div class="eshop-header">
+    <!-- SPOTLIGHT 2 -->
+    <div class="container">
+        <!-- SPOTLIGHT -->
+        <div class="t3-spotlight t3-eshop-header  row">
+            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+                <div class="t3-module module " id="Mod90">
+                    <div class="module-inner">
+                        <div class="module-ct">
+                            <div id="currency" class="eshop-currency">
+                                <a class="active" title="Follow Us">
+                                    Follow Us
+                                </a>
+                                <a title="Facebook">
+                                    <i class="fa-brands fa-facebook"></i>
+                                </a>
+                                <a title="google-plus">
+                                    <i class="fa-brands fa-google-plus"></i>
+                                </a>
+                                <a title="twitter">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                                <a title="instagram">
+                                    <i class="fa-brands fa-square-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 hidden-xs">
+                @if ( ! Request.IsAuthenticated)
+                {
+                    @Html.Action("_LoginForm", "Account")
+                }
+                <div class="t3-module module " id="Mod1">
+                    <div class="module-inner">
+                        <div class="module-ct">
+                            <ul class="nav  nav-pills  nav-pills">
+                                <li class="item-109"><a href="@Url.RouteUrl("ProductFavorite")"><i class="icon fa fa-heart"></i> Sản phẩm yêu thích</a></li>
+                                <li class="item-108"><a href="@Url.RouteUrl("ShopingCart")"><i class="fa fa-shopping-bag"></i> Giỏ hàng</a></li>
+                                @if (Request.IsAuthenticated)
+                                { 
+                                    <li class="item-107"><a href="@Url.RouteUrl("AccountManage")"><i class="fa fa-user"></i> Tài khoản</a></li>
+
+                                }
+                            </ul>          
+                        </div>
+                    </div>                                                                                         
+                </div>
+            </div>
+        </div>
+        <!-- SPOTLIGHT -->
+    </div>
+    <!-- //SPOTLIGHT 2 -->
+</div>
+<header id="t3-header" class="container t3-header">
+    <div class="row">
+        <!-- LOGO -->
+        <div class="col-xs-12 col-sm-4 logo">
+            <div class="logo-image">
+                <a href="/" title="QFashion - Lựa chọn cho phong cách!">
+                    <img class="logo-img img-responsive" src="~/Content/images/qfashion.png" alt="QFashion - Lựa chọn cho phong cách!" />
+                    <span>QFashion - Lựa chọn cho phong cách!</span>
+                </a>
+                <small class="site-slogan"></small>
+            </div>
+        </div>
+        <!-- //LOGO -->
+
+        <div class="col-xs-12 col-sm-8">
+            <div class="eshop-header-2">
+                <!-- SPOTLIGHT -->
+                <div class="t3-spotlight t3-eshop-header2  row">
+                    <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12" style="display:flex">
+                        <div class="hidesearch col-sm-3" style="line-height: 100px; font-size: 24px">
+                            <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="t3-module module col-xs-12" id="Mod95">
+                            <div class="module-inner">
+                                <div class="module-ct">
+
+                                    <div class="custom">
+                                        <h2></h2>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="col-sm-3 hidesearch" style="padding-left:0">
+                            @Html.Action("_MiniCartMobile", "Cart")
+                        </div>*@
+                    </div>
+                    <form id="HeaderSearchForm" action="@Url.RouteUrl("SearchProduct")" method="get">
+                        <div class="search-container" style="padding-left: 15px; padding-right: 40px;">
+                            <input id="prependedInput" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" value="" />
+                        </div>
+                     </form>
+                    <div class="col-lg-4 col-md-12 col-sm-6 col-xs-12 hide">
+                        @Html.Action("_HeaderSearchForm", "Product")
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 height0">
+                        @Html.Action("_MiniCart", "Cart")
+                    </div>
+                </div>
+                <!-- SPOTLIGHT -->
+            </div>
+        </div>
+        
+    </div>
+</header>
+<!--<nav id="t3-mainnav" class="wrap navbar nav-default-class navbar-default t3-mainnav">
+    <div class="container">
+        <div class="relative-wrap">-->
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <!--<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".t3-navbar-collapse">
+                    <i class="fa-regular fa-bars-staggered"></i>
+                </button>
+            </div>
+
+            <div class="t3-navbar-collapse navbar-collapse collapse"></div>
+
+            <div class="logo-image">
+                <a href="/" title="QFashion - Lựa chọn cho phong cách!">
+                    <img class="logo-img img-responsive" src="~/Content/images/logo-fashiongo.png" alt="QFashion - Lựa chọn cho phong cách!" />
+                    <span>QFashion - Lựa chọn cho phong cách!</span>
+                </a>
+                <small class="site-slogan"></small>
+            </div>
+
+            <div class="t3-navbar navbar-collapse collapse">
+
+                <button class="btn btn-primary off-canvas-toggle " type="button" data-pos="left" data-nav="#t3-off-canvas" data-effect="off-canvas-effect-4">
+                    <i class="fa-regular fa-bars-staggered"></i>
+                </button>-->
+
+                <!-- OFF-CANVAS SIDEBAR -->
+                <!--<div id="t3-off-canvas" class="t3-off-canvas ">
+                    <div class="t3-off-canvas-header">
+                        <h2 class="t3-off-canvas-header-title">FashionGo Menu</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="t3-off-canvas-body">
+                        <div class="t3-module module " id="Mod141">
+                            <div class="module-inner">
+                                <div class="module-ct">
+                                    @Html.Action("_MobileMenu", "Menu")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>-->
+                <!-- //OFF-CANVAS SIDEBAR -->
+
+                <!--<div class="t3-megamenu animate fading" data-duration="400" data-responsive="true">
+                    @Html.Action("_MainMenu", "Menu")
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</nav>-->
+<nav id="t3-mainnav"
+     class="wrap navbar nav-default-class navbar-default t3-mainnav">
+    <div class="container">
+        <div class="relative-wrap">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button"  class="navbar-toggle"  data-toggle="collapse" data-target=".t3-navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+
+            <div class="t3-navbar-collapse navbar-collapse collapse"></div>
+
+            <div class="logo-image">
+                <a href="#" title="QShop Fashion Pro Template">
+                    <img class="logo-img" src="/Content/images/qfashion1.png" alt="EShop Fashion Pro Template" style="width:97%">
+                    <span>QShop Fashion Pro Template</span>
+                </a>
+                <small class="site-slogan"></small>
+            </div>
+
+            <div class="t3-navbar navbar-collapse collapse">
+                <button class="btn btn-primary off-canvas-toggle" type="button" data-pos="left" data-nav="#t3-off-canvas" data-effect="off-canvas-effect-4">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- OFF-CANVAS SIDEBAR -->
+                <div id="t3-off-canvas" class="t3-off-canvas">
+                    <div class="t3-off-canvas-header">
+                        <h2 class="t3-off-canvas-header-title">Sidebar</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+                    </div>
+
+                    <div class="t3-off-canvas-body">
+                        <div class="t3-module module" id="Mod141">
+                            <div class="module-inner">
+                                <div class="module-ct">
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li class="item-101 current active">
+                                            <a href="index.html">Home</a>
+                                        </li>
+                                        <li class="item-144 parent">
+                                            <a href="men.html">Men</a>
+                                        </li>
+                                        <li class="item-147 parent">
+                                            <a href="women.html">Women</a>
+                                        </li>
+                                        <li class="item-168">
+                                            <a href="girls.html">Girls</a>
+                                        </li>
+                                        <li class="item-198"><a href="boys.html">Boys</a></li>
+                                        <li class="item-150">
+                                            <a href="our-brands.html">Our Brands</a>
+                                        </li>
+                                        <li class="item-181"><a href="#">Sale Off</a></li>
+                                        <li class="item-196"><a href="blog.html">Blog</a></li>
+                                        <li class="item-186">
+                                            <a href="contact-us.html">Contact us</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //OFF-CANVAS SIDEBAR -->
+
+                <div class="t3-megamenu animate fading" data-duration="400" data-responsive="true">
+                    @Html.Action("_MainMenu", "Menu")
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- //MAIN NAVIGATION -->
+<!-- slideshow -->

@@ -1,0 +1,46 @@
+﻿<div class="t3-module module" id="Mod93">
+    <div class="module-inner">
+        <div class="module-ct">
+            <div class="eshop-search">
+                <form id="HeaderSearchForm" action="@Url.RouteUrl("SearchProduct")" method="get">
+                    <div class="input-prepend input-append input-group">
+                        <input class="inputbox product_search" type="text" name="keyword" id="prependedInput" value="" placeholder="Tìm sản phẩm...">
+                        <div class="add-on input-group-addon">
+                            <button type="submit" class="btn btn-link"><i class="icon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+                @*<ul id="eshop_result"></ul>*@
+                <input type="hidden" name="live_site" id="live_site" value="http://fashiongo.vn/">
+                <input type="hidden" name="image_width" id="image_width" value="80">
+                <input type="hidden" name="image_height" id="image_height" value="107">
+                <input type="hidden" name="category_ids" id="category_ids" value="">
+                <input type="hidden" name="description_max_chars" id="description_max_chars" value="50">
+            </div>
+            
+            <style>
+                #eshop_result {
+                    background-color: #ffffff;
+                    width: 470px;
+                    position: absolute;
+                    z-index: 9999;
+                }
+
+                .input-group-addon > .btn{
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+
+                .t3-header .t3-eshop-header2 .eshop-search .add-on {
+                    border-radius: 0px !important;
+                    background: #f2533d;
+                    border: none;
+                    padding: 11px 12px 12px;
+                    height: auto;
+                    width: 50px;
+                }
+            </style>
+        </div>
+    </div>
+</div>
+
