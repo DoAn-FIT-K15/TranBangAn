@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Revenue";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var data = ViewBag.Data;
+    var year = ViewBag.Year;
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+<h1>Thống kê doanh thu @Html.Raw(year) </h1>
+<span>Chọn năm muốn thống kê :</span>
+@using (Html.BeginForm("Revenue", "Statistical"))
+{
+    <input type="number" name="year" min="2020" formmethod="post"/>
+    <button type="submit">Chọn</button>
+}
+
+<div>
+    <canvas id="lineChart" height="400" width="1000"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+    const ctx = document.getElementById('lineChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        datasets: [{
+        label: 'Vnd',
+        data: @Html.Raw(Json.Encode(data)),
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        }]
+        },
+        options:{
+            transitions: {
+                show: {
+                    animations: {
+                        x: {
+                            from: 0
+                        },
+                        y: {
+                            from: 0
+                        }
+                    }
+                },
+                hide: {
+                    animations: {
+                        x: {
+                            to: 0
+                        },
+                        y: {
+                            to: 0
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>

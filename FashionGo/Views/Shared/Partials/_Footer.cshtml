@@ -1,0 +1,111 @@
+﻿@using FashionGo.Models.Entities
+<footer class="t3-sl t3-sl-2">
+    <!-- FOOT NAVIGATION -->
+    <div class="container">
+        <!-- SPOTLIGHT -->
+        <div class="t3-spotlight t3-spotlight-2 t3-footnav  row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="t3-module module" id="Mod96">
+                    <div class="module-inner">
+                        <div class="module-ct">
+                            <div class="footer-logo" style="margin-bottom: 15px;">
+                                <p>
+                                    <a href="/" title="FashionGo.VN">
+                                        <img src="~/Content/images/logo-footer.png" alt="FashionGo.VN" height="65" class="img-logo img-responsive" />
+                                    </a>
+                                </p>
+                            </div><!-- /.footer-logo -->
+                            <div class="custom">
+                                <p>Lý Nhân-Hà Nam-Hà Nội</p>
+                                <p><strong>Hotline: </strong>0375.021.901 - 0123.456.789</p>
+                                <p><a href="mailto:info@fashiongo.vn">ahan4960@gmail.com</a></p>
+                                <p>
+                                    <a href="http://facebook.com"><span class="social-icons"><i class="fa-brands fa-facebook"><span class="text-hide">face</span></i></span></a>&nbsp;
+                                    <a href="htpp://plus.google.com"><span class="social-icons"><i class="fa-brands fa-google"><span class="text-hide">g+</span></i></span></a>
+                                    <a href="htpp://twitter.com"><span class="social-icons"><i class="fa-brands fa-twitter"><span class="text-hide">twitter</span></i></span></a>
+                                    <a href="http://linkedin.com"><span class="social-icons"><i class="fa-brands fa-linkedin"><span class="text-hide">linkedin</span></i></span></a>&nbsp;
+                                    <a href="http://rss.com"><span class="social-icons"><i class="fa fa-rss"><span class="text-hide">rss</span></i></span></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="t3-module module " id="Mod107">
+                    <div class="module-inner">
+                        <h3 class="module-title "><span>Giới thiệu</span></h3><div class="module-ct">
+                            <ul class="nav nav-pills nav-stacked">
+                                @foreach (Menu m in ViewBag.MenuGioiThieu)
+                                {
+                                    <li class="item-@m.Id"><a href="@m.Url" title="@Html.Raw(m.Text)" target="@m.Target">@Html.Raw(m.Text)</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="t3-module module " id="Mod108">
+                    <div class="module-inner">
+                        <h3 class="module-title "><span>Hướng dẫn - Trợ giúp</span></h3>
+                        <div class="module-ct">
+                            <ul class="nav nav-pills nav-stacked">
+                                @foreach (Menu m in ViewBag.MenuTroGiup)
+                                {
+                                    <li class="item-@m.Id"><a href="@m.Url" title="@Html.Raw(m.Text)" target="@m.Target">@Html.Raw(m.Text)</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="">
+                <div class="">
+                    <h5 class="module-title"><span>Đăng ký nhận thông tin</span></h5>
+                    <div class="input-group mb-3">
+                        <label for="emailInput" class="form-label">Bạn muốn giải đáp thắc mắc hay góp ý để nâng cao chất lượng. Bạn có thể để lại email để chúng tôi liên hệ với bạn</label>
+                        <br />
+                        <div style="display: flex;">
+                            <img src="~/Content/images/Screenshot 2023-05-15 095349.png" style="width:40px" id="submit-button" onclick="GuiGmail()">
+                            <input type="text" class="form-control" placeholder="Nhập email của bạn ..." id="txtemail" aria-describedby="basic-addon2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- SPOTLIGHT -->
+    </div>
+    <!-- //FOOT NAVIGATION -->
+    <section class="t3-copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    <div class="module">
+                        <p><strong>Copyright &#169; @DateTime.Now.Year FashionGo - By Trần Bằng An.</strong></p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 text-hide footer-right">
+                    <div class="custom">
+                        <p><img src="~/Content/images/payments/1.png" alt=""><img src="~/Content/images/payments/2.png" alt=""><img src="~/Content/images/payments/3.png" alt=""><img src="~/Content/images/payments/4.png" alt=""><img src="~/Content/images/payments/5.png" alt=""></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</footer>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82789497-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+

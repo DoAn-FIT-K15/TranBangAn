@@ -1,0 +1,49 @@
+﻿@model IEnumerable<FashionGo.Models.Entities.Post>
+
+<nav class="wrap t3-blog ">
+    <div class="container">
+        <div class="t3-module module " id="Mod103">
+            <div class="module-inner">
+                <h3 class="module-title"><span>Tin Tức Nổi Bật</span></h3><div class="module-ct">
+                    <ul class="nav">
+                        <div class="row">
+                            @foreach (var m in Model)
+                            {
+                                <li class="col-md-4 col-lg-4 col-xs-12">
+                                    <div class="mod-articles-category-image">
+                                        <img src="@m.Image" alt="@m.Title" style="height: 210px;max-height:210px;">
+                                    </div>
+                                    <p>
+                                        <span class="mod-articles-category-date">
+                                            <i class="fa fa-calendar">&nbsp;</i>
+                                            @if (m.createDate.HasValue)
+                                            {
+                                                @m.createDate.Value.ToString("dd/MM/yyyy")
+                                            }
+                                        </span>
+                                    </p>
+
+                                    <p class="article-title" style="height:50px">
+                                        <a class="mod-articles-category-title" href="@Url.RouteUrl("BlogDetails", new { CatSlug = m.Category.Name.ToAscii(), Slug = m.Slug })" title="@m.Title">
+                                            @m.Title
+                                        </a>
+                                    </p>
+
+                                    <p class="mod-articles-category-introtext">
+                                        @m.Content.StripTagsRegex().LimitLength(88, "...")
+                                    </p>
+
+                                    <p class="mod-articles-category-readmore">
+                                        <a class="btn btn-primary mod-articles-category-title" href="@Url.RouteUrl("BlogDetails", new { CatSlug = m.Category.Name.ToAscii(), Slug = m.Slug })" title="@m.Title">
+                                            Đọc thêm ...
+                                        </a>
+                                    </p>
+                                </li>
+                            }
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

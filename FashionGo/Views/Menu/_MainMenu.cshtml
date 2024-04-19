@@ -1,0 +1,315 @@
+﻿@model FashionGo.Models.MenuCategoryViewModel
+@using FashionGo.Models.Dao
+
+<style>
+    .sale-flash {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 6px 10px;
+        background-color: #ee4d2d;
+        color: #FFF;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+        border-radius: 2px;
+        z-index: 5;
+    }
+
+        .sale-flash.out-of-stock {
+            background-color: #777;
+        }
+</style>
+
+<ul class="nav navbar-nav level0">
+    @{
+        int count = 1;
+    }
+    @foreach (var item in Model.menu)
+    {
+        if (count == 2)
+        {
+            <li class="current active" data-id="@item.Id" data-level="1">
+                <a class="" href="@item.Url" data-target="@item.Target">@item.Text </a>
+            </li>
+        }
+        if (count == 3)
+        {
+            <li class="dropdown mega" data-id="@item.Id" data-level="1">
+                <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown">
+                    @item.Text <b class="caret"></b>
+                </a>
+
+                <div class="nav-child dropdown-menu mega-dropdown-menu">
+                    <div class="mega-dropdown-inner">
+                        <a class="dropdown-header mega-group-title" href="#" data-target="#" style="margin-left:35px">
+                            Thời Trang Nam
+                        </a>
+                        <div class="row" style="display:flex">
+                            @foreach (var data in Model.procate.Skip(1).Take(1))
+                            {
+                                <div class="mega-inner">
+                                    <div class="t3-module module" id="Mod123">
+                                        <div class="module-inner">
+                                            <div class="module-ct">
+                                                <div class="custom row">
+                                                    @{
+                                                        var childCategories = data.ChildCategories();
+                                                    }
+
+                                                    @if (childCategories.Count() > 0)
+                                                    {
+
+                                                        foreach (var child in childCategories)
+                                                        {
+                                                            <div class="col-xs-4 mega-col-module">
+                                                                <ul class="mega-nav level1">
+                                                                    <li class="mega mega-group" data-id="145" data-level="2" data-group="1">
+                                                                        <a href="@Url.RouteUrl("ProductCategory", new { slug = child.Name.ToAscii(), id = child.CatId })" title="@child.Name">
+                                                                            <i class="fa fa-angle-right"></i> @child.Name (@child.CountProducts())
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        }
+
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-xs-4 mega-col-module" data-width="4" data-position="124">
+                                <div class="mega-inner">
+                                    <div class="t3-module module" id="Mod124">
+                                        <div class="module-inner">
+                                            <div class="module-ct">
+                                                <div class="custom">
+                                                    <p>
+                                                        <img src="~/Uploads/images/banner/banner-2.jpg" alt="" />
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+        if (count == 4)
+        {
+            <li class="dropdown mega" data-id="@item.Id" data-level="1">
+                <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown">
+                    @item.Text <b class="caret"></b>
+                </a>
+
+                <div class="nav-child dropdown-menu mega-dropdown-menu">
+                    <div class="mega-dropdown-inner">
+                        <a class="dropdown-header mega-group-title" href="#" data-target="#" style="margin-left:35px">
+                            Thời Trang Nữ
+                        </a>
+                        <div class="row" style="display:flex">
+                            @foreach (var data in Model.procate.Take(1))
+                            {
+                                <div class="mega-inner">
+                                    <div class="t3-module module" id="Mod123">
+                                        <div class="module-inner">
+                                            <div class="module-ct">
+                                                <div class="custom row">
+                                                    @{
+                                                        var childCategories = data.ChildCategories();
+                                                    }
+
+                                                    @if (childCategories.Count() > 0)
+                                                    {
+
+                                                        foreach (var child in childCategories)
+                                                        {
+                                                            <div class="col-xs-4 mega-col-module">
+                                                                <ul class="mega-nav level1">
+                                                                    <li class="mega mega-group" data-id="145" data-level="2" data-group="1">
+                                                                        <a href="@Url.RouteUrl("ProductCategory", new { slug = child.Name.ToAscii(), id = child.CatId })" title="@child.Name">
+                                                                            <i class="fa fa-angle-right"></i> @child.Name (@child.CountProducts())
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        }
+
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-xs-4 mega-col-module" data-width="4" data-position="124">
+                                <div class="mega-inner">
+                                    <div class="t3-module module" id="Mod124">
+                                        <div class="module-inner">
+                                            <div class="module-ct">
+                                                <div class="custom">
+                                                    <p>
+                                                        <img src="~/Uploads/images/banner/banner-2.jpg" alt="" />
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+
+
+        if (count == 5)
+        {
+            <li class="dropdown mega" data-id="150" data-level="1">
+                <a class="dropdown-toggle" href="our-brands.html" data-target="#" data-toggle="dropdown">
+                    Our Brands <b class="caret"></b>
+                </a>
+
+                <div class="nav-child dropdown-menu mega-dropdown-menu" style="width: 1170px" data-width="1170">
+                    <div class="mega-dropdown-inner">
+                        <div class="row">
+                            <div class="col-xs-12 mega-col-module"
+                                 data-width="12"
+                                 data-position="128">
+                                <div class="mega-inner">
+                                    <div class="t3-module module" id="Mod128">
+                                        <div class="module-inner">
+                                            <div class="module-ct">
+                                                <div class="custom">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+        if (count == 6)
+        {
+            <li class="dropdown mega" data-id="181" data-level="1">
+                <a class="dropdown-toggle"
+                   href="#"
+                   data-target="#"
+                   data-toggle="dropdown">
+                    Sale Off 50%<b class="caret"></b>
+                </a>
+
+                <div class="nav-child dropdown-menu mega-dropdown-menu" style="width: 1170px" data-width="1170">
+                    <div class="mega-dropdown-inner">
+                        <div class="row">
+                            <div class="col-xs-12 mega-col-module" data-width="12" data-position="127">
+                                <div class="mega-inner">
+                                    <div class="t3-module module" id="Mod127">
+                                        <div class="module-inner">
+                                            <h3 class="module-title">
+                                                <span>Menu Product</span>
+                                            </h3>
+                                            <div class="module-ct">
+                                                <div class="eshop-product">
+                                                    <div class="image-product row">
+                                                        @foreach (var pro in Model.pro)
+                                                        {
+                                                            <div class="eshop_product col-lg-2 col-xs-12 col-md-2">
+                                                                <div class="eshop-wrap-product">
+                                                                    <div class="eshop-image-block">
+                                                                        <div class="image">
+                                                                            <span class="overlay-background-color">&nbsp;</span>
+                                                                            <a href="girls/melange-sweater.html">
+                                                                                <img class="image" alt="" src="@pro.FeaturedImage" style="height:250px" />
+                                                                            </a>
+                                                                            <div class="sale-flash">@pro.Discount% Off*</div>
+                                                                        </div>
+                                                                        <div class="eshop-buttons">
+                                                                            <p>
+                                                                                <a class="button" style="cursor: pointer" onclick="addToWishList(35, 'index.html')" title="Add to Wish List">
+                                                                                    <i class="fa fa-heart"></i><span class="text-hide">Add to Wish List</span>
+                                                                                </a>
+                                                                                <a class="button" style="cursor: pointer" onclick="addToCompare(35, 'index.html')" title="Add to Compare">
+                                                                                    <i class="fa fa-retweet"></i><span class="text-hide">Add to Compare</span>
+                                                                                </a>
+                                                                                <a class="button" style="cursor: pointer" href="girls/melange-sweater.html" title="Read more">
+                                                                                    <i class="fa fa-arrow-right"></i><span class="text-hide">Read more</span>
+                                                                                </a>
+                                                                            </p>
+                                                                            <div class="eshop-cart-area">
+                                                                                <button id="add-to-cart-35" class="btn btn-primary" onclick="addToCart(35, 1, 'index.html'); ">
+                                                                                    Add to Cart
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h4 class="eshop-product-title" style="display:flex; justify-content:space-between">
+                                                                        <div>
+                                                                            <a href="girls/melange-sweater.html" style="padding-right:30px" class="link" data-original-title=" Suspendisse risus odio, posuere a, volutpat ac, adipiscing pellentesque, diam">
+                                                                                @pro.Name
+                                                                            </a>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span class="eshop-price">@Html.FormatValue(pro.PriceAfter, "{0:0,0}")đ</span>
+                                                                        </div>
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+
+                                                    </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    jQuery(document).ready(function (
+                                                        $
+                                                    ) {
+                                                        $(".image-product").slick({
+                                                            dots: false,
+                                                            infinite: false,
+                                                            speed: 300,
+                                                            slidesToShow: 4,
+                                                            touchMove: false,
+                                                            slidesToScroll: 1,
+                                                        });
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+        count++;
+
+    }
+    <li data-id="186" data-level="1">
+        <a class="" href="Home/Contact" data-target="#">
+            Contact us
+        </a>
+    </li>
+</ul>
+<script type="text/javascript">
+    jQuery(function ($) {
+        //reset button
+        $('.eshop-reset').click(function () {
+            $('input[name^=optionvalue_ids]').prop("checked", false);
+            $('input[name^=keyword]').val('');
+        });
+    })
+</script>
+

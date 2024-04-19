@@ -1,0 +1,182 @@
+﻿@model IEnumerable<FashionGo.Models.Entities.Product>
+@using System.Web.Configuration
+
+<style>
+    .sale-flash {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 6px 10px;
+        background-color: #ee4d2d;
+        color: #FFF;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+        border-radius: 2px;
+        z-index: 5;
+    }
+
+        .sale-flash.out-of-stock {
+            background-color: #777;
+        }
+
+    
+
+    .img-custom {
+        height: 220px;
+    }
+
+    .sign {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999999;
+        display: none;
+    }
+
+    .sign-content {
+        border-radius: 10px;
+        background-color: #fff;
+        margin: 8% auto;
+        font-size: 15px;
+        max-height: 80vh;
+        max-width: 150vh;
+    }
+
+    .sign-list {
+        margin: 16px;
+    }
+
+    .span7 #main-image-area {
+        float: left;
+        width: 350px;
+    }
+
+    .selected {
+        background-color: #f2533d;
+        color: #fff;
+    }
+</style>
+
+@if (Model.Count() > 0)
+{
+    <div class="wrap t3-latest-product ">
+        <div class="container">
+            <div class="t3-module module " id="Mod100">
+                <div class="module-inner">
+                    <h3 class="module-title "><span>Sản phẩm mới</span></h3>
+                    <div class="module-ct">
+                        <div class="row eshop-product ">
+                            <div class="customNavigation">
+                                <a class="btn prev"><span class="text-hide">Quay lại</span></a>
+                                <a class="btn next"><span class="text-hide">Tiếp</span></a>
+                            </div>
+                            <div id="images-product-row" class="">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="image">
+                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
+                                            <img id="product-image-@item.Id" class="image img-responsive" alt="@item.Name" src="@item.FeaturedImage">
+                                        </a>
+                                        <div class="sale-flash">@item.Discount% Off*</div>
+                                        <h4 class="eshop-product-title">
+                                            <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" class="link" data-original-title="@item.Name">
+                                                @item.Name
+                                            </a>
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                                @if (item.Discount.Value > 0)
+                                                {
+                                                    <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
+                                                }
+                                                <span class="eshop-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                                <button onclick="loadForm('@item.Id')" class="btn btn-primary">Thêm vào giỏ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function ($) {
+                                var owl = $("#images-product-row");
+                                owl.owlCarousel({
+                                    pagination: false,
+                                    items: 4,
+                                });
+                                // Custom Navigation Events
+                                $(".next").click(function () {
+                                    owl.trigger('owl.next');
+                                })
+                                $(".prev").click(function () {
+                                    owl.trigger('owl.prev');
+                                })
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="sign" id="sign">
+
+</div>
+
+<script>
+
+    function loadForm(id) {
+        debugger
+        jQuery.ajax({
+            url: '/Product/BlokAdd',
+            type: 'GET',
+            data: { Id: id },
+            success: function (result) {
+                debugger
+                document.getElementById('sign').innerHTML = result;
+                document.getElementById('sign').style.display = 'block';
+            }
+        });
+    }
+
+    function addToWishList(itemId) {
+        jQuery.ajax({
+            type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
+            url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
+            data: { id: itemId },
+            success: function (response) {
+                // Xử lý kết quả trả về sau khi gọi controller thành công
+            },
+            error: function () {
+                // Xử lý lỗi (nếu có)
+            }
+        });
+    }
+
+    function toggleColorButton(button) {
+        var colorButtons = document.getElementsByClassName("colorButton");
+        for (var i = 0; i < colorButtons.length; i++) {
+            colorButtons[i].classList.remove("selected");
+        }
+        button.classList.add("selected");
+        selectedColor = button.getAttribute("data-color"); // Loại bỏ từ khóa "var" ở đây
+    }
+
+    function toggleSizeButton(button) {
+        var sizeButtons = document.getElementsByClassName("sizeButton");
+        for (var i = 0; i < sizeButtons.length; i++) {
+            sizeButtons[i].classList.remove("selected");
+        }
+        button.classList.add("selected");
+        selectedSize = button.getAttribute("data-size"); // Loại bỏ từ khóa "var" ở đây
+    }
+    console.log(selectedColor);
+    console.log(selectedSize);
+
+</script>
+
