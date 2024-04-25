@@ -160,11 +160,9 @@
                                         <div>
                                             <button id="add-to-cart_@Model.Id" class="btn btn-primary add-to-cart" onclick="flyToCart(@Model.Id)" type="button">Thêm vào giỏ</button>
                                         </div>
-                                        <div class="pull-right">
+                                        <div class="pull-left">
                                             <p>
-                                                <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích" style="cursor: pointer;" onclick="addToWishList(@Model.Id, '@WebConfigurationManager.AppSettings["SiteUrl"].ToString()')"><i class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span></a>
-                                                <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào So sánh" title="Thêm vào so sánh" style="cursor: pointer;" onclick="addToCompare(15, 'FashonPro/index.html')"><i class="icon-retweet"></i><span class="text-hide">Thêm vào so sánh</span></a>
-                                                <a class="btn" data-toggle="tooltip" data-original-title="Hỏi về sản phẩm này" title="Hỏi về sản phẩm này" style="cursor: pointer;" onclick="askQuestion(@Model.Id, '@WebConfigurationManager.AppSettings["SiteUrl"].ToString()')"><i class="icon-question"></i><span class="text-hide">Hỏi về sản phẩm này</span></a>
+                                                <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích" style="cursor: pointer;" onclick="addToWishList2(this,@Model.Id, '@WebConfigurationManager.AppSettings["SiteUrl"].ToString()')"><i class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span></a>
                                             </p>
                                         </div>
                                     </div>

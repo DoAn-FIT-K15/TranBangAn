@@ -155,7 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="I18N\Global.resx" />
-    <EmbeddedResource Include="I18N\Global.vi.resx" />
+    <EmbeddedResource Include="I18N\Global.vi.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -93,7 +93,7 @@
 
                                     <div class="eshop-buttons">
                                         <p>
-                                            <a class="button" style="cursor: pointer;" onclick="addToWishList(@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích">
+                                            <a class="button" style="cursor: pointer;" onclick="addToWishList(this,@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích">
                                             <i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
                                             <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="Xem chi tiết"><i class="fa fa-arrow-right"></i><span class="text-hide">Chi tiết</span></a>
                                         </p>
@@ -145,7 +145,7 @@
                                             </button>
                                         </div>
                                         <p>
-                                            <a class="btn button" style="cursor: pointer;" onclick="addToWishList(@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i>Đánh dấu Yêu thích</a>
+                                            <a class="btn button" style="cursor: pointer;" onclick="addToWishList(this,@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i>Đánh dấu Yêu thích</a>
                                             <a class="btn button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="Xem chi tiết">Chi tiết <i class="fa fa-arrow-right"></i></a>
                                         </p>
                                     </div>

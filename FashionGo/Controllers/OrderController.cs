@@ -29,6 +29,11 @@ namespace FashionGo.Controllers
         [HttpGet]
         public ActionResult Checkout()
         {
+            if (string.IsNullOrEmpty(User.Identity.GetUserId()))
+            {
+                Warning(string.Format("<b><h5>{0}</h4></b>", "Vui lòng đăng nhập!"), true);
+                return RedirectToAction("Index", "Cart");
+            }
             if (cart.Count == 0)
             {
                 Warning(string.Format("<b><h5>{0}</h4></b>", "Bạn chưa có sản phẩm nào trong giỏ hàng, Vui lòng chọn sản phẩm trước khi thanh toán."), true);
@@ -426,7 +431,17 @@ namespace FashionGo.Controllers
             ViewBag.Total = order.StatusId;
             return View(order);
         }
+        public ActionResult Delete(int id)
+        {
+            var orderDetails = db.OrderDetails.Where(x=>x.OrderId == id);
+            db.OrderDetails.RemoveRange(orderDetails);
+            db.SaveChanges();
 
+            var order = db.Orders.Find(id);
+            db.Orders.Remove(order);
+            db.SaveChanges();
+            return RedirectToAction("OderPurchased");
+        }
         public ActionResult List()
         {
             string currentUserId = User.Identity.GetUserId();

@@ -120,6 +120,12 @@
                                                                             <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
                                                                         }
                                                                         <span class="eshop-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
+                                                                        <div class="eshop-buttons">
+                                                                            <p>
+                                                                                <a class="button" style="cursor: pointer;" onclick="addToWishList2(this,item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
+                                                                                <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="Xem chi tiết"><i class="fa fa-arrow-right"></i><span class="text-hide">Chi tiết</span></a>
+                                                                            </p>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="col-lg-6 col-md-6 col-xs-6">
                                                                         <button onclick="loadForm('@item.Id')" class="btn btn-primary">Thêm vào giỏ</button>
@@ -200,8 +206,22 @@
             }
         });
     }
-
-    function addToWishList(itemId) {
+    function addToWishList2(ele,itemId) {
+        ele.innerHTML = "<i class='fa fa-heart red'></i><span class='text-hide'>Yêu thích</span>";
+        jQuery.ajax({
+            type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
+            url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
+            data: { id: itemId },
+            success: function (response) {
+                // Xử lý kết quả trả về sau khi gọi controller thành công
+            },
+            error: function () {
+                // Xử lý lỗi (nếu có)
+            }
+        });
+    }
+    function addToWishList(ele, itemId) {
+        ele.innerHTML = "<i class='fa fa-heart red'></i><span class='text-hide'>Yêu thích</span>";
         jQuery.ajax({
             type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
             url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể

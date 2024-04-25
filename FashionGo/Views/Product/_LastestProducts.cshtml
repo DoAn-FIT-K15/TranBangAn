@@ -144,7 +144,9 @@
         });
     }
 
-    function addToWishList(itemId) {
+    function addToWishList(e, itemId) {
+        e.innerHTML = "<i class="fa fa - heart red"></i><span class="text - hide">Yêu thích</span>";
+
         jQuery.ajax({
             type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
             url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể

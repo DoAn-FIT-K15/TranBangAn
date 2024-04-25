@@ -59,17 +59,17 @@
                 </td>
 
                 <td>
-                    @Html.FormatValue(p.Price, "{0:0,0}")<sup>đ</sup>
+                    @Html.FormatValue(p.PriceAfter, "{0:0,0}")<sup>đ</sup>
                 </td>
                 <td>
-                    <input type="number" min="1" class="input-mini quantity" value="@p.Amount" name="quantity[@p.Id]" data-id="@p.Id" id="quantity_@p.Id">
+                    <input type="number" min="1" onchange="updateQuantity(this)" class="input-mini quantity" value="@p.Amount" name="quantity[@p.Id]" data-id="@p.Id" id="quantity_@p.Id">
                     <a class="eshop-remove-item-cart btn text-danger" href="#" data-id="@p.Id" onclick="return deleteFromCart(@p.Id);" title="Xóa khỏi giỏ hàng">
                         <i class="fa fa-times"></i>
                     </a>
                 </td>
                 <td>
                     <span id="Amount-@p.Id">
-                        @Html.FormatValue(p.Price * p.Amount, "{0:0,0}")
+                        @Html.FormatValue(p.PriceAfter * p.Amount, "{0:0,0}")
                     </span><sup>đ</sup>
                 </td>
             </tr>
@@ -147,7 +147,21 @@
             });
         }
     });
-
+    $(function () {
+        // Xóa khỏi giỏ
+        $(".remove-from-cart").click(function () {
+            pid = $(this).attr("data-id");
+            tr = $(this).parents("tr");// tim <tr> chua <img> bi click
+            $.ajax({
+                url: "/Cart/Remove",
+                data: { id: pid },
+                success: function (response) {
+                    $("#nn-cart-count").html(response.Count);
+                    $(".nn-cart-total").html(response.Total);
+                    tr.hide(500);
+                }
+            });
+        });
 </script>
 
 

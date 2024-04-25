@@ -1,6 +1,8 @@
 ﻿@model FashionGo.Models.MenuCategoryViewModel
 @using FashionGo.Models.Dao
-
+@{
+    string path = HttpContext.Current.Request.Url.AbsolutePath;
+}
 <style>
     .sale-flash {
         position: absolute;
@@ -19,21 +21,21 @@
         }
 </style>
 
-<ul class="nav navbar-nav level0">
+<ul class="nav navbar-nav level0" id="header">
     @{
-        int count = 1;
+        int count = 2;
     }
     @foreach (var item in Model.menu)
     {
         if (count == 2)
         {
-            <li class="current active" data-id="@item.Id" data-level="1">
-                <a class="" href="@item.Url" data-target="@item.Target">@item.Text </a>
+            <li class="li @(!path.Contains("nam") && !path.Contains("nu") && !path.Contains("brand")? "current active" : "")" onclick="active(this)" data-id="@item.Id" data-level="1">
+                <a class="" href="/" data-target="@item.Target">@item.Text </a>
             </li>
         }
         if (count == 3)
         {
-            <li class="dropdown mega" data-id="@item.Id" data-level="1">
+            <li class="li dropdown mega @(path.Contains("nam")? "current active" : "")  " onclick="active(this)" data-id="@item.Id" data-level="1">
                 <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown">
                     @item.Text <b class="caret"></b>
                 </a>
@@ -101,7 +103,7 @@
         }
         if (count == 4)
         {
-            <li class="dropdown mega" data-id="@item.Id" data-level="1">
+            <li class="li dropdown mega @(path.Contains("nu")? "current active" : "") " onclick="active(this)" data-id="@item.Id" data-level="1">
                 <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown">
                     @item.Text <b class="caret"></b>
                 </a>
@@ -171,7 +173,7 @@
 
         if (count == 5)
         {
-            <li class="dropdown mega" data-id="150" data-level="1">
+            <li class="li dropdown mega @(path.Contains("brand")? "current active" : "")" onclick="active(this)" data-id="150" data-level="1">
                 <a class="dropdown-toggle" href="our-brands.html" data-target="#" data-toggle="dropdown">
                     Our Brands <b class="caret"></b>
                 </a>
@@ -187,7 +189,7 @@
                                         <div class="module-inner">
                                             <div class="module-ct">
                                                 <div class="custom">
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -201,7 +203,7 @@
         }
         if (count == 6)
         {
-            <li class="dropdown mega" data-id="181" data-level="1">
+            <li class="li dropdown mega"  data-id="181" data-level="1">
                 <a class="dropdown-toggle"
                    href="#"
                    data-target="#"
@@ -236,21 +238,11 @@
                                                                         </div>
                                                                         <div class="eshop-buttons">
                                                                             <p>
-                                                                                <a class="button" style="cursor: pointer" onclick="addToWishList(35, 'index.html')" title="Add to Wish List">
-                                                                                    <i class="fa fa-heart"></i><span class="text-hide">Add to Wish List</span>
-                                                                                </a>
-                                                                                <a class="button" style="cursor: pointer" onclick="addToCompare(35, 'index.html')" title="Add to Compare">
-                                                                                    <i class="fa fa-retweet"></i><span class="text-hide">Add to Compare</span>
-                                                                                </a>
-                                                                                <a class="button" style="cursor: pointer" href="girls/melange-sweater.html" title="Read more">
-                                                                                    <i class="fa fa-arrow-right"></i><span class="text-hide">Read more</span>
-                                                                                </a>
+                                                                                <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = pro.Name.ToAscii(), id = pro.Id })" title="Xem chi tiết"><span class="text-hide">Chi tiết</span></a>
                                                                             </p>
-                                                                            <div class="eshop-cart-area">
-                                                                                <button id="add-to-cart-35" class="btn btn-primary" onclick="addToCart(35, 1, 'index.html'); ">
-                                                                                    Add to Cart
-                                                                                </button>
-                                                                            </div>
+                                                                            <button id="add-to-cart-@item.Id" class="btn btn-primary" onclick="addToCart(@pro.Id, 1, 'abc');" value="Thêm vào giỏ">
+                                                                                <i class="fa fa-shopping-cart">&nbsp;</i>&nbsp;Thêm vào giỏ
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                     <h4 class="eshop-product-title" style="display:flex; justify-content:space-between">
@@ -311,5 +303,9 @@
             $('input[name^=keyword]').val('');
         });
     })
+    function active(element) {
+        document.getElementsByClassName('current active').classList.remove("current active");
+        element.classList.add("current active");
+    }
 </script>
 
