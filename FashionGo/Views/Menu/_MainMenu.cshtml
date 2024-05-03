@@ -23,7 +23,7 @@
 
 <ul class="nav navbar-nav level0" id="header">
     @{
-        int count = 2;
+        int count = 1;
     }
     @foreach (var item in Model.menu)
     {
@@ -173,36 +173,6 @@
 
         if (count == 5)
         {
-            <li class="li dropdown mega @(path.Contains("brand")? "current active" : "")" onclick="active(this)" data-id="150" data-level="1">
-                <a class="dropdown-toggle" href="our-brands.html" data-target="#" data-toggle="dropdown">
-                    Our Brands <b class="caret"></b>
-                </a>
-
-                <div class="nav-child dropdown-menu mega-dropdown-menu" style="width: 1170px" data-width="1170">
-                    <div class="mega-dropdown-inner">
-                        <div class="row">
-                            <div class="col-xs-12 mega-col-module"
-                                 data-width="12"
-                                 data-position="128">
-                                <div class="mega-inner">
-                                    <div class="t3-module module" id="Mod128">
-                                        <div class="module-inner">
-                                            <div class="module-ct">
-                                                <div class="custom">
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        }
-        if (count == 6)
-        {
             <li class="li dropdown mega"  data-id="181" data-level="1">
                 <a class="dropdown-toggle"
                    href="#"
@@ -238,11 +208,13 @@
                                                                         </div>
                                                                         <div class="eshop-buttons">
                                                                             <p>
-                                                                                <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = pro.Name.ToAscii(), id = pro.Id })" title="Xem chi tiết"><span class="text-hide">Chi tiết</span></a>
+                                                                                <a class="button" style="cursor: pointer;" onclick="addToWishList(this,@item.Id, 'abc')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
+                                                                                <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = pro.Name.ToAscii(), id = pro.Id })" title="Xem chi tiết"><i class="fa fa-arrow-right"></i><span class="text-hide">Chi tiết</span></a>
                                                                             </p>
-                                                                            <button id="add-to-cart-@item.Id" class="btn btn-primary" onclick="addToCart(@pro.Id, 1, 'abc');" value="Thêm vào giỏ">
-                                                                                <i class="fa fa-shopping-cart">&nbsp;</i>&nbsp;Thêm vào giỏ
-                                                                            </button>
+                                                                            <div class="eshop-cart-area">
+                                                                                @*<button id="add-to-cart-@item.Id" class="btn btn-primary" onclick="flyToCart(@item.Id); ">Thêm vào giỏ</button>*@
+                                                                                <button onclick="loadForm('@pro.Id')" class="btn btn-primary">Thêm vào giỏ</button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <h4 class="eshop-product-title" style="display:flex; justify-content:space-between">
