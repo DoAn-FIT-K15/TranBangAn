@@ -20,7 +20,76 @@ namespace FashionGo.Areas.Admin.Controllers
             var products = db.Products.Include(p => p.User).Include(p => p.Manufact).Include(p => p.ProductCategory).Include(p => p.ProductType).OrderByDescending(p=>p.CreateDate);
             return View(products.ToList());
         }
-
+        public ActionResult ListProductsSize(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                var products = db.Sizes.Include(p => p.Product).ToList();
+                return View(products);
+            }
+            else
+            {
+                var products = db.Sizes.Include(p => p.Product).Where(x => x.Product.Name.Contains(searchString)).ToList();
+                return View(products);
+            }    
+        }
+        public ActionResult DeleteProductsSize(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Sizes product = db.Sizes.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+        [HttpPost, ActionName("DeleteProductsSize")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProductsSizeConfirmed(int id)
+        {
+            Sizes product = db.Sizes.Find(id);
+            db.Sizes.Remove(product);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult ListProductsColor(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                var products = db.Colors.Include(p => p.Product).ToList();
+                return View(products);
+            }
+            else
+            {
+                var products = db.Colors.Include(p => p.Product).Where(x => x.Product.Name.Contains(searchString)).ToList();
+                return View(products);
+            }
+        }
+        public ActionResult DeleteProductsColor(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+        [HttpPost, ActionName("DeleteProductsColor")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProductsColorConfirmed(int id)
+        {
+            Colors product = db.Colors.Find(id);
+            db.Colors.Remove(product);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         public ActionResult CreateProperties()
         {
             ViewBag.Products = new SelectList(db.Products, "id", "name");

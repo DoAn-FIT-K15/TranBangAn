@@ -6,7 +6,7 @@
 }
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm mới", "Create")
 </p>
 
 <div class="box">
@@ -14,16 +14,16 @@
         <table class="table table-bordered table-responsive">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Image)
+                    Hình ảnh
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                   Tên danh mục
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Slug)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ParentCategory.Name)
+                    Danh mục cha
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
@@ -31,9 +31,6 @@
                 
                 <th>
                     @Html.DisplayNameFor(model => model.Banner)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DisplayOrder)
                 </th>
                 <th></th>
             </tr>
@@ -59,9 +56,6 @@
                     </td>
                     <td>
                         <img src="@item.Banner" style="max-height:36px;" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DisplayOrder)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.CatId }) |

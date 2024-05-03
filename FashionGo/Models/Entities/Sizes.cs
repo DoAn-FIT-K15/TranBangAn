@@ -15,5 +15,7 @@ namespace FashionGo.Models.Entities
 
         [StringLength(50)]
         public string SizeName { get; set; }
+        public virtual Product Product { get; set; }
+
     }
 }

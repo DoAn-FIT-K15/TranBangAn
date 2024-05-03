@@ -46,7 +46,7 @@
             {
                 <tr>
                     <td>
-                        <p class="label label-success">@Html.DisplayFor(modelItem => item.OrderStatus.Name)</p>
+                        <p class="label @item.OrderStatus.Class">@Html.DisplayFor(modelItem => item.OrderStatus.Name)</p>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ReceiveName) 

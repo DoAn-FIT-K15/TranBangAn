@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using FashionGo.Migrations;
 using System.Drawing;
+using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Web.Security;
 
 namespace FashionGo.Models
 {
@@ -37,8 +40,8 @@ namespace FashionGo.Models
         public virtual ICollection<Order> Orders { get; set; }
 
         public virtual District District { get; set; }
-    }
 
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -46,7 +49,6 @@ namespace FashionGo.Models
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
-
         public virtual DbSet<BannerPosition> BannerPositions { get; set; }
         public virtual DbSet<Banner> Banners { get; set; }
         public virtual DbSet<BannerType> BannerTypes { get; set; }
@@ -219,5 +221,6 @@ namespace FashionGo.Models
             return new ApplicationDbContext();
         }
 
+        //public System.Data.Entity.DbSet<FashionGo.Models.ApplicationUser> IdentityUsers { get; set; }
     }
 }

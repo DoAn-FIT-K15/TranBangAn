@@ -22,7 +22,7 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Color.ColorName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2"> Màu sắc (nhập cách nhau sau dấu phẩy vd: XANH, ĐỎ, TÍM, VÀNG) </label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Color.ColorName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Color.ColorName, "", new { @class = "text-danger" })
@@ -30,7 +30,9 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2"> Kích cỡ (nhập cách nhau sau dấu phẩy vd: XL, S, M) </label>
+
+       
         <div class="col-md-10">
             @Html.EditorFor(model => model.Size.SizeName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })

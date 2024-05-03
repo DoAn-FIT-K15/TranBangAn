@@ -1,0 +1,63 @@
+﻿@model IEnumerable<FashionGo.Models.Entities.Sizes>
+
+@{
+    ViewBag.Title = "Danh sách kích thước sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Thêm mới", "CreateProperties", null, new { @class = "btn btn-primary" })
+</p>
+<form asp-controller="Products" asp-action="ListProductsSize">
+    <p>
+        Tên sản phẩm: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<div class="box">
+    <div class="box-body">
+        <table class="table table-bordered table-striped datatable slide">
+            <thead>
+                <tr>
+                    <th>
+                        Tên sản phẩm
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                        Kích cỡ
+                    </th>
+
+                    @*<th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>*@
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td>
+                            <img src="@item.Product.FeaturedImage" style="max-width:36px;" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SizeName)
+                        </td>
+
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>*@
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.SizeID }) |
+                            @Html.ActionLink("Delete", "DeleteProductsSize", new { id = item.SizeID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
