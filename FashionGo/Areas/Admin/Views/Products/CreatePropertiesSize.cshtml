@@ -1,0 +1,67 @@
+﻿@model FashionGo.Models.ColorSizeViewModel
+
+@{
+    ViewBag.Title = "Thêm kích thước";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-group">
+    <label class="control-label col-md-2"> Sản phẩm </label>
+    <div class="col-md-9">
+        @Html.DropDownList("Id", ViewBag.Products as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Size.ProductID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+    <div class="form-group" hidden>
+        <label class="control-label col-md-2"> Màu sắc (nhập cách nhau sau dấu phẩy vd: XANH, ĐỎ, TÍM, VÀNG) </label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Color.ColorName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Color.ColorName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2"> Kích cỡ (nhập cách nhau sau dấu phẩy vd: XL, S, M) </label>
+
+       
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Size.SizeName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ListProductsSize")
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Lắng nghe sự kiện thay đổi trên trường thả xuống
+        $("#ProductDropdown").change(function () {
+            debugger
+            // Lấy giá trị đã chọn
+            var selectedProductId = $(this).val();
+            debugger
+            // Hiển thị giá trị đã chọn trong cửa sổ console (để kiểm tra)
+            console.log("Selected Product ID: " + selectedProductId);
+        });
+    });
+</script>
+

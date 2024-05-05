@@ -278,7 +278,20 @@
             }
         });
     }
-
+    function addToWishList2(ele, itemId) {
+        ele.innerHTML = "<i class='fa fa-heart red'></i><span class='text-hide'>Yêu thích</span>";
+        jQuery.ajax({
+            type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
+            url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
+            data: { id: itemId },
+            success: function (response) {
+                // Xử lý kết quả trả về sau khi gọi controller thành công
+            },
+            error: function () {
+                // Xử lý lỗi (nếu có)
+            }
+        });
+    }
     function addToWishList(itemId) {
         jQuery.ajax({
             type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request

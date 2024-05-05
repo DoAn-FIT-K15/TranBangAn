@@ -2,13 +2,197 @@
 @{
     ViewBag.Title = "Trang Quản Lý";
 }
+<style>
+    /* CSS for banner area */
+    .banner-area {
+        position: relative;
+    }
 
+        .banner-area .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #919191;
+        }
+
+        .banner-area .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .banner-area .about-content {
+            text-align: center;
+        }
+
+        .banner-area h1 {
+            color: #fff;
+        }
+
+        .banner-area p {
+            color: #fff;
+        }
+
+    /* CSS for contact page area */
+    .contact-page-area {
+        padding: 80px 0;
+    }
+
+        .contact-page-area .contact-btns {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+
+            .contact-page-area .contact-btns .left-icon {
+                margin-right: 15px;
+            }
+
+            .contact-page-area .contact-btns .arrow-right {
+                margin-left: 15px;
+            }
+
+            .contact-page-area .contact-btns .text {
+                flex: 1;
+            }
+
+                .contact-page-area .contact-btns .text h4 {
+                    margin-bottom: 5px;
+                }
+
+                .contact-page-area .contact-btns .text span {
+                    font-size: 14px;
+                    color: #777;
+                }
+
+        .contact-page-area form .common-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .contact-page-area form .common-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-page-area form .animation-btn {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 30px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .contact-page-area .alert-msg {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        /* CSS for map */
+        .contact-page-area iframe {
+            margin-top: 60px;
+        }
+</style>
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
+<section class="contact-page-area section-gap" style="padding-top:10px!important">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <dl class="dl-horizontal">
+                    <dt>Phone Number:</dt>
+    <dd style="display:flex ; margin-right:20px">
+        <div>@(Model.PhoneNumber ?? "None")</div>
+
+        @if (Model.PhoneNumber != null)
+        {
+            <br />
+            <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+            using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+            }
+        }
+        else
+        {
+            <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+        }
+    </dd>
+
+    <dt>FullName:</dt>
+    <dd style="display:flex ; margin-right:20px">
+        <div>@(Model.FullName ?? "None")</div>
+
+        @if (Model.FullName != null)
+        {
+            <br />
+            <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddFullName")&nbsp;&nbsp;]</text>
+            using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+            }
+        }
+        else
+        {
+            <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddFullName")&nbsp;&nbsp;]</text>
+        }
+    </dd>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 d-flex flex-column">
+                <a class="contact-btns" href="/Order/OderPurchased">
+                    <i class="fa-solid fa-user left-icon"></i>
+                    <div class="text">
+                        <h4>Lịch sử mua hàng</h4>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-right"></i>
+                </a>
+                <a class="contact-btns" href="/admin">
+                    <i class="fa-solid fa-newspaper left-icon"></i>
+                    <div class="text">
+                        <h4>Trang quản trị</h4>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-right"></i>
+                </a>
+
+            </div>
+            <div class="col-lg-4 d-flex flex-column">
+                <a class="contact-btns" href="/manage/ChangePassword">
+                    <i class="fa-solid fa-user left-icon"></i>
+                    <div class="text">
+                        <h4>Đổi mật khẩu</h4>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-right"></i>
+                </a>
+
+                <a class="contact-btns" href="/manage/Logout">
+                    <i class="fa-solid fa-user left-icon"></i>
+                    <div class="text">
+                        <h4>Đăng xuất</h4>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-right"></i>
+                </a>
+            </div>
+        </div>        <!-- Start map-->
+        <!-- End map -->
+    </div>
+</section>
+
 <div>
-    
-    <h4>Thay đổi cài đặt tài khoản của bạn</h4>
+    <!--<h4>Thay đổi cài đặt tài khoản của bạn</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>Password:</dt>
@@ -28,9 +212,8 @@
         <dd>
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-
-        @*Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+        </dd>-->
+    @*Phone Numbers can used as a second factor of verification in a two-factor authentication system.
 
         See
         <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
@@ -39,90 +222,44 @@
         Uncomment the following block after you have set up two-factor authentication*@
 
 
-        <dt>Phone Number:</dt>
-        <dd style="display:flex ; margin-right:20px">
-            <div>@(Model.PhoneNumber ?? "None")</div>
+    <!--<dt>Phone Number:</dt>
+    <dd style="display:flex ; margin-right:20px">
+        <div>@(Model.PhoneNumber ?? "None")</div>
 
-            @if (Model.PhoneNumber != null)
-            {
-                <br />
-                <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                }
-            }
-            else
-            {
-                <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-            }
-        </dd>
-
-        <dt>FullName:</dt>
-        <dd style="display:flex ; margin-right:20px">
-            <div>@(Model.FullName ?? "None")</div>
-
-            @if (Model.FullName != null)
-            {
-                <br />
-                <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddFullName")&nbsp;&nbsp;]</text>
-                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                }
-            }
-            else
-            {
-                <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddFullName")&nbsp;&nbsp;]</text>
-            }
-        </dd>
-
-        @*<dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
-            @if (Model.TwoFactor)
-            {
-                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                    </text>
-                }
-            }
-            else
-            {
-                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                    </text>
-                }
-            }
-        </dd>*@
-        @using (Html.BeginForm("OderPurchased", "Order", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+        @if (Model.PhoneNumber != null)
         {
-            @Html.AntiForgeryToken()
-
-            <text>
-                <input type="submit" value="Đơn Hàng Đã Mua" class="btn btn-link" />
-            </text>
+            <br />
+            <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+            using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+            }
         }
-
-        @using (Html.BeginForm("Logout", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        else
         {
-            @Html.AntiForgeryToken()
-
-            <text>
-                <input type="submit" value="Đăng Xuất" class="btn btn-link" />
-            </text>
+            <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")&nbsp;&nbsp;]</text>
         }
+    </dd>
 
-    </dl>
+    <dt>FullName:</dt>
+    <dd style="display:flex ; margin-right:20px">
+        <div>@(Model.FullName ?? "None")</div>
+
+        @if (Model.FullName != null)
+        {
+            <br />
+            <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddFullName")&nbsp;&nbsp;]</text>
+            using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+            }
+        }
+        else
+        {
+            <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddFullName")&nbsp;&nbsp;]</text>
+        }
+    </dd>-->
+
 </div>

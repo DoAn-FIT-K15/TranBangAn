@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FashionGo.Models.ApplicationUser>
+﻿@model List<FashionGo.Areas.Admin.Controllers.UsersController.UserModel>
 
 @{
     ViewBag.Title = "Quản lý user";
@@ -14,22 +14,25 @@
     <table class="table table-bordered table-striped datatable">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+               Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                Số điện thoại
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                Username
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                Tên đầy đủ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Địa chỉ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Quận/ huyện
+            </th>
+            <th>
+                Vai trò
             </th>
             <th></th>
         </tr>
@@ -53,7 +56,10 @@
                     @Html.DisplayFor(modelItem => item.Address)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.District.Name)
+                    @Html.DisplayFor(modelItem => item.DistrictName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
                     @Html.ActionLink("Xem", "Details", new { id = item.Id }, new { @class = "btn btn-xs btn-primary" })

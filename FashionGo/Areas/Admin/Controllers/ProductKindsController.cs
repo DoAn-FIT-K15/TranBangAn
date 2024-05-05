@@ -12,12 +12,12 @@ using FashionGo.Models.Dao;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
-    public class ProductCategoriesController : AdminController
+    public class ProductKindsController : AdminController
     {
         // GET: Admin/ProductCategories
         public ActionResult Index()
         {
-            var productCategories = db.ProductCategories.Where(x => x.ParentId != null).OrderBy(p=>p.DisplayOrder).Include(p => p.ParentCategory);
+            var productCategories = db.ProductCategories.Where(x => x.ParentId == null).OrderBy(p=>p.DisplayOrder).Include(p => p.ParentCategory);
             return View(productCategories.ToList());
         }
 
@@ -54,7 +54,6 @@ namespace FashionGo.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 productCategory.Slug = productCategory.Name.ToAscii();
-                productCategory.ParentId = null;
                 db.ProductCategories.Add(productCategory);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -90,7 +89,6 @@ namespace FashionGo.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                productCategory.ParentId = null;
                 db.Entry(productCategory).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -215,7 +215,7 @@
                                         </span>
                                     </span>
                                 </div>
-                                <button id="add-to-cart_@Model.Id" class="btn btn-primary add-to-cart" onclick="flyToCart(@Model.Id)" type="button">Thêm vào giỏ</button>
+                                <button id="add-to-cart_@Model.Id" class="btn btn-primary add-to-cart" onclick="flyToCart1(@Model.Id)" type="button">Thêm vào giỏ</button>
                             </div>
                             <div class="pull-left">
                                 <p>
@@ -324,7 +324,7 @@
     <script>
         function addToWishList(itemId) {
             document.getElementById("icon_heart").style.color = "red";
-            $.ajax({
+            jQuery.ajax({
                 type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
                 url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
                 data: { id: itemId },

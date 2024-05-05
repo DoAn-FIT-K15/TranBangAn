@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FashionGo.Models.Entities.ProductCategory>
 
 @{
-    ViewBag.Title = "Loại sản phẩm";
+    ViewBag.Title = "Danh mục sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
@@ -17,13 +17,10 @@
                     Hình ảnh
                 </th>
                 <th>
-                   Tên loại sản phẩm
+                   Tên danh mục
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Slug)
-                </th>
-                <th>
-                    Tên danh mục
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
@@ -47,9 +44,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Slug)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ParentCategory.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)

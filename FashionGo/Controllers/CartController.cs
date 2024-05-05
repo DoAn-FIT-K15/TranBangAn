@@ -48,7 +48,10 @@ namespace FashionGo.Controllers
         {
             var cart = ShoppingCart.Cart;
             cart.Remove(id);
-
+            if(cart.Total == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var info = new { Count = cart.Count, Total = cart.Total };
             return Json(info, JsonRequestBehavior.AllowGet);
         }

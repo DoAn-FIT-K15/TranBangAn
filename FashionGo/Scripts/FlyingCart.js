@@ -163,9 +163,7 @@ function deleteFromCart(pid) {
             jQuery("#eshop-cart-total").text(response.Count);
 
             jQuery("#cart-item").load("/Cart/_PartialCart");
-            if (tr.length) {
-                tr.remove();
-            }
+            document.getElementById('row-' + pid).remove()
             //tr.hide(500);
         },
         complete: function () {
@@ -189,7 +187,7 @@ function flyToCart(pid) {
             alert("Bạn Chưa Chọn Màu!");
         }
         else {
-            color = selectedColor.innerHTML;
+            color = selectedColor;
         }
     }
     if (document.getElementsByClassName("sizeButton").length == 0) {
@@ -201,7 +199,7 @@ function flyToCart(pid) {
             alert("Bạn Chưa Chọn Size!");
         }
         else {
-            size = selectedSize.innerHTML;
+            size = selectedSize;
         }
     }
 
@@ -250,6 +248,97 @@ function flyToCart(pid) {
     return false;
 }
 
+function flyToCart1(pid) {
+    var ty = jQuery("#addToCart").closest('.product').find('#' + pid);
+    var img = jQuery("#product-image-" + pid);
+    quatity = jQuery('#quantity_' + pid).val();
+    var color = null;
+    var size = null;
+    if (document.getElementsByClassName("colorButton").length == 0) {
+        color = "default";
+    }
+    else {
+        if (selectedColor === "undefined") {
+            alert("Bạn Chưa Chọn Màu!");
+        }
+        else {
+            color = selectedColor.innerHTML;
+        }
+    }
+    if (document.getElementsByClassName("sizeButton").length == 0) {
+        size = "default";
+    }
+    else {
+        if (selectedSize === "undefined") {
+            alert("Bạn Chưa Chọn Size!");
+        }
+        else {
+            size = selectedSize.innerHTML;
+        }
+    }
+
+    if (quatity == 'undefined' || quatity == null) {
+        quatity = 1;
+    }
+
+    jQuery.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: 'Cart/Add',
+        data: { id: pid, quatity: quatity, color: color, size: size },
+        beforeSend: function () {
+            jQuery('.add-to-cart').attr('disabled', true);
+            jQuery('.add-to-cart').after('<span class="wait">&nbsp;<img src="Assets/Frontend/components/com_eshop/assets/images/loading.gif" /></span>');
+        },
+        complete: function () {
+            jQuery('.add-to-cart').attr('disabled', false);
+            jQuery('.wait').remove();
+        },
+        success: function (result) {
+            //alert(result.Count);
+            jQuery("#eshop-cart-total").text(result.Count);
+        }
+    }).done(function (response) {
+        //Load giỏ hàng
+        jQuery("#cart-item").load("/Cart/_PartialCart")
+
+        flyToElement(jQuery(img), jQuery('#eshop-cart'));
+
+        /*jQuery("html, body").animate({ scrollTop: 0 }, 2000);*/
+
+        //Mở giỏ hàng
+        //jQuery('.eshop-content').slideToggle();
+        alert("Thêm Sản Phẩm Thành Công");
+
+        //Đóng giỏ hàng sau 8s
+        setTimeout(function () {
+            //jQuery('.eshop-content').hide();
+        }, 8000);
+
+    }).fail(function () {
+        alert("fail");
+    });
+
+    return false;
+}
+function format1(n,) {
+    return   n.toFixed(2).replace(/./g, function (c, i, a) {
+        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+    });
+}
+function formatMoney(number, decPlaces, decSep, thouSep) {
+    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+        decSep = typeof decSep === "undefined" ? "." : decSep;
+    thouSep = typeof thouSep === "undefined" ? "," : thouSep;
+    var sign = number < 0 ? "-" : "";
+    var i = String(parseInt(number = Math.abs(Number(number) || 0).toFixed(decPlaces)));
+    var j = (j = i.length) > 3 ? j % 3 : 0;
+
+    return sign +
+        (j ? i.substr(0, j) + thouSep : "") +
+        i.substr(j).replace(/(\decSep{3})(?=\decSep)/g, "$1" + thouSep) +
+        (decPlaces ? decSep + Math.abs(number - i).toFixed(decPlaces).slice(2) : "");
+}
 
 function updateOrderSummary() {
 
@@ -258,9 +347,12 @@ function updateOrderSummary() {
         type: 'Get',
         dataType: 'json',
         success: function (response) {
-            jQuery("#orderTransportCost").text(jQuery.number(response.TransportCost) + "đ");
-            jQuery("#orderDiscount").text(jQuery.number(response.Discount) + "đ");
-            jQuery("#totalOrder").text(jQuery.number(response.OrderTotal) + "đ");
+            if (response.OrderTotal == 0) {
+                window.location.href = '/Home/Index';
+            }
+            jQuery("#orderTransportCost").text(formatMoney(response.TransportCost, ".", ",") + "đ");
+            jQuery("#orderDiscount").text(response.Discount + "đ");
+            jQuery("#totalOrder").text(response.OrderTotal + "đ");
             jQuery("#discountDescription").html(response.DiscountDescription);
         },
         error: function (err) {

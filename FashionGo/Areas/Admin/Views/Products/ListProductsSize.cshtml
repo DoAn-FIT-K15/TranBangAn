@@ -6,7 +6,7 @@
 }
 
 <p>
-    @Html.ActionLink("Thêm mới", "CreateProperties", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Thêm mới", "CreatePropertiesSize", null, new { @class = "btn btn-primary" })
 </p>
 <form asp-controller="Products" asp-action="ListProductsSize">
     <p>
@@ -52,7 +52,7 @@
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>*@
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.SizeID }) |
+                            @Html.ActionLink("Edit", "UpdatePropertiesSize", new { id = item.SizeID }) |
                             @Html.ActionLink("Delete", "DeleteProductsSize", new { id = item.SizeID })
                         </td>
                     </tr>

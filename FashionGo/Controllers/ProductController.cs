@@ -158,7 +158,11 @@ namespace FashionGo.Controllers
                 // Nếu chưa có cookie cũ -> tạo mới
                 if (wishlist == null)
                 {
-                    wishlist = new HttpCookie("wishlist");
+                    wishlist = new HttpCookie("wishlist")
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                    };
                 }
                 // Bổ sung mặt hàng đã xem vào cookie
                 if(wishlist[Id.ToString()]==null)
@@ -169,7 +173,10 @@ namespace FashionGo.Controllers
                 }
                 
                 // Đặt thời hạn tồn tại của cookie
-                wishlist.Expires = DateTime.Now.AddMonths(1);
+                wishlist.Expires = DateTime.Now.AddYears(1);
+                wishlist.Secure = true;
+                wishlist.HttpOnly = true;
+                Response.Cookies.Remove("wishlist");
                 // Gửi cookie về client để lưu lại
                 Response.Cookies.Add(wishlist);
 

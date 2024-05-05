@@ -79,6 +79,7 @@ namespace FashionGo.Models
         public virtual DbSet<MenuLocation> MenuLocations { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
         public virtual DbSet<Testimonial> Testimonials { get; set; }
+        public virtual DbSet<IdentityUserRole> IdentityUserRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

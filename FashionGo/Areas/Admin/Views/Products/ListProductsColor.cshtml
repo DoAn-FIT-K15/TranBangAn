@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FashionGo.Models.Entities.Sizes>
+﻿@model IEnumerable<FashionGo.Models.Entities.Colors>
 
 @{
     ViewBag.Title = "Danh sách màu sắc sản phẩm";
@@ -6,7 +6,7 @@
 }
 
 <p>
-    @Html.ActionLink("Thêm mới", "CreateProperties", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Thêm mới", "CreatePropertiesColor", null, new { @class = "btn btn-primary" })
 </p>
 <form asp-controller="Products" asp-action="ListProductsColor">
     <p>
@@ -45,15 +45,15 @@
                             <img src="@item.Product.FeaturedImage" style="max-width:36px;" />
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.SizeName)
+                            @Html.DisplayFor(modelItem => item.ColorName)
                         </td>
 
                         @*<td>
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>*@
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.SizeID }) |
-                            @Html.ActionLink("Delete", "DeleteProductsColor", new { id = item.SizeID })
+                            @Html.ActionLink("Edit", "UpdatePropertiesColor", new { id = item.ColorID }) |
+                            @Html.ActionLink("Delete", "DeleteProductsColor", new { id = item.ColorID })
                         </td>
                     </tr>
                 }

@@ -65,6 +65,9 @@
                             $("#nn-cart-count").html(response.Count);
                             $(".nn-cart-total").html(response.Total);
                             tr.hide(500);
+                            if (response.Total == 0) {
+                                window.location.href = '/Home/Index';
+                            }
                         }
                     });
                 });

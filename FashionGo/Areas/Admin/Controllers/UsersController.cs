@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using FashionGo.Models.Entities;
 using FashionGo.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -16,11 +17,44 @@ namespace FashionGo.Areas.Admin.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Admin/Users
+        public class UserModel
+        {
+           public string Id { get; set; }
+            public string FullName { get; set; }
+            public string UserName { get; set; }
+            public string PhoneNumber { get; set; }
+            public string Email { get; set; }
+            public string Address { get; set; }
+            public string DistrictName { get; set; }
+            public string Role { get; set; }
+
+        }
         public ActionResult Index()
         {
             var identityUsers = db.Users.Include(a => a.District).Include(a => a.Roles).ToList();
-
-            return View(identityUsers);
+            var listRole = db.Roles.ToList();
+            var listUserRole = db.IdentityUserRoles.ToList();
+            List<UserModel> users = new List<UserModel>();
+            foreach (var item in identityUsers)
+            {
+                var roleId = listUserRole.Where(x => x.UserId == item.Id).FirstOrDefault()!= null ? 
+                    listUserRole.Where(x => x.UserId == item.Id).FirstOrDefault().RoleId : "";
+                users.Add(new UserModel
+                {
+                    Id = item.Id,
+                    FullName = item.FullName,
+                    UserName = item.UserName,
+                        
+                    PhoneNumber = item.PhoneNumber,
+                    Email = item.Email,
+                    Address = item.Address,
+                    DistrictName =item.District!=null ?item.District.Name:"",
+                    Role = roleId != "" ? listRole.Where(x=>x.Id == roleId).FirstOrDefault().Name
+                    : ""
+                });
+            }
+            ViewBag.listRole = listRole;
+            return View(users);
         }
 
         // GET: Admin/Users/Details/5
@@ -42,6 +76,7 @@ namespace FashionGo.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.DistrictId = new SelectList(db.Districts, "DistrictId", "Name");
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View();
         }
 
@@ -50,14 +85,18 @@ namespace FashionGo.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FullName,Address,DistrictId")] ApplicationUser applicationUser)
+        public ActionResult Create(ApplicationUser applicationUser, string RoleId)
         {
-            if (ModelState.IsValid)
-            {
+            applicationUser.Id = Guid.NewGuid().ToString();
                  db.Users.Add(applicationUser);
+                    db.SaveChanges();
+                IdentityUserRole identityUserRole = new IdentityUserRole();
+                identityUserRole.RoleId = RoleId;
+                identityUserRole.UserId = applicationUser.Id;
+                db.IdentityUserRoles.Add(identityUserRole);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
+            
 
             ViewBag.DistrictId = new SelectList(db.Districts, "DistrictId", "Name", applicationUser.DistrictId);
             return View(applicationUser);
@@ -75,6 +114,10 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            var listUserRole = db.IdentityUserRoles.ToList();
+            var roleId = listUserRole.Where(x => x.UserId == id).FirstOrDefault() != null ?
+                 listUserRole.Where(x => x.UserId == id).FirstOrDefault().RoleId : "";
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", roleId);
             ViewBag.DistrictId = new SelectList(db.Districts, "DistrictId", "Name", applicationUser.DistrictId);
             return View(applicationUser);
         }
@@ -84,12 +127,35 @@ namespace FashionGo.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FullName,Address,DistrictId")] ApplicationUser applicationUser)
+        //public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,FullName,Address,DistrictId")] ApplicationUser applicationUser)
+        public ActionResult Edit([Bind(Include = "Id,Email,PhoneNumber,UserName,FullName,Address,DistrictId")] ApplicationUser applicationUser, string RoleId)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(applicationUser).State = EntityState.Modified;
                 db.SaveChanges();
+                IdentityUserRole identityUserRole = db.IdentityUserRoles.Where(x=>x.UserId == applicationUser.Id).FirstOrDefault();
+                if(identityUserRole == null )
+                {
+                    db.IdentityUserRoles.Add(new IdentityUserRole
+                    {
+                        RoleId = RoleId,
+                        UserId = applicationUser.Id,
+                        
+                    });
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.IdentityUserRoles.Remove(identityUserRole);
+                    IdentityUserRole UserRole = new IdentityUserRole();
+                    UserRole.RoleId = RoleId;
+                    UserRole.UserId = applicationUser.Id;
+                    db.IdentityUserRoles.Add(UserRole);
+                    db.SaveChanges();
+
+                }    
+
                 return RedirectToAction("Index");
             }
             ViewBag.DistrictId = new SelectList(db.Districts, "DistrictId", "Name", applicationUser.DistrictId);
@@ -119,6 +185,10 @@ namespace FashionGo.Areas.Admin.Controllers
             ApplicationUser applicationUser =  db.Users.Find(id);
              db.Users.Remove(applicationUser);
             db.SaveChanges();
+            List<IdentityUserRole> identityUserRole = db.IdentityUserRoles.Where(x=>x.UserId == id).ToList();
+            db.IdentityUserRoles.RemoveRange(identityUserRole);
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

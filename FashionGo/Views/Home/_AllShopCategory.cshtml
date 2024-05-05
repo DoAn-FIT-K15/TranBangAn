@@ -88,7 +88,7 @@
                                         {
                                             var activeClass = rel == 0 ? "active" : "";
                                             <input type="hidden" id="setcount-@rel" name="setcount-@rel" value="0" />
-                                            <div class="tab-pane @activeClass row-fluid" id="category-tab-@rel@data">
+                                            <div class="tab-pane @activeClass row-fluid " id="category-tab-@rel@data">
                                                 <div class="category-desc span3">
                                                     <p>@Html.Raw(cat.Description)</p>
                                                     <div class="category-view-all">
@@ -97,40 +97,44 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="clearfix span9">
-                                                    <ul id="item-container-@rel@data" class="product-tab-content row ">
+                                                <div class="clearfix span9 ">
+                                                    <ul id="item-container-@rel@data" class="product-tab-content row " >
                                                         @foreach (var item in cat.AllProducts(18))
                                                         {
-                                                            <li class="eshop-product-tab col-lg-4 col-md-4 col-xs-12">
-                                                                <div class="image">
-                                                                    <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
-                                                                        <img class="image img-responsive" alt="@item.Name" src="@item.FeaturedImage">
-                                                                    </a>
-                                                                    <div class="sale-flash">@item.Discount% Off*</div>
+                                                            <li class="eshop-product-tab eshop-wrap-product col-lg-4 col-md-4 col-xs-12" style="width:33%!important">
+                                                                <div class="eshop-image-block">
+                                                                    <div class="image">
+                                                                        <span class="overlay-background-color">&nbsp;</span>
+                                                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
+                                                                            <img class="image img-responsive" alt="@item.Name" src="@item.FeaturedImage">
+                                                                        </a>
+                                                                        <div class="sale-flash">@item.Discount% Off*</div>
+                                                                    </div>
+                                                                    <div class="eshop-buttons">
+                                                                        <p>
+                                                                            <a class="button" style="cursor: pointer;" onclick="addToWishList2(this,@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
+                                                                            <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = @item.Name.ToAscii(), id = @item.Id })" title="Xem chi tiết"><i class="fa fa-arrow-right"></i><span class="text-hide">Chi tiết</span></a>
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
-                                                                <h4 class="eshop-product-title">
-                                                                    <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" class="link" data-original-title="@item.Name">
-                                                                        @item.Name
-                                                                    </a>
-                                                                </h4>
-                                                                <div class="row">
-                                                                    <div class="col-lg-6 col-md-6 col-xs-6">
-                                                                        @if (item.Discount.Value > 0)
-                                                                        {
-                                                                            <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
-                                                                        }
-                                                                        <span class="eshop-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
-                                                                        <div class="eshop-buttons">
-                                                                            <p>
-                                                                                <a class="button" style="cursor: pointer;" onclick="addToWishList2(this,item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
-                                                                                <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="Xem chi tiết"><i class="fa fa-arrow-right"></i><span class="text-hide">Chi tiết</span></a>
-                                                                            </p>
+                                                                    <h4 class="eshop-product-title">
+                                                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" class="link" data-original-title="@item.Name">
+                                                                            @item.Name
+                                                                        </a>
+                                                                    </h4>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-6 col-md-6 col-xs-6">
+                                                                            @if (item.Discount.Value > 0)
+                                                                            {
+                                                                                <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
+                                                                            }
+                                                                            <span class="eshop-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
+
+                                                                        </div>
+                                                                        <div class="col-lg-6 col-md-6 col-xs-6">
+                                                                            <button onclick="loadForm('@item.Id')" class="btn btn-primary">Thêm vào giỏ</button>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-6 col-md-6 col-xs-6">
-                                                                        <button onclick="loadForm('@item.Id')" class="btn btn-primary">Thêm vào giỏ</button>
-                                                                    </div>
-                                                                </div>
                                                             </li>
                                                         }
                                                     </ul>

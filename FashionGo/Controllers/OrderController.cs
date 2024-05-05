@@ -6,17 +6,11 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using Commons.Libs;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
 using System.Configuration;
 using Newtonsoft.Json.Linq;
 using MoMo;
-
-using CKFinder.Connector;
 using FashionGo.Others;
-using Twilio.TwiML.Voice;
 using System.Threading.Tasks;
 
 namespace FashionGo.Controllers
@@ -84,9 +78,22 @@ namespace FashionGo.Controllers
                 Warning(string.Format("<h5>{0}</h4>", "Bạn chưa có sản phẩm nào trong giỏ hàng, Vui lòng chọn sản phẩm trước khi thanh toán."), true);
                 return RedirectToAction("Index", "Home");
             }
-            // Validate Email
-            if (! Request.IsAuthenticated && String.IsNullOrEmpty(form["Email"]))
-                ModelState.AddModelError("", "-Bạn chưa nhập email nhận đơn hàng!");
+            if (String.IsNullOrEmpty(form["ReceiveName"]))
+            {
+                Warning(string.Format("<h5>{0}</h4>", "Bạn chưa nhập tên người nhận hàng nhận đơn hàng!"), true);
+                return RedirectToAction("Checkout", "Order");
+            }
+            if (String.IsNullOrEmpty(form["ReceivePhone"]))
+            {
+                Warning(string.Format("<h5>{0}</h4>", "Bạn chưa nhập số điện thoại nhận hàng nhận đơn hàng!"), true);
+                return RedirectToAction("Checkout", "Order");
+            }
+            if (String.IsNullOrEmpty(form["ReceiveAddress"]))
+            {
+                Warning(string.Format("<h5>{0}</h4>", "Bạn chưa nhập địa chỉ nhận hàng nhận đơn hàng!"), true);
+                return RedirectToAction("Checkout", "Order");
+            }
+            
 
             //Check quận huyện
             if (String.IsNullOrEmpty(form["DistrictId"]))
@@ -97,7 +104,10 @@ namespace FashionGo.Controllers
                 ModelState.AddModelError("", "-Bạn chưa chọn nhà vận chuyển trước khi đặt hàng!");
             //Check phuong thuc thanh toán
             if (String.IsNullOrEmpty(form["PaymentMethodId"]))
-                ModelState.AddModelError("", "-Bạn chưa chọn phương thức thanh toán!");
+            {
+                Warning(string.Format("<h5>{0}</h4>", "Bạn chưa chọn phương thức thanh toán!"), true);
+                return RedirectToAction("Checkout", "Order");
+            }
             
                 int paymentMethodId = int.Parse(form["PaymentMethodId"]);
 

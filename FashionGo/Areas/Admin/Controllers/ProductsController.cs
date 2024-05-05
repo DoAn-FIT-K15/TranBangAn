@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using FashionGo.Models;
 using FashionGo.Models.Entities;
+using Google.Type;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -40,11 +41,13 @@ namespace FashionGo.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Sizes product = db.Sizes.Find(id);
+            db.Sizes.Remove(product);
+            db.SaveChanges();
             if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return RedirectToAction("ListProductsSize");
         }
         [HttpPost, ActionName("DeleteProductsSize")]
         [ValidateAntiForgeryToken]
@@ -74,28 +77,19 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-        [HttpPost, ActionName("DeleteProductsColor")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteProductsColorConfirmed(int id)
-        {
             Colors product = db.Colors.Find(id);
             db.Colors.Remove(product);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ListProductsColor");
         }
+
         public ActionResult CreateProperties()
         {
             ViewBag.Products = new SelectList(db.Products, "id", "name");
             
             return View();
         } 
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -130,10 +124,158 @@ namespace FashionGo.Areas.Admin.Controllers
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("CreateProperties");
+                return RedirectToAction("ListProductsColor");
             }
 
            
+            return View(data);
+        }
+
+
+
+
+
+        public ActionResult CreatePropertiesColor()
+        {
+            ViewBag.Products = new SelectList(db.Products, "id", "name");
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult CreatePropertiesColor(ColorSizeViewModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                string ProductId = Request.Form["Id"];
+                int selectedProductId;
+
+                int.TryParse(ProductId, out selectedProductId);
+
+                string[] colors = data.Color.ColorName.Split(',');
+
+                foreach (string color in colors)
+                {
+                    // Lưu từng tùy chọn màu vào cơ sở dữ liệu
+                    string colorName = color.Trim().ToUpper();
+                    data.Color.ProductID = selectedProductId;
+                    db.Colors.Add(new Colors { ColorName = colorName, ProductID = data.Color.ProductID });
+                }
+
+
+
+
+                db.SaveChanges();
+                return RedirectToAction("CreatePropertiesColor");
+            }
+
+
+            return View(data);
+        }
+
+        public ActionResult UpdatePropertiesColor(int? id)
+        {
+            Colors color = db.Colors.Find(id);
+
+            ViewBag.Products = new SelectList(db.Products, "id", "name", color.ProductID);
+            ViewBag.ProductName = db.Products.Where(x=>x.Id == color.ProductID).FirstOrDefault();
+            return View(new ColorSizeViewModel
+            {
+                Color = color,
+            });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult UpdatePropertiesColor(ColorSizeViewModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                string ProductId = Request.Form["Id"];
+                int selectedProductId;
+
+                int.TryParse(ProductId, out selectedProductId);
+                Colors product = db.Colors.Where(X => X.ColorID == data.Color.ColorID).FirstOrDefault();
+                product.ColorName = data.Color.ColorName;
+
+                db.SaveChanges();
+                return RedirectToAction("ListProductsColor");
+            }
+
+
+            return View(data);
+        }
+
+        public ActionResult UpdatePropertiesSize(int? id)
+        {
+            Sizes product = db.Sizes.Find(id);
+
+            ViewBag.Products = new SelectList(db.Products, "id", "name", product.ProductID);
+            ViewBag.ProductName = db.Products.Where(x => x.Id == product.ProductID).FirstOrDefault();
+
+            return View(new ColorSizeViewModel
+            {
+                Size = product,
+            });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult UpdatePropertiesSize(ColorSizeViewModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                string ProductId = Request.Form["Id"];
+                int selectedProductId;
+
+                int.TryParse(ProductId, out selectedProductId);
+                Sizes product = db.Sizes.Where(X=>X.SizeID == data.Size.SizeID).FirstOrDefault();
+                product.SizeName = data.Size.SizeName;
+
+                db.SaveChanges();
+                return RedirectToAction("ListProductsSize");
+            }
+
+
+            return View(data);
+        }
+        public ActionResult CreatePropertiesSize()
+        {
+            ViewBag.Products = new SelectList(db.Products, "id", "name");
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult CreatePropertiesSize(ColorSizeViewModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                string ProductId = Request.Form["Id"];
+                int selectedProductId;
+
+                int.TryParse(ProductId, out selectedProductId);
+
+
+
+
+                string[] sizes = data.Size.SizeName.Split(',');
+
+                foreach (string size in sizes)
+                {
+                    // Lưu từng tùy chọn màu vào cơ sở dữ liệu
+                    string sizeName = size.Trim().ToUpper();
+                    data.Size.ProductID = selectedProductId;
+                    db.Sizes.Add(new Sizes { SizeName = sizeName, ProductID = data.Size.ProductID });
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("ListProductsSize");
+            }
+
+
             return View(data);
         }
 
@@ -158,7 +300,7 @@ namespace FashionGo.Areas.Admin.Controllers
         {
             //ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
             ViewBag.ManufactId = new SelectList(db.Manufacts, "id", "name");
-            ViewBag.CatId = new SelectList(db.ProductCategories, "CatId", "Name");
+            ViewBag.CatId = new SelectList(db.ProductCategories.Where(x=>x.ParentId != null), "CatId", "Name");
             ViewBag.TypeId = new SelectList(db.ProductTypes, "id", "name");
             return View();
         }
@@ -181,7 +323,7 @@ namespace FashionGo.Areas.Admin.Controllers
 
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", product.UserId);
             ViewBag.ManufactId = new SelectList(db.Manufacts, "id", "name", product.ManufactId);
-            ViewBag.CatId = new SelectList(db.ProductCategories, "CatId", "Name", product.CatId);
+            ViewBag.CatId = new SelectList(db.ProductCategories.Where(x => x.ParentId != null), "CatId", "Name", product.CatId);
             ViewBag.TypeId = new SelectList(db.ProductTypes, "id", "name", product.TypeId);
             return View(product);
         }
@@ -201,7 +343,7 @@ namespace FashionGo.Areas.Admin.Controllers
             }
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", product.UserId);
             ViewBag.ManufactId = new SelectList(db.Manufacts, "id", "name", product.ManufactId);
-            ViewBag.CatId = new SelectList(db.ProductCategories, "CatId", "Name", product.CatId);
+            ViewBag.CatId = new SelectList(db.ProductCategories.Where(x => x.ParentId != null), "CatId", "Name", product.CatId);
             ViewBag.TypeId = new SelectList(db.ProductTypes, "id", "name", product.TypeId);
             return View(product);
         }
@@ -223,7 +365,7 @@ namespace FashionGo.Areas.Admin.Controllers
             }
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", product.UserId);
             ViewBag.ManufactId = new SelectList(db.Manufacts, "id", "name", product.ManufactId);
-            ViewBag.CatId = new SelectList(db.ProductCategories, "CatId", "Name", product.CatId);
+            ViewBag.CatId = new SelectList(db.ProductCategories.Where(x => x.ParentId != null), "CatId", "Name", product.CatId);
             ViewBag.TypeId = new SelectList(db.ProductTypes, "id", "name", product.TypeId);
             return View(product);
         }
