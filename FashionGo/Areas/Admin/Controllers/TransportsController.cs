@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using FashionGo.Models.Entities;
 using FashionGo.Models;
+using System.Security.Cryptography.Xml;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -40,7 +41,9 @@ namespace FashionGo.Areas.Admin.Controllers
         // GET: Admin/Transports/Create
         public ActionResult Create()
         {
-            ViewBag.DistrictId = new SelectList(db.Districts, "DistrictId", "Name");
+            ViewBag.ProvinceId = new SelectList(db.Provinces, "ProvinceId", "Name");
+
+            ViewBag.DistrictId = new SelectList(db.Districts.Take(50), "DistrictId", "Name");
             ViewBag.TransporterId = new SelectList(db.Transporters, "Id", "Name");
             ViewBag.TransportTypeId = new SelectList(db.TransportTypes, "Id", "Name");
             return View();
@@ -78,6 +81,8 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ProvinceId = new SelectList(db.Provinces, "ProvinceId", "Name", transport.District.ProvinceId);
+
             ViewBag.DistrictId = new SelectList(db.Districts, "DistrictId", "Name", transport.DistrictId);
             ViewBag.TransporterId = new SelectList(db.Transporters, "Id", "Name", transport.TransporterId);
             ViewBag.TransportTypeId = new SelectList(db.TransportTypes, "Id", "Name", transport.TransportTypeId);

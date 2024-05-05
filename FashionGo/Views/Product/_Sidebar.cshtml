@@ -8,7 +8,7 @@
                 <ul>
                     @foreach (var item in Model)
                     {
-                        <li>
+                        <li style="text-align:left!important">
                             <a href="@Url.RouteUrl("ProductCategory", new { slug = item.Name.ToAscii(), id = item.CatId })" title="@item.Name">
                                 <i class="fa fa-angle-right"></i> @item.Name (@item.CountProducts())
                             </a>
@@ -21,7 +21,7 @@
                                 <ul id="eshop-accordion">
                                     @foreach (var child in childCategories)
                                     {
-                                        <li>
+                                        <li style="text-align:left!important">
                                             <a href="@Url.RouteUrl("ProductCategory", new { slug = child.Name.ToAscii(), id = child.CatId })" title="@child.Name">
                                                 <i class="fa fa-angle-right"></i> @child.Name (@child.CountProducts())
                                             </a>

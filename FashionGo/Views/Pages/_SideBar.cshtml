@@ -9,7 +9,7 @@
                 <ul>
                     @foreach (Menu m in ViewBag.MenuGioiThieu)
             {
-                        <li>
+                        <li style="text-align:left!important">
                             <a href="@m.Url" title="@Html.Raw(m.Text)">
                                 @Html.Raw(m.Text)
                             </a>
@@ -29,7 +29,7 @@
                 <ul>
                     @foreach (Menu m in ViewBag.MenuTroGiup)
                     {
-                        <li>
+                        <li style="text-align:left!important">
                             <a href="@m.Url" title="@Html.Raw(m.Text)">
                                 @Html.Raw(m.Text)
                             </a>

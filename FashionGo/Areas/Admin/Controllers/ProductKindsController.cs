@@ -54,6 +54,8 @@ namespace FashionGo.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 productCategory.Slug = productCategory.Name.ToAscii();
+                productCategory.ParentId = null;
+
                 db.ProductCategories.Add(productCategory);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -89,6 +91,7 @@ namespace FashionGo.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                productCategory.ParentId = null;
                 db.Entry(productCategory).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
