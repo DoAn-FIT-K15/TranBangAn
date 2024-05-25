@@ -1,18 +1,19 @@
-﻿using System;
+﻿using FashionGo.Models.Dao;
+using FashionGo.Models.Entities;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
-using FashionGo.Models.Entities;
-using FashionGo.Models.Dao;
-using System.Net;
 
 namespace FashionGo.Controllers
 {
     public class ProductController : BaseController
     {
+#pragma warning disable CS0414 // The field 'ProductController.pageSize' is assigned but its value is never used
         int pageSize = 20;
+#pragma warning restore CS0414 // The field 'ProductController.pageSize' is assigned but its value is never used
         public List<Product> Products
         {
             get
@@ -27,35 +28,148 @@ namespace FashionGo.Controllers
                 return list;
             }
         }
-
-        public ActionResult ProductCategory(int id, int? page)
+        public ActionResult ProductCategory(int? id, int? a, int? page, int? Cateid/*, string keyword,*/ ,string sort_options, int? limit = 10)
         {
-            int pageNumber = (page ?? 1);
+            var products = db.Products.AsQueryable();
 
-            var cat = db.ProductCategories.Find(id);
-            if (cat == null)
+            // Lọc sản phẩm dựa trên category nếu có
+            if (id.HasValue)
             {
-                return RedirectToAction("NotFound", "Home");
+                products = products.Where(p => p.CatId == id.Value);
             }
+            // Sắp xếp sản phẩm
 
-            var model = cat.AllProducts(100);
-            ViewBag.Category = cat;
-            return View(model.ToPagedList(pageNumber, pageSize ));
+            int pageSize = limit ?? 20; // Nếu không có giá trị limit, sử dụng giá trị mặc định là 20
+            int pageNumber = (page ?? 1);
+            if (Cateid != null)
+            {
+                var cat = db.ProductCategories.Find(Cateid);
+                switch (sort_options)
+                {
+                    case "product_name-ASC":
+                        products = products.Where(p => p.ProductCategory.CatId == Cateid).
+                            OrderBy(p => p.Name);
+                        break;
+                    case "product_name-DESC":
+                        products = products.Where(p => p.ProductCategory.CatId == Cateid)
+                            .OrderByDescending(p => p.Name);
+                        break;
+                    case "product_price-ASC":
+                        products = products.Where(p => p.ProductCategory.CatId == Cateid)
+                            .OrderBy(p => p.Price - (p.Price * p.Discount / 100));
+                        break;
+                    case "product_price-DESC":
+                        products = products.Where(p => p.ProductCategory.CatId == Cateid)
+                            .OrderByDescending(p => p.Price - (p.Price * p.Discount / 100));
+                        break;
+                }
+                ViewBag.Category = cat;
+                ViewBag.CateId = Cateid;
+                ViewBag.CurrentFilters = limit;
+                var model = cat.AllProducts(100);
+                return View(model.ToPagedList(pageNumber, pageSize));
+            }
+            else if (a != null)
+            {
+                var cat = db.ProductCategories.Where(c => c.ParentId == a).ToList();
+                if (!cat.Any())
+                {
+                    cat = db.ProductCategories.Where(c => c.CatId == a).ToList();
+                }
+                var catIds = cat.Select(c => c.CatId).ToList();
+                switch (sort_options)
+                {
+                    case "product_name-ASC":
+                        products = products.Where(p => catIds.Contains(p.CatId ?? 0)).
+                            OrderBy(p => p.Name);
+                        break;
+                    case "product_name-DESC":
+                        products = products.Where(p => catIds.Contains(p.CatId ?? 0))
+                            .OrderByDescending(p => p.Name);
+                        break;
+                    case "product_price-ASC":
+                        products = products.Where(p => catIds.Contains(p.CatId ?? 0))
+                            .OrderBy(p => p.Price - (p.Price * p.Discount / 100));
+                        break;
+                    case "product_price-DESC":
+                        products = products.Where(p => catIds.Contains(p.CatId ?? 0))
+                            .OrderByDescending(p => p.Price - (p.Price * p.Discount / 100));
+                        break;
+                }
+                var cate = db.ProductCategories.Find(a);
+                ViewBag.Category = cate;
+                ViewBag.CateId = a;
+                ViewBag.CurrentFilters = limit;
+                var model = products.ToList();
+                return View(model.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                var cat = db.ProductCategories.Find(id);
+                if (cat == null)
+                {
+                    cat = db.ProductCategories.First();
+                }
+                switch (sort_options)
+                {
+                    case "product_name-ASC":
+                        products = products.Where(p => p.ProductCategory.CatId == id).
+                            OrderBy(p => p.Name);
+                        break;
+                    case "product_name-DESC":
+                        products = products.Where(p => p.ProductCategory.CatId == id)
+                            .OrderByDescending(p => p.Name);
+                        break;
+                    case "product_price-ASC":
+                        products = products.Where(p => p.ProductCategory.CatId == id)
+                            .OrderBy(p => p.Price - (p.Price * p.Discount / 100));
+                        break;
+                    case "product_price-DESC":
+                        products = products.Where(p => p.ProductCategory.CatId == id)
+                            .OrderByDescending(p => p.Price - (p.Price * p.Discount / 100));
+                        break;
+                }
+                var model = products.ToList();
+
+                ViewBag.Category = cat;
+                ViewBag.CateId = cat.CatId;
+                ViewBag.CurrentFilters = limit;
+                return View(model.ToPagedList(pageNumber, pageSize));
+            }
         }
+
 
 
         //TÌm kiếm sản phẩm theo từ khóa khớp với tên chuyên mục hoặc tên sản phẩm
         [HttpGet]
-        public ActionResult Search(string keyword, int? page)
+        public ActionResult Search(string keyword, int? page, string sort_options, int? limit = 10)
         {
             ViewBag.keyword = keyword;
             var results = (from s in db.Products.ToList()
-                           where ( (string.IsNullOrEmpty(keyword) ? true : s.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase) )) || 
-                                 ( (string.IsNullOrEmpty(keyword) ? true : s.ProductCategory.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase) ))
+                           where ((string.IsNullOrEmpty(keyword) ? true : s.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase))) ||
+                                 ((string.IsNullOrEmpty(keyword) ? true : s.ProductCategory.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase)))
                            select s).Where(p => p.Actived == true);
-            int pageSize = 20;
+            switch (sort_options)
+            {
+                case "product_name-ASC":
+                    results = results.OrderBy(p => p.Name);
+                    break;
+                case "product_name-DESC":
+                    results = results.OrderByDescending(p => p.Name);
+                    break;
+                case "product_price-ASC":
+                    results = results.OrderBy(p => p.Price - (p.Price * p.Discount / 100));
+                    break;
+                case "product_price-DESC":
+                    results = results.OrderByDescending(p => p.Price - (p.Price * p.Discount / 100));
+                    break;
+                default:
+                    break;
+            }
+            int pageSize = limit ?? 10;
             int pageNumber = (page ?? 1);
 
+            ViewBag.CurrentFilters = limit;
             if (results.Count() == 0)
             {
                 ViewBag.notice = "Không tìm thấy sản phẩm phù hợp với từ khóa: \"" + keyword + "\"";
@@ -74,7 +188,9 @@ namespace FashionGo.Controllers
 
         public ActionResult Detail(int Id, string Slug)
         {
+#pragma warning disable CS0472 // The result of the expression is always 'false' since a value of type 'int' is never equal to 'null' of type 'int?'
             if (Id == null)
+#pragma warning restore CS0472 // The result of the expression is always 'false' since a value of type 'int' is never equal to 'null' of type 'int?'
             {
                 return RedirectToAction("NotFound", "Home");
             }
@@ -99,7 +215,7 @@ namespace FashionGo.Controllers
             //san pham vua xem
             var list = Products;
             var m = list.SingleOrDefault(c => c.Id == Id);
-            if(m==null)
+            if (m == null)
             {
                 list.Add(model);
             }
@@ -113,14 +229,16 @@ namespace FashionGo.Controllers
                 ViewBag.Views = list;
             }
 
-            ViewBag.PageHelp = db.Pages.SingleOrDefault(p=>p.Id == 8);
+            ViewBag.PageHelp = db.Pages.SingleOrDefault(p => p.Id == 8);
             //ViewBag.Views = list;
             return View("Detail", model);
         }
 
         public ActionResult BlokAdd(int Id)
         {
+#pragma warning disable CS0472 // The result of the expression is always 'false' since a value of type 'int' is never equal to 'null' of type 'int?'
             if (Id == null)
+#pragma warning restore CS0472 // The result of the expression is always 'false' since a value of type 'int' is never equal to 'null' of type 'int?'
             {
                 return RedirectToAction("NotFound", "Home");
             }
@@ -165,13 +283,13 @@ namespace FashionGo.Controllers
                     };
                 }
                 // Bổ sung mặt hàng đã xem vào cookie
-                if(wishlist[Id.ToString()]==null)
+                if (wishlist[Id.ToString()] == null)
                 {
-                    
+
                     wishlist.Values[Id.ToString()] = Id.ToString();
-                     //Success(string.Format("<b><h4>{0}</h4></b> was add to wish list successfully.", ProductName.Name), true);
+                    //Success(string.Format("<b><h4>{0}</h4></b> was add to wish list successfully.", ProductName.Name), true);
                 }
-                
+
                 // Đặt thời hạn tồn tại của cookie
                 wishlist.Expires = DateTime.Now.AddYears(1);
                 wishlist.Secure = true;
@@ -229,10 +347,10 @@ namespace FashionGo.Controllers
             {
 
             }
-         
+
 
             // Bổ sung mặt hàng đã xem vào cookie
-           // wishlist.Values[Id.ToString()].Remove
+            // wishlist.Values[Id.ToString()].Remove
             return RedirectToAction("MyWishList", "Product");
         }
 
@@ -254,7 +372,7 @@ namespace FashionGo.Controllers
             return View(model.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult ListBySpecial(string Id, int?page)
+        public ActionResult ListBySpecial(string Id, int? page)
         {
             int pageSize = 12;
             int pageNumber = (page ?? 1);
@@ -264,12 +382,12 @@ namespace FashionGo.Controllers
                 case "All":
                     model = db.Products.Where(p => p.Actived == true).ToList();
                     ViewBag.Id = Id;
-                   
+
                     break;
                 case "Latest":
                     model = db.Products.Where(p => p.Actived == true).OrderByDescending(p => p.CreateDate).ToList();
                     ViewBag.label = "Mới";
-                  
+
                     break;
                 case "Best":
                     model = db.Products.Where(p => p.Actived == true)
@@ -295,10 +413,10 @@ namespace FashionGo.Controllers
 
                 default:
                     model = db.Products.Where(p => p.Actived == true).ToList();
-                        //.Where(p => p.ManufactId == Id).ToList();
+                    //.Where(p => p.ManufactId == Id).ToList();
                     ViewBag.label = Id;
                     break;
-             }
+            }
 
             ViewBag.Id = Id;
 
@@ -374,6 +492,50 @@ namespace FashionGo.Controllers
             var model = db.Products.Where(p => p.Actived == true).Where(p => p.Discount > 0).Take(5);
             return PartialView("Partials/_Saleoff", model);
         }
+        /*       public ActionResult SortAndFilter(string sortOrder, string currentFilter, int? page)
+               {
+                   ViewBag.CurrentSort = sortOrder;
+                   ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                   ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
+
+                   if (sortOrder != null)
+                   {
+                       page = 1;
+                   }
+                   else
+                   {
+                       sortOrder = currentFilter;
+                   }
+
+                   ViewBag.CurrentFilter = sortOrder;
+
+                   var products = from p in db.Products
+                                  select p;
+
+                   if (!String.IsNullOrEmpty(sortOrder))
+                   {
+                       switch (sortOrder)
+                       {
+                           case "name_desc":
+                               products = products.OrderByDescending(p => p.Name);
+                               break;
+                           case "Price":
+                               products = products.OrderBy(p => p.Price);
+                               break;
+                           case "price_desc":
+                               products = products.OrderByDescending(p => p.Price);
+                               break;
+                           default:
+                               products = products.OrderBy(p => p.Name);
+                               break;
+                       }
+                   }
+
+                   int pageSize = 20;
+                   int pageNumber = (page ?? 1);
+                   return View(products.ToPagedList(pageNumber, pageSize));
+               }*/
+
 
     }
 }

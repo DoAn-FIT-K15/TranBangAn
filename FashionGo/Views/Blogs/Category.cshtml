@@ -19,7 +19,7 @@
 <div class="wrap-content">
     <div class="blog" itemscope="" itemtype="http://schema.org/Blog">
         <div class="page-header clearfix">
-            <h1 class="page-title"> @ViewBag.Cat.Name</h1>
+            <h1 class="page-title"style="text-transform: none; font-family: Arial; font-weight: 100;"> @ViewBag.Cat.Name</h1>
         </div>
         @foreach (var m in Model)
         {
@@ -30,7 +30,7 @@
                         <article>
                             <header class="article-header clearfix">
                                 <h2 class="article-title" itemprop="name">
-                                    <a href="@Url.RouteUrl("BlogDetails", new { catslug = m.Category.Slug, slug = m.Slug })" itemprop="url" title="@m.Title">
+                                    <a href="@Url.RouteUrl("BlogDetails", new { catslug = m.Category.Slug, slug = m.Slug })" itemprop="url" title="@m.Title"style="text-transform: none; font-family: Arial; font-weight: 100;">
                                         @m.Title
                                     </a>
                                 </h2>
@@ -41,9 +41,9 @@
                                     <dt class="article-info-term">
                                         Chi tiết bài viết
                                     </dt>
-                                    <dd class="createdby hasTooltip" itemprop="author" itemscope="" itemtype="http://schema.org/Person" title="" data-original-title="Đăng bởi:">
-                                        <span class="">Bởi: </span>
-                                        <span class="brand-primary-color" itemprop="name">FG</span> /
+                                    <dd class="createdby hasTooltip" itemprop="author" itemscope="" itemtype="http://schema.org/Person" title="" data-original-title="Đăng bởi:"style="text-transform: none; font-family: Arial; font-weight: 100;">
+                                        <span class=""style="text-transform: none; font-family: Arial; font-weight: 100;">Bởi: </span>
+                                        <span class="brand-primary-color" itemprop="name"style="text-transform: none; font-family: Arial; font-weight: 100;">QF</span> /
                                     </dd>
                                     <dd class="create text-muted hidden">
                                         <time datetime="@m.createDate" itemprop="dateCreated">
@@ -54,9 +54,9 @@
                                             </div>
                                         </time>
                                     </dd>
-                                    <dd class="category-name hasTooltip" title="" data-original-title="Chuyên mục: ">
-                                        <span class="">Chuyên mục</span>
-                                        <a href="@Url.RouteUrl("BlogCategory", new { slug = m.Category.Slug })" title="@m.Category.Name"><span itemprop="genre">@m.Category.Name</span></a>
+                                    <dd class="category-name hasTooltip" title="" data-original-title="Chuyên mục: "style="text-transform: none; font-family: Arial; font-weight: 100;">
+                                        <span class="" style="text-transform: none; font-family: Arial; font-weight: 100; text-align: center;">Chuyên mục:</span>
+                                        <a href="@Url.RouteUrl("BlogCategory", new { slug = m.Category.Slug })" title="@m.Category.Name"><span itemprop="genre" style="text-transform: none; font-family: Arial; font-weight: 100;">@m.Category.Name</span></a>
                                     </dd>
                                 </dl>
                             </aside>
@@ -70,7 +70,7 @@
                             <!-- footer -->
                             <section class="readmore">
                                 <a class="btn btn-primary" href="@Url.RouteUrl("BlogDetails", new { catslug = m.Category.Slug, slug = m.Slug })">
-                                    <span>
+                                    <span style="text-transform: none; font-family: Arial; font-weight: 100;">
                                         Đọc thêm ...
                                     </span>
                                 </a>

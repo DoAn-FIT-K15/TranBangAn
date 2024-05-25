@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FashionGo.Models;
+using FashionGo.Models.Entities;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FashionGo.Models;
-using FashionGo.Models.Entities;
-using Google.Type;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -18,7 +13,7 @@ namespace FashionGo.Areas.Admin.Controllers
         // GET: Admin/Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.User).Include(p => p.Manufact).Include(p => p.ProductCategory).Include(p => p.ProductType).OrderByDescending(p=>p.CreateDate);
+            var products = db.Products.Include(p => p.User).Include(p => p.Manufact).Include(p => p.ProductCategory).Include(p => p.ProductType).OrderByDescending(p => p.CreateDate);
             return View(products.ToList());
         }
         public ActionResult ListProductsSize(string searchString)
@@ -32,7 +27,7 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 var products = db.Sizes.Include(p => p.Product).Where(x => x.Product.Name.Contains(searchString)).ToList();
                 return View(products);
-            }    
+            }
         }
         public ActionResult DeleteProductsSize(int? id)
         {
@@ -86,9 +81,9 @@ namespace FashionGo.Areas.Admin.Controllers
         public ActionResult CreateProperties()
         {
             ViewBag.Products = new SelectList(db.Products, "id", "name");
-            
+
             return View();
-        } 
+        }
 
 
         [HttpPost]
@@ -127,7 +122,7 @@ namespace FashionGo.Areas.Admin.Controllers
                 return RedirectToAction("ListProductsColor");
             }
 
-           
+
             return View(data);
         }
 
@@ -179,7 +174,7 @@ namespace FashionGo.Areas.Admin.Controllers
             Colors color = db.Colors.Find(id);
 
             ViewBag.Products = new SelectList(db.Products, "id", "name", color.ProductID);
-            ViewBag.ProductName = db.Products.Where(x=>x.Id == color.ProductID).FirstOrDefault();
+            ViewBag.ProductName = db.Products.Where(x => x.Id == color.ProductID).FirstOrDefault();
             return View(new ColorSizeViewModel
             {
                 Color = color,
@@ -230,7 +225,7 @@ namespace FashionGo.Areas.Admin.Controllers
                 int selectedProductId;
 
                 int.TryParse(ProductId, out selectedProductId);
-                Sizes product = db.Sizes.Where(X=>X.SizeID == data.Size.SizeID).FirstOrDefault();
+                Sizes product = db.Sizes.Where(X => X.SizeID == data.Size.SizeID).FirstOrDefault();
                 product.SizeName = data.Size.SizeName;
 
                 db.SaveChanges();
@@ -300,7 +295,7 @@ namespace FashionGo.Areas.Admin.Controllers
         {
             //ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
             ViewBag.ManufactId = new SelectList(db.Manufacts, "id", "name");
-            ViewBag.CatId = new SelectList(db.ProductCategories.Where(x=>x.ParentId != null), "CatId", "Name");
+            ViewBag.CatId = new SelectList(db.ProductCategories.Where(x => x.ParentId != null), "CatId", "Name");
             ViewBag.TypeId = new SelectList(db.ProductTypes, "id", "name");
             return View();
         }
@@ -390,11 +385,38 @@ namespace FashionGo.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Products.Find(id);
-            db.Products.Remove(product);
-            db.SaveChanges();
+            using (var db = new ApplicationDbContext())
+            {
+                Product product = db.Products.Include(p => p.Color)
+                    .Include(o => o.OrderDetails)
+                    .Include(s => s.Size)
+                    .FirstOrDefault(p => p.Id == id);
+
+                if (product != null)
+                {
+                    var colors = db.Colors.Where(c => c.ProductID == product.Id).ToList();
+                    var sizes = db.Sizes.Where(c => c.ProductID == product.Id).ToList();
+                    var orders = db.OrderDetails.Where(c => c.ProductId == product.Id).ToList();
+                    foreach (var color in colors)
+                    {
+                        db.Colors.Remove(color);
+                    }
+                    foreach (var size in sizes)
+                    {
+                        db.Sizes.Remove(size);
+                    }
+                    foreach (var order in orders)
+                    {
+                        db.OrderDetails.Remove(order);
+                    }
+                    db.Products.Remove(product);
+                    db.SaveChanges();
+                }
+            }
+
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

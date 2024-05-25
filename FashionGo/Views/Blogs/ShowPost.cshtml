@@ -51,18 +51,18 @@
 <div class="wrap-content">
     <div class="blog" itemscope="" itemtype="http://schema.org/Blog">
         <div class="page-header clearfix">
-            <h1 class="page-title">@Model.Title</h1>
+            <h1 class="page-title"style="text-transform: none; font-family: Arial; font-weight: 100;">@Model.Title</h1>
         </div>
 
         <!-- Aside -->
         <aside class="article-aside clearfix">
             <dl class="article-info  muted">
-                <dt class="article-info-term">
+                <dt class="article-info-term"style="text-transform: none; font-family: Arial; font-weight: 100;">
                     Chi tiết bài viết
                 </dt>
-                <dd class="createdby hasTooltip" itemprop="author" itemscope="" itemtype="http://schema.org/Person" title="" data-original-title="Đăng bởi:">
-                    <span class="">Bởi: </span>
-                    <span class="brand-primary-color" itemprop="name">FG</span> /
+                <dd class="createdby hasTooltip" itemprop="author" itemscope="" itemtype="http://schema.org/Person" title="" data-original-title="Đăng bởi:"style="text-transform: none; font-family: Arial; font-weight: 100;">
+                    <span class=""style="text-transform: none; font-family: Arial; font-weight: 100;">Bởi: </span>
+                    <span class="brand-primary-color" itemprop="name"style="text-transform: none; font-family: Arial; font-weight: 100;">QF</span> /
                 </dd>
                 <dd class="create text-muted hidden">
                     <time datetime="@Model.createDate" itemprop="dateCreated">
@@ -73,14 +73,14 @@
                         </div>
                     </time>
                 </dd>
-                <dd class="category-name hasTooltip" title="" data-original-title="Chuyên mục: ">
-                    <span class="">Chuyên mục</span>
-                    <a href="@Url.RouteUrl("BlogCategory", new { slug = Model.Category.Slug })" title="@Model.Category.Name"><span itemprop="genre">@Model.Category.Name</span></a>
+                <dd class="category-name hasTooltip" title="" data-original-title="Chuyên mục: "style="text-transform: none; font-family: Arial; font-weight: 100;">
+                    <span class="" style="text-transform: none; font-family: Arial; font-weight: 100;">Chuyên mục</span>
+                    <a href="@Url.RouteUrl("BlogCategory", new { slug = Model.Category.Slug })" title="@Model.Category.Name"><span itemprop="genre" style="text-transform: none; font-family: Arial; font-weight: 100;">@Model.Category.Name</span></a>
                 </dd>
             </dl>
         </aside>
 
-        <section class="article-content clearfix" itemprop="articleBody">
+        <section class="article-content clearfix" itemprop="articleBody" style="text-transform: none; font-family: Arial; font-weight: 100;">
 
             @Html.Raw(Model.Content)
 
@@ -88,12 +88,12 @@
 
         <div class="tags">
             <span class="tag-6 tag-list0" itemprop="keywords">
-                <a href="#" class="label label-info">
-                    Tin tức mới,
+                <a href="#" class="label label-info" style="text-transform: none; font-family: Arial; font-weight: 100;">
+                    Tin tức mới
                 </a>
             </span>
             <span class="tag-8 tag-list1" itemprop="keywords">
-                <a href="#" class="label label-info">
+                <a href="#" class="label label-info" style="text-transform: none; font-family: Arial; font-weight: 100;">
                     Thời trang
                 </a>
             </span>

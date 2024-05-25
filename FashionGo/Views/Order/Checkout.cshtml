@@ -41,14 +41,14 @@
 
     <div class="row outer-bottom-xs">
         <div class="col-md-7">
-            <h3 class="block-title"><i class="fa fa-user" aria-hidden="true"></i> THÔNG TIN NGƯỜI NHẬN</h3>
+            <h3 class="block-title" style="font-family:Arial; font-size:20px;"><i class="fa fa-user" aria-hidden="true"></i> THÔNG TIN NGƯỜI NHẬN</h3>
             <div class="block block-white  block-bordered">
 
                 @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
                 @if (Request.IsAuthenticated == false)
                 {
-                    <p class="alert alert-info">Bạn đã có tài khoản <i class="fa fa-hand-o-right" aria-hidden="true"></i> <a href="#loginform" class="btn-toggle text-danger" data-toggle="toggle" title="đăng nhập tại đây">đăng nhập tại đây. </a>Nếu chưa có tài khoản vui lòng điền thông tin của bạn vào form dưới đây.</p>
+                    <p class="alert alert-info" style="font-family:Arial; font-size:20px;">Bạn đã có tài khoản <i class="fa fa-hand-o-right" aria-hidden="true"></i> <a href="#loginform" class="btn-toggle text-danger" data-toggle="toggle" title="đăng nhập tại đây">đăng nhập tại đây. </a>Nếu chưa có tài khoản vui lòng điền thông tin của bạn vào form dưới đây.</p>
 
                     <div id="loginform" class="alert alert-info" style="display: none;">
                         <a href="#loginform" class="close btn-toggle" data-dismiss="alert" aria-hidden="true">&times;</a>
@@ -75,12 +75,12 @@
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="col-md-8">
-                            <label class="control-label">Họ và tên</label>
+                            <label class="control-label" style="font-family:Arial;">Họ và tên</label>
                             @Html.TextBoxFor(model => model.ReceiveName, new { @class = "form-control", placeholder = "Nhập tên người nhận hàng..." })
                             @Html.ValidationMessageFor(model => model.ReceiveName, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-4">
-                            <label class="control-label">Số điện thoại</label>
+                            <label class="control-label" style="font-family:Arial;">Số điện thoại</label>
                             @Html.TextBoxFor(model => model.ReceivePhone, new { @class = "form-control", placeholder = "Số điện thoại..." })
                             @Html.ValidationMessageFor(model => model.ReceivePhone, "", new { @class = "text-danger" })
                         </div>
@@ -90,7 +90,7 @@
                     {
                         <div class="form-group">
                             <div class="col-md-12">
-                                <label class="control-label" for="Email">Địa chỉ Email</label>
+                                <label class="control-label" for="Email" style="font-family:Arial;">Địa chỉ Email</label>
                                 @Html.TextBox("Email", null, new { @class = "form-control", Type = "email", placeholder = "Địa chỉ email có thực để nhận thông tin đơn hàng..." })
                                 @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
                             </div>
@@ -99,7 +99,7 @@
 
                     <div class="form-group">
                         <div class="col-md-12">
-                            <label class="control-label">Địa chỉ</label>
+                            <label class="control-label" style="font-family:Arial;">Địa chỉ</label>
                             @Html.TextBoxFor(model => model.ReceiveAddress, new { @class = "form-control", placeholder = "Địa chỉ nhận hàng..." })
                             @Html.ValidationMessageFor(model => model.ReceiveAddress, "", new { @class = "text-danger" })
                         </div>
@@ -107,12 +107,12 @@
 
                     <div class="form-group">
                         <div class="col-md-6">
-                            <label class="control-label">Tỉnh/Thành phố</label>
+                            <label class="control-label" style="font-family:Arial;">Tỉnh/Thành phố</label>
                             @Html.DropDownList("ProvinceId", null, "Chọn Tỉnh thành", htmlAttributes: new { @class = "form-control select2" })
                             @Html.ValidationMessage("ProvinceId", "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-6">
-                            <label class="control-label">Quận/Huyện</label>
+                            <label class="control-label" style="font-family:Arial;">Quận/Huyện</label>
                             @Html.DropDownList("DistrictId", null, "Chọn Quận huyện", htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessage("DistrictId", "", new { @class = "text-danger" })
                         </div>
@@ -121,14 +121,16 @@
             </div>
 
             <!-- Chọn nhà vận chuyển -->
-            <h3 class="block-title"><i class="fa fa-truck" aria-hidden="true"></i> CHỌN NHÀ VẬN CHUYỂN</h3>
+            <h3 class="block-title" style="font-family:Arial; font-size:20px;"><i class="fa fa-truck" aria-hidden="true"></i> CHỌN NHÀ VẬN CHUYỂN</h3>
             <div id="transport-table" class="block block-white  block-bordered">
-                <p class="alert alert-info">
+                <p class="alert alert-info"  style="font-family:Arial;">
                     Vui lòng chọn Tỉnh thành > Quận huyện để tìm nhà vận chuyển cho bạn.
                 </p>
+                
             </div>
+            <p style="color:red;"><i class="fa-solid fa-2x fa-truck-fast"></i> Đơn hàng trên 300K sẽ được trừ đi 15k phí vận chuyển</p>
             <div class="container" style="padding-left:0px">
-                <h3 class="block-title"><i class="fa fa-money" aria-hidden="true"></i> Phương thức thanh toán</h3>
+                <h3 class="block-title" style="font-family:Arial; font-size:20px;"><i class="fa fa-money" aria-hidden="true"></i> PHƯƠNG tHỨC THANH TOÁN</h3>
                 <div class="row">
                     <div class="col-md-7">
                         <div class="card">
@@ -136,29 +138,19 @@
                                 <input type="radio" name="PaymentMethodId" value="1" style="margin-left: 8px;" id="momoRadio1" onchange="changeBorderColor(this)">
                                 <img src="https://web.nvnstatic.net/tp/T0441/img/cod.svg?v=3" alt="Momo" style="margin: 25px 15px; height: 20px;">
                                 <div style="padding-left:30%; margin-top:20px">
-                                    <p class="card-text">Thanh toán khi nhận hàng</p>
+                                    <p class="card-text"  style="font-family:Arial;">Thanh toán khi nhận hàng</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7">
-                        <div class="card">
-                            <div class="card-body" id="paymentCard2">
-                                <input type="radio" name="PaymentMethodId" value="2" style="margin-left: 8px;" id="momoRadio2" onchange="changeBorderColor(this)">
-                                <img src="https://web.nvnstatic.net/img/logo_momo.png?v=2" alt="Momo" style="margin: 25px 15px; height: 20px;">
-                                <div style="padding-left: 32%; margin-top:20px">
-                                    <p class="card-text">Thanh toán bằng ví MoMo</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
                     <div class="col-md-7">
                         <div class="card">
                             <div class="card-body" id="paymentCard3">
                                 <input type="radio" name="PaymentMethodId" value="3" style="margin-left: 8px;" id="momoRadio2" onchange="changeBorderColor(this)">
                                 <img src="https://vnpay.vn/assets/images/logo-icon/logo-primary.svg" alt="VNPay" style="margin: 25px 15px; height: 20px;">
                                 <div style="padding-left: 25%; margin-top:20px">
-                                    <p class="card-text">Thanh toán bằng ví VNPAY</p>
+                                    <p class="card-text"  style="font-family:Arial;">Thanh toán bằng ví VNPAY</p>
                                 </div>
                             </div>
                         </div>
@@ -170,16 +162,16 @@
         
 
         <div id="cart-detail" class="col-md-5">
-            <h3 class="block-title"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> THÔNG TIN ĐƠN HÀNG</h3>
+            <h3 class="block-title" style="font-family:Arial; font-size:20px;"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> THÔNG TIN ĐƠN HÀNG</h3>
             <div class="block block-white block-bordered">
                 <table class="table mycart">
                     <thead>
                         <tr>
-                            <th>Sản phẩm</th>
-                            <th class="text-center">Xóa</th>
-                            <th class="text-center">Giá tiền</th>
-                            <th class="text-center">Số lượng</th>
-                            <th class="text-right">Thành tiền</th>
+                            <th  style="font-family:Arial;">Sản phẩm</th>
+                            <th  style="font-family:Arial;" class="text-center">Xóa</th>
+                            <th class="text-center"  style="font-family:Arial;">Giá tiền</th>
+                            <th class="text-center"  style="font-family:Arial;">Số lượng</th>
+                            <th class="text-right"  style="font-family:Arial;">Thành tiền</th>
 
                         </tr>
                     </thead>
@@ -189,7 +181,7 @@
                             <tr class="start-item row-@p.Id" id="row-@p.Id">
                                 <td rowspan="2"><img src="@p.FeaturedImage" style="width: 52px;" class="img-thumbnail" /></td>
                                 <td class="action removeProduct text-center">
-                                    <a href="#" class="removeProduct" data-id="@p.Id" onclick="return deleteFromCart(@p.Id);" title="Xóa khỏi giỏ hàng">
+                                    <a href="#" class="removeProduct" data-id="@p.Id" onclick="return deleteFromCart(@p.Id);" title="Xóa khỏi giỏ hàng"  style="font-family:Arial;">
                                         <i class="removeProduct fa fa-close text-danger"></i>
                                     </a>
                                 </td>
@@ -197,7 +189,7 @@
                                 <td class="text-center">
                                    <input value="@p.Amount" disabled/ style="width:50px;text-align:center">
                                 </td>
-                                <td id="Amount-@p.Id" class="text-right">@Html.FormatValue(p.PriceAfter * p.Amount, "{0:0,0}")<sup>đ</sup></td>
+                                <td id="Amount-@p.Id" class="text-right"  style="font-family:Arial;">@Html.FormatValue(p.PriceAfter * p.Amount, "{0:0,0}")<sup>đ</sup></td>
                             </tr>
                             <tr class="end-item row-@p.Id">
                                 <td colspan="4">@p.Name&nbsp;&nbsp; @p.ColorDefaut/@p.SizeDefaut</td>
@@ -208,7 +200,7 @@
                         <tr>
                             <th id="couponbox" colspan="2" rowspan="4" style="vertical-align: top;">
 
-                                <label class="control-label" for="couponcode">Mã giảm giá (nếu có)</label>
+                                <label class="control-label" for="couponcode"  style="text-transform: none; font-family: Arial; font-weight: 100;">Mã giảm giá (nếu có)</label>
 
                                 <div class="input-group">
 
@@ -223,23 +215,23 @@
                                 <p class="status"></p>
 
                             </th>
-                            <th colspan="2">Tổng đơn hàng:</th>
+                            <th colspan="2"  style="text-transform: none; font-family: Arial; font-weight: 100;">Tổng đơn hàng:</th>
                             <th class="text-right">
                                 <span class="nn-cart-total">@Html.FormatValue(ShoppingCart.Cart.Total, "{0:0,0}")đ</span>
                             </th>
                         </tr>
                         <tr class="text-right">
-                            <td colspan="2">Phí vận chuyển:</td>
-                            <td id="orderTransportCost" class="text-right">@Html.FormatValue(ShoppingCart.Cart.TransportCost, "{0:0,0}")đ</td>
+                            <th colspan="2"  style="text-transform: none; font-family: Arial; font-weight: 100;">Phí vận chuyển:</th>
+                            <th id="orderTransportCost" class="text-right"style="text-transform: none; font-family: Arial; font-weight: 100;">@ShoppingCart.Cart.TransportCost.ToString("N0") đ</th>
                         </tr>
-                        <tr class="text-right">
-                            <td colspan="2">Giảm giá: <span id="discountDescription">@Html.Raw(ShoppingCart.Cart.discountDescription)</span></td>
-                            <td id="orderDiscount" class="text-right">@Html.FormatValue(ShoppingCart.Cart.Discount, "{0:0,0}")đ</td>
+                        <tr class="text-right"  style="font-family:Arial;">
+                            <th colspan="2"style="text-transform: none; font-family: Arial; font-weight: 100;">Giảm giá: <span id="discountDescription">@Html.Raw(ShoppingCart.Cart.discountDescription)</span></th>
+                            <th id="orderDiscount" class="text-right"style="text-transform: none; font-family: Arial; font-weight: 100;">@Html.FormatValue(ShoppingCart.Cart.Discount, "{0:0,0}")đ</th>
                         </tr>
                         <tr style="font-weight: 700; color: orangered">
-                            <th colspan="2" class="text-right">Tổng thành tiền:</th>
+                            <th colspan="2" class="text-right"  style="text-transform: none; font-family: Arial; font-weight: 100;">Tổng thành tiền:</th>
                             <th class="text-right">
-                                <span id="totalOrder">@Html.FormatValue(ShoppingCart.Cart.OrderTotal, "{0:0,0}")đ</span>
+                                <span id="orderDiscount"style="text-transform: none; font-family: Arial; font-weight: 100;">@Html.FormatValue(ShoppingCart.Cart.OrderTotal, "{0:0,0}")đ</span>
                             </th>
                         </tr>
                     </tfoot>
@@ -249,7 +241,7 @@
                     <div class="actions">
                         <button class="btn btn-warning btn-checkout" type="submit">
                             <i class="fa fa-hand-o-right" aria-hidden="true"></i> Đặt Hàng
-                        </button>
+                        </button>                                                                                  
                         <a href="/" class="btn btn-info">
                             <i class="fa fa-cart-plus" aria-hidden="true"></i> Thêm sản phẩm khác
                         </a>

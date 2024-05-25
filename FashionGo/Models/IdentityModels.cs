@@ -1,16 +1,12 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using FashionGo.Migrations;
+using FashionGo.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using FashionGo.Models.Entities;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using FashionGo.Migrations;
-using System.Drawing;
-using System.ComponentModel.DataAnnotations.Schema;
-using System;
-using System.Web.Security;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FashionGo.Models
 {

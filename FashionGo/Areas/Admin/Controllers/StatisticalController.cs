@@ -1,47 +1,65 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using FashionGo.Models;
-using FashionGo.Models.Entities;
-using Microsoft.Ajax.Utilities;
+﻿using FashionGo.Controllers;
+using System;
 using System.Data.Entity;
-using FashionGo.Controllers;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
     public class StatisticalController : BaseController
     {
-        public ActionResult BestSeller()
+        public ActionResult BestSeller(int? sl, string selectedMonthYear)
         {
-            var mostPurchasedProducts = db.OrderDetails
+            if (string.IsNullOrEmpty(selectedMonthYear))
+            {
+                selectedMonthYear = DateTime.Now.ToString("MM-yyyy");
+            }
+            var query = db.OrderDetails.Include(od => od.Order).AsQueryable();
+
+            if (!string.IsNullOrEmpty(selectedMonthYear))
+            {
+                string[] monthYear = selectedMonthYear.Split('-');
+                if (monthYear.Length == 2)
+                {
+                    int month = int.Parse(monthYear[0]);
+                    int year = int.Parse(monthYear[1]);
+
+                    query = query.Where(od => od.Order.OrderDate.Value.Month == month && od.Order.OrderDate.Value.Year == year);
+                }
+            }
+
+            var mostPurchasedProducts = query
                 .GroupBy(od => od.ProductId)
                 .OrderByDescending(g => g.Sum(od => od.Amount))
-                .Take(4)
                 .Select(group => new
                 {
-                     Amount = group.Sum(od => od.Amount),
-                     Product = group.FirstOrDefault().Product
-                })
-                .ToArray();
+                    Amount = group.Sum(od => od.Amount),
+                    Product = group.FirstOrDefault().Product
+                });
 
-            var quantities = mostPurchasedProducts.Select(group => group.Amount).ToArray();
-            var productNames = mostPurchasedProducts.Select(group => group.Product.Name).ToArray();
+            if (sl.HasValue && sl > 0)
+            {
+                mostPurchasedProducts = mostPurchasedProducts.Take(sl.Value);
+            }
+            else
+            {
+                mostPurchasedProducts = mostPurchasedProducts.Take(4);
+            }
+            var bestSellers = mostPurchasedProducts.ToArray();
+            var quantities = bestSellers.Select(group => group.Amount).ToArray();
+            var productNames = bestSellers.Select(group => group.Product.Name).ToArray();
 
+            ViewBag.Sort = selectedMonthYear;
+            ViewBag.SoLuong = sl;
             ViewBag.DataA = quantities;
             ViewBag.DataB = productNames;
-            return View(ViewBag);
+            return View();
         }
+
 
         public ActionResult Revenue()
         {
-            
+
             var currentYear = DateTime.Now.Year;
             var monthlyRevenue = db.Orders
            .Where(o => o.OrderDate.Value.Year == currentYear)
@@ -84,7 +102,7 @@ namespace FashionGo.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Revenue(int? year)
         {
-            year = year == null ? DateTime.Now.Year : year ;
+            year = year == null ? DateTime.Now.Year : year;
             var monthlyRevenue = db.Orders
            .Where(o => o.OrderDate.Value.Year == year)
            .GroupBy(o => new { Year = o.OrderDate.Value.Year, Month = o.OrderDate.Value.Month })

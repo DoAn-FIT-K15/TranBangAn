@@ -15,7 +15,7 @@ namespace FashionGo.Models.Entities
 
         [Column(TypeName = "ntext")]
         [Display(Name = "Mô tả")]
-        public string Description  { get; set; }
+        public string Description { get; set; }
 
         public bool? Actived { get; set; }
 

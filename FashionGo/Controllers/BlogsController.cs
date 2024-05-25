@@ -1,15 +1,12 @@
 ﻿using PagedList;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FashionGo.Controllers
 {
     public class BlogsController : BaseController
     {
-        
+
         // GET: Blogs
         public ActionResult Index(int? page)
         {
@@ -18,7 +15,7 @@ namespace FashionGo.Controllers
             var model = db.Posts.Where(p => p.Active == true).OrderByDescending(p => p.createDate).ToList();
             return View(model.ToPagedList(pageNumber, pageSize));
         }
-        
+
 
         // GET: Category
         public ActionResult Category(string Slug, int? page)
@@ -51,7 +48,7 @@ namespace FashionGo.Controllers
 
             return View(Post);
         }
-  
+
         //get siderbar
         public ActionResult _Sidebar()
         {

@@ -28,23 +28,61 @@
     const ctx = document.getElementById('lineChart');
 
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
         datasets: [{
+
         label: 'Vnd',
         data: @Html.Raw(Json.Encode(data)),
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+            fill: false,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)',
+                'rgb(201, 203, 207)',
+                'rgb(201, 203, 207)',
+                'rgb(201, 203, 207)',
+                'rgb(201, 203, 207)',
+                'rgb(201, 203, 207)'
+
+
+
+
+
+            ],
+       
         }]
         },
-        options:{
+        options: {
+            indexAxis: 'y', // Thêm thuộc tính này để chuyển trục
+            scales: {
+                x: {
+                    beginAtZero: true // Đảm bảo trục x bắt đầu từ 0
+                }
+            },
             transitions: {
                 show: {
                     animations: {
-                        x: {
-                            from: 0
-                        },
+                       
                         y: {
                             from: 0
                         }
@@ -52,10 +90,8 @@
                 },
                 hide: {
                     animations: {
+                       
                         x: {
-                            to: 0
-                        },
-                        y: {
                             to: 0
                         }
                     }

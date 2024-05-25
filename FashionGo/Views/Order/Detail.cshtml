@@ -10,91 +10,91 @@
     <div class="row">
         <div class="col-md-4">
             <div class="page-header clearfix">
-                <h1 class="page-title">Thông tin khách hàng</h1>
+                <h1 class="page-title"style="text-transform: none; font-family: Arial; font-weight: 100;">Thông tin khách hàng</h1>
             </div>
             
             <table class="table table-hover">
                 <tr>
-                    <td>Tên Người nhận: @Model.ReceiveName</td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Tên Người nhận: @Model.ReceiveName</td>
                 </tr>
                 <tr>
-                    <td>Số điện thoại: @Model.ReceivePhone</td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Số điện thoại: @Model.ReceivePhone</td>
                 </tr>
                 <tr>
-                    <td>Địa chỉ nhận: @Model.ReceiveAddress</td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Địa chỉ nhận: @Model.ReceiveAddress</td>
                 </tr>
                 <tr>
-                    <td>Ngày đặt hàng: @Html.FormatValue(Model.OrderDate, "{0:dd/MM/yyyy}")</td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Ngày đặt hàng: @Html.FormatValue(Model.OrderDate, "{0:dd/MM/yyyy}")</td>
                 </tr>
                 <tr>
-                    <td>Tổng tiền: @Html.FormatValue(Model.TotalOrder, "{0:0,0}")<sup>đ</sup></td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Tổng tiền: @Html.FormatValue(Model.TotalOrder, "{0:0,0}")<sup>đ</sup></td>
                 </tr>
                 <tr>
-                    <td>Ghi chú: @Model.Note</td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Ghi chú: @Model.Note</td>
                 </tr>
                 <tr>
-                    <td>Nhà vận chuyển: @Model.Transport.Transporter.Name</td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Nhà vận chuyển: @Model.Transport.Transporter.Name</td>
                 </tr>
                 <tr>
-                    <td>Thời gian vận chuyển (dự tính): @Model.Transport.TransportTime (ngày)</td>
+                    <td style="text-transform: none; font-family: Arial; font-weight: 100;">Thời gian vận chuyển (dự tính): @Model.Transport.TransportTime (ngày)</td>
                 </tr>
             </table>
             <hr />
             <p class="left-right">
-                <a href="/" class="btn btn-success">
-                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Về trang chủ
+                <a href="/" class="btn btn-success" style="text-transform: none; font-family: Arial; font-weight: 100;">
+                    <i class="fa fa-arrow-left" aria-hidden="true" ></i> Về trang chủ
                 </a>
             </p>
         </div>
         <div id="cart-detail" class="col-md-8">
             <div class="page-header clearfix">
-                <h1 class="page-title">Chi tiết đơn hàng</h1>
+                <h1 class="page-title" style="text-transform: none; font-family: Arial; font-weight: 100;">Chi tiết đơn hàng</h1>
             </div>
             
             <table class="table mycart">
                 <thead>
                     <tr>
-                        <th colspan="2">Sản phẩm</th>
-                        <th>Size</th>
-                        <th>Màu</th>
-                        <th>Đơn giá</th>
-                        <th>Số lượng</th>
-                        <th>Thành tiền</th>
+                        <th colspan="2" style="text-transform: none; font-family: Arial; font-weight: 100;">Sản phẩm</th>
+                        <th style="text-transform: none; font-family: Arial; font-weight: 100;">Size</th>
+                        <th style="text-transform: none; font-family: Arial; font-weight: 100;">Màu</th>
+                        <th style="text-transform: none; font-family: Arial; font-weight: 100;">Đơn giá</th>
+                        <th style="text-transform: none; font-family: Arial; font-weight: 100;">Số lượng</th>
+                        <th style="text-transform: none; font-family: Arial; font-weight: 100;">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.OrderDetails)
                     {
                         <tr>
-                            <td><img src="@item.Product.FeaturedImage" style="width: 52px;" class="img-thumbnail" /></td>
-                            <td>@item.Product.Name</td>
-                            <td>@item.Size</td>
-                            <td>@item.Color</td>
-                            <td>@Html.FormatValue(item.PriceAfter, "{0:0,0}")<sup>đ</sup></td>
-                            <td>@item.Amount</td>
-                            <td>@Html.FormatValue(item.PriceAfter * item.Amount, "{0:0,0}")<sup>đ</sup></td>
+                            <td ><img src="@item.Product.FeaturedImage" style="width: 52px;" class="img-thumbnail" /></td>
+                            <td style="text-transform: none; font-family: Arial; font-weight: 100;">@item.Product.Name</td>
+                            <td style="text-transform: none; font-family: Arial; font-weight: 100;">@item.Size</td>
+                            <td style="text-transform: none; font-family: Arial; font-weight: 100;">@item.Color</td>
+                            <td style="text-transform: none; font-family: Arial; font-weight: 100;">@Html.FormatValue(item.PriceAfter, "{0:0,0}")<sup>đ</sup></td>
+                            <td style="text-transform: none; font-family: Arial; font-weight: 100;">@item.Amount</td>
+                            <td style="text-transform: none; font-family: Arial; font-weight: 100;">@Html.FormatValue(item.PriceAfter * item.Amount, "{0:0,0}")<sup>đ</sup></td>
                         </tr>
                     }
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="4" class="text-right">Tổng giá sp:</th>
+                        <th colspan="4" class="text-right" style="text-transform: none; font-family: Arial; font-weight: 100;">Tổng giá sp:</th>
                         <th class="text-right">
-                            <span class="nn-cart-total">@Html.FormatValue(Model.TotalAmount, "{0:0,0}")đ</span>
+                            <span class="nn-cart-total" style="text-transform: none; font-family: Arial; font-weight: 100;">@Html.FormatValue(Model.TotalAmount, "{0:0,0}")đ</span>
                         </th>
                     </tr>
                     <tr class="text-right">
-                        <td colspan="4">Phí vận chuyển:</td>
-                        <td id="orderTransportCost" class="text-right">@Html.FormatValue(Model.Transport.Cost, "{0:0,0}")đ</td>
+                        <td colspan="4" style="text-transform: none; font-family: Arial; font-weight: 100;">Phí vận chuyển:</td>
+                        <td id="orderTransportCost" class="text-right" style="text-transform: none; font-family: Arial; font-weight: 100;">@Html.FormatValue(Model.Transport.Cost, "{0:0,0}")đ</td>
                     </tr>
                     <tr class="text-right">
-                        <td colspan="4">Giảm giá:</td>
-                        <td id="orderDiscount" class="text-right">-@Html.FormatValue(Model.Discount, "{0:0,0}")đ</td>
+                        <td colspan="4" style="text-transform: none; font-family: Arial; font-weight: 100;">Giảm giá:</td>
+                        <td id="orderDiscount" class="text-right" style="text-transform: none; font-family: Arial; font-weight: 100;">-@Html.FormatValue(Model.Discount, "{0:0,0}")đ</td>
                     </tr>
                     <tr style="font-weight: 700; color: orangered">
-                        <td colspan="4" class="text-right">Tổng đơn hàng:</td>
+                        <td colspan="4" class="text-right" style="text-transform: none; font-family: Arial; font-weight: 100;">Tổng đơn hàng:</td>
                         <th class="text-right">
-                            <span id="totalOrder"> @Html.FormatValue(Model.TotalOrder, "{0:0,0}")đ</span>
+                            <span id="totalOrder" style="text-transform: none; font-family: Arial; font-weight: 100;"> @Html.FormatValue(Model.TotalOrder, "{0:0,0}")đ</span>
                         </th>
                     </tr>
                 </tfoot>

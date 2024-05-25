@@ -1,17 +1,17 @@
-﻿using FashionGo.Models.Entities;
+﻿using Commons.Libs;
 using FashionGo.Models;
+using FashionGo.Models.Entities;
+using FashionGo.Others;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using MoMo;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Commons.Libs;
-using System.Configuration;
-using Newtonsoft.Json.Linq;
-using MoMo;
-using FashionGo.Others;
-using System.Threading.Tasks;
 
 namespace FashionGo.Controllers
 {
@@ -33,11 +33,11 @@ namespace FashionGo.Controllers
                 Warning(string.Format("<b><h5>{0}</h4></b>", "Bạn chưa có sản phẩm nào trong giỏ hàng, Vui lòng chọn sản phẩm trước khi thanh toán."), true);
                 return RedirectToAction("Index", "Home");
             }
-            
+
             ViewBag.ProvinceId = new SelectList(db.Provinces.Select(x => new { ProvinceId = x.ProvinceId, NameFull = x.Type + " " + x.Name }), "ProvinceId", "NameFull");
             ViewBag.DistrictId = new SelectList(db.Districts.Where(d => d.ProvinceId == "-1").Select(x => new { DistrictId = x.DistrictId, NameFull = x.Type + " " + x.Name }), "DistrictId", "NameFull");
 
-           
+
             var model = new Order();
 
             if (ModelState.IsValid && Request.IsAuthenticated)
@@ -47,12 +47,12 @@ namespace FashionGo.Controllers
                 model.ReceiveName = user.FullName;
                 model.ReceivePhone = user.PhoneNumber;
                 model.ReceiveAddress = user.Address;
-                
+
                 ViewBag.Email = user.UserName;
 
-                if (user.District != null)//second
+                if (user.District != null)//second D
                 {
-                    ViewBag.ProvinceId = new SelectList(db.Provinces.Select(x => new { ProvinceId = x.ProvinceId, NameFull = x.Type + " " +  x.Name }), "ProvinceId", "NameFull", user.District.ProvinceId);
+                    ViewBag.ProvinceId = new SelectList(db.Provinces.Select(x => new { ProvinceId = x.ProvinceId, NameFull = x.Type + " " + x.Name }), "ProvinceId", "NameFull", user.District.ProvinceId);
                     ViewBag.DistrictId = new SelectList(db.Districts.Where(d => d.ProvinceId == user.District.ProvinceId).Select(x => new { DistrictId = x.DistrictId, NameFull = x.Type + " " + x.Name }), "DistrictId", "NameFull", user.DistrictId);
                 }
             }
@@ -93,7 +93,7 @@ namespace FashionGo.Controllers
                 Warning(string.Format("<h5>{0}</h4>", "Bạn chưa nhập địa chỉ nhận hàng nhận đơn hàng!"), true);
                 return RedirectToAction("Checkout", "Order");
             }
-            
+
 
             //Check quận huyện
             if (String.IsNullOrEmpty(form["DistrictId"]))
@@ -108,8 +108,8 @@ namespace FashionGo.Controllers
                 Warning(string.Format("<h5>{0}</h4>", "Bạn chưa chọn phương thức thanh toán!"), true);
                 return RedirectToAction("Checkout", "Order");
             }
-            
-                int paymentMethodId = int.Parse(form["PaymentMethodId"]);
+
+            int paymentMethodId = int.Parse(form["PaymentMethodId"]);
 
 
 
@@ -279,11 +279,11 @@ namespace FashionGo.Controllers
                 }
 
                 SaveData(model, form);
-            }   
+            }
             return View(model);
         }
 
-        public ActionResult SaveData(Order model , FormCollection form)
+        public ActionResult SaveData(Order model, FormCollection form)
         {
             var sms = new SpeedSMSAPI();
             //Update order info 
@@ -296,9 +296,24 @@ namespace FashionGo.Controllers
             model.OrderDate = DateTime.Now;
             model.StatusId = model.StatusId != null ? model.StatusId : 1;
 
+            var user = db.Users.Find(model.UserId);
+            var provinceId = form["ProvinceId"];
+            var districtId = form["DistrictId"];
+            if (user != null)
+            {
+                user.Address = model.ReceiveAddress;
+                user.DistrictId = districtId.ToString();
+            }
+            else { return View(); }
             db.Orders.Add(model);
             try
             {
+                var productNames = new System.Collections.Generic.List<string>();
+                var productColors = new System.Collections.Generic.List<string>();
+                var productSizes = new System.Collections.Generic.List<string>();
+                var productAmount = new System.Collections.Generic.List<int?>();
+
+
                 foreach (var p in cart.Items)
                 {
                     var d = new OrderDetail
@@ -312,9 +327,19 @@ namespace FashionGo.Controllers
                         Color = p.ColorDefaut
 
                     };
-                    //ViewBag.ProductDetail = cart.Items;
+                    var product = db.Products.SingleOrDefault(prod => prod.Id == p.Id);
+                    if (product != null)
+                    {
+                        product.Amount -= p.Amount;
+                        productNames.Add(product.Name);
+                        productColors.Add(d.Color);
+                        productSizes.Add(d.Size);
+                        productAmount.Add(d.Amount);
+
+                    }
                     db.OrderDetails.Add(d);
                 }
+               
                 if (db.SaveChanges() > 0)
                 {
                     var data = db.Users.Find(model.UserId);
@@ -324,7 +349,7 @@ namespace FashionGo.Controllers
                     var customerMsg = "QFashion: Dat hang thanh cong don hang:#" + model.Id + ", Voi so tien: " + string.Format("{0:0,0}vnđ", model.TotalAmount);
                     var saleSMS = "QFashion: Don hang moi #" + model.Id + " tu KH: " + model.ReceiveName + " - " + model.ReceivePhone;
                     string response = sms.sendSMS(model.ReceivePhone, customerMsg, 2, "");
-                    response = sms.sendSMS("0334460843", saleSMS, 2, "");
+                    response = sms.sendSMS("0375021901", saleSMS, 2, "");
 
 
                     //string accountSid = Convert.ToString(ConfigurationManager.AppSettings["config:AccountSID"]);
@@ -339,15 +364,22 @@ namespace FashionGo.Controllers
                     //);
 
                     //Gửi tin nhắn tài khoản cho người dùng.
-                    var subject = "Đơn Hàng Tại QFASHION";
-                    var msg = "Xin chào, " + model.ReceiveName;
-                    msg += "<br>Chúng tôi xin gửi lời cảm ơn chân thành vì đã lựa chọn sản phẩm/dịch vụ của chúng tôi. ";
-                    msg += "<br>Đơn Hàng Đã Được Đặt";
-                    msg += "<br>Mã Đơn Hàng :#" + model.Id + ", Với Số Tiền: " + string.Format("{0:0,0}vnđ", model.TotalOrder);
-                    msg += "<br>Chúng tôi sẽ tiến hành xử lý đơn hàng của bạn và sẽ thông báo cho bạn khi đơn hàng được vận chuyển";
+                    var subject = "[QFASHION]THÔNG BÁO XÁC NHẬN ĐƠN HÀNG ĐƯỢC ĐẶT THÀNH CÔNG!!!";
+                    var msg = "Xin chào, " + model.ReceiveName + "<3";
+                    msg += "<br>";
+                    msg += "<br>Thông tin đơn hàng đã đặt";
+                    msg += "<br>Mã đơn hàng:QF" + model.Id;
+                    msg += "<br>Tên sản phẩm:" + string.Join(" ,", productNames) + " Màu: " + string.Join(" ", productColors) + " Size " + string.Join(" ", productSizes) + " Số lượng: " + string.Join(" ", productAmount);
+                    
+
+                    msg += "<br>Địa chỉ nhận:" + model.ReceiveAddress;
+                    msg += "<br>Ngày đặt hàng:" + model.OrderDate;
+                    msg += "<br>Tổng tiền: " + string.Format("{0:0,0}vnđ", model.TotalOrder);
+                    msg += "<br>";
+                    msg += "<br>Chúng tôi sẽ tiến hành xử lý đơn hàng và sẽ thông báo qua số điện thoại" + model.ReceivePhone;
                     msg += "<br>Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu đặc biệt nào, xin vui lòng liên hệ với chúng tôi qua địa chỉ email <a href='mailto:ahan4960@gmail.com'>ahan4960@gmail.com</a> hoặc số điện thoại <a href='tel:0375021901'>0375021901</a>.";
                     msg += "<br>Chúc bạn một ngày tốt lành.";
-                    msg += "<p></p><p></p>-BQT QFASHION!.</p>";
+                    msg += "<p></p><p></p>-QFASHION-</p>";
 
                     XMail.Send(data.Email, subject, msg);
                 }
@@ -358,15 +390,16 @@ namespace FashionGo.Controllers
                 Danger(string.Format("-{0}<br>", ex.Message), true);
                 ModelState.AddModelError("", ex.InnerException);
             }
-            
-            var provinceId = form["ProvinceId"];
+
             ViewBag.ProvinceId = new SelectList(db.Provinces.Select(x => new { ProvinceId = x.ProvinceId, NameFull = x.Type + " " + x.Name }), "ProvinceId", "NameFull", provinceId);
             ViewBag.DistrictId = new SelectList(db.Districts.Where(d => d.ProvinceId == provinceId).Select(x => new { DistrictId = x.DistrictId, NameFull = x.Type + " " + x.Name }), "DistrictId", "NameFull", form["DistrictId"].ToString());
             return View();
         }
 
 
+#pragma warning disable CS1998 // This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
         public async Task<ActionResult> PaymentConfirm()
+#pragma warning restore CS1998 // This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
         {
             if (Request.QueryString.Count > 0)
             {
@@ -400,7 +433,7 @@ namespace FashionGo.Controllers
                         var models = TempData["model"] as Order;
                         var forms = TempData["form"] as FormCollection;
                         models.StatusId = 8;
-                        
+
                         SaveData(models, forms);
                     }
                     else
@@ -431,7 +464,9 @@ namespace FashionGo.Controllers
         public void SavePayment()
         {
             //cập nhật dữ liệu vào db
+#pragma warning disable CS0219 // The variable 'a' is assigned but its value is never used
             String a = "";
+#pragma warning restore CS0219 // The variable 'a' is assigned but its value is never used
         }
 
 
@@ -443,13 +478,26 @@ namespace FashionGo.Controllers
         }
         public ActionResult Delete(int id)
         {
-            var orderDetails = db.OrderDetails.Where(x=>x.OrderId == id);
+            var orderDetails = db.OrderDetails.Where(x => x.OrderId == id).ToList();
+            foreach (var detail in orderDetails)
+            {
+                var product = db.Products.Find(detail.ProductId);
+                if (product != null)
+                {
+                    product.Amount += detail.Amount;
+                }
+            }
+            db.SaveChanges();
             db.OrderDetails.RemoveRange(orderDetails);
             db.SaveChanges();
 
             var order = db.Orders.Find(id);
-            db.Orders.Remove(order);
+            if (order != null)
+            {
+                db.Orders.Remove(order);
+            }
             db.SaveChanges();
+
             return RedirectToAction("OderPurchased");
         }
         public ActionResult List()
@@ -459,7 +507,7 @@ namespace FashionGo.Controllers
             return View(orders);
         }
 
-        
+
         public bool UpdateTransport(int transportId)
         {
             var transport = db.Transports.Find(transportId);
@@ -467,14 +515,14 @@ namespace FashionGo.Controllers
             {
                 return false;
             }
-            
+
             //Update cart Transport
             cart.UpdateTransport(transport);
 
             return true;
         }
 
-        
+
         public bool UpdateCoupon(string code)
         {
             var coupon = db.Coupons.Find(code);
@@ -488,7 +536,7 @@ namespace FashionGo.Controllers
             return true;
         }
 
-        
+
         public ActionResult AjaxGetTransport(string districtId)
         {
             var transports = db.Transports.Where(t => t.DistrictId == districtId).ToList();
@@ -500,7 +548,7 @@ namespace FashionGo.Controllers
         }
 
         [HttpPost]
-        
+
         public ActionResult AjaxUpdateCoupon(string couponCode)
         {
             var info = new
@@ -521,7 +569,7 @@ namespace FashionGo.Controllers
             return Json(info, JsonRequestBehavior.AllowGet);
         }
 
-        
+
         public ActionResult getOrderInfo()
         {
             var info = new

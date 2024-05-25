@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FashionGo.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FashionGo.Models.Entities;
-using FashionGo.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -30,7 +27,7 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdentityRole applicationUser =  db.Roles.Find(id);
+            IdentityRole applicationUser = db.Roles.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -52,9 +49,9 @@ namespace FashionGo.Areas.Admin.Controllers
         public ActionResult Create(IdentityRole applicationUser)
         {
             applicationUser.Id = Guid.NewGuid().ToString();
-                 db.Roles.Add(applicationUser);
-                    db.SaveChanges();
-                return RedirectToAction("Index");         
+            db.Roles.Add(applicationUser);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/Users/Edit/5
@@ -64,12 +61,12 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IdentityRole applicationUser =  db.Roles.Find(id);
+            IdentityRole applicationUser = db.Roles.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-           return View(applicationUser);
+            return View(applicationUser);
         }
 
         // POST: Admin/Users/Edit/5
@@ -83,7 +80,7 @@ namespace FashionGo.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(applicationUser).State = EntityState.Modified;
-                db.SaveChanges();   
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -99,7 +96,7 @@ namespace FashionGo.Areas.Admin.Controllers
             }
             var listUserRole = db.IdentityUserRoles.ToList();
             var roles = listUserRole.Where(x => x.RoleId == id).ToList();
-            if(roles.Count > 0)
+            if (roles.Count > 0)
             {
                 TempData["message"] = "Cannot delete this role!";
                 return RedirectToAction("Index");

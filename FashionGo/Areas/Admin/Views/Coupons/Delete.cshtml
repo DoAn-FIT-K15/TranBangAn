@@ -1,13 +1,13 @@
 ﻿@model FashionGo.Models.Entities.Coupon
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Xóa khuyến mãi";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+
+<h3>Bạn có muốn xóa khuyến mãi này???</h3>
 <div>
     <h4>Coupon</h4>
     <hr />
@@ -65,9 +65,9 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<div class="form-actions no-color">
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn  btn-default" })
+</div>
     }
 </div>

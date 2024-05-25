@@ -142,31 +142,27 @@ function addToQuote(productId, quantity, site, lang)
 }
 
 // Function to add a product to the wish list
-function addToWishList(e , productId, site, lang)
-{
-	console.log('addToWishList',e)
-	if (e.innerHtml == '<i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span>')
-		e.innerHtml = '<i class="fa fa-heart red"></i><span class="text-hide">Bỏ Yêu thích</span>'
-	else
-		e.innerHtml = '<i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span>'
-	lang = typeof(lang) != 'undefined' ? lang : '';
+function addToWishList(itemId) {
+	var heartIcon = document.getElementById("icon_heart");
+	if (heartIcon.style.color === "red") {
+		heartIcon.style.color = ""; // Xóa thuộc tính màu để trở về màu mặc định
+	} else {
+		heartIcon.style.color = "red";
+	}
+
 	jQuery.ajax({
-		url: site + 'index.php?option=com_eshop&task=wishlist.add' + lang,
-		type: 'post',
-		data: 'product_id=' + productId,
-		dataType: 'json',
-		success: function(json) {
-			if (json['success']) {
-				jQuery.colorbox({
-					overlayClose: true,
-					opacity: 0.5,
-					href: false,
-					html: json['success']['message']
-				});
-			}
+		type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
+		url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
+		data: { id: itemId },
+		success: function (response) {
+			// Xử lý kết quả trả về sau khi gọi controller thành công
+		},
+		error: function () {
+			// Xử lý lỗi (nếu có)
 		}
 	});
 }
+
 
 //Function to remove a product from the wish list
 function removeFromWishlist(productId, site, lang)

@@ -37,7 +37,7 @@ public class MvcHelpers
     {
         List<string> controllerNames = new List<string>();
         GetSubClasses<Controller>().ForEach(
-            type => controllerNames.Add(type.Name.Replace("Controller","")));
+            type => controllerNames.Add(type.Name.Replace("Controller", "")));
         return controllerNames;
     }
 

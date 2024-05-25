@@ -1,12 +1,12 @@
-﻿using System;
+﻿using FashionGo.Models;
+using FashionGo.Models.Entities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using FashionGo.Models;
 
 namespace FashionGo.Controllers
 {
@@ -15,7 +15,7 @@ namespace FashionGo.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        public ApplicationDbContext db = new ApplicationDbContext();
         public ManageController()
         {
         }
@@ -32,9 +32,9 @@ namespace FashionGo.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -65,6 +65,23 @@ namespace FashionGo.Controllers
 
             var userId = User.Identity.GetUserId();
             var data = await UserManager.FindByIdAsync(userId);
+            var order = new Order();
+
+            if (ModelState.IsValid && Request.IsAuthenticated)
+            {
+                order.UserId = User.Identity.GetUserId();
+                var users = UserManager.FindById(order.UserId);
+                order.ReceiveName = users.FullName;
+                order.ReceivePhone = users.PhoneNumber;
+                order.ReceiveAddress = users.Address;
+
+                ViewBag.Email = users.UserName;
+                if (users.District != null)//second
+                {
+                    ViewBag.ProvinceId = new SelectList(db.Provinces.Select(x => new { ProvinceId = x.ProvinceId, NameFull = x.Type + " " + x.Name }), "ProvinceId", "NameFull", users.District.ProvinceId);
+                    ViewBag.DistrictId = new SelectList(db.Districts.Where(d => d.ProvinceId == users.District.ProvinceId).Select(x => new { DistrictId = x.DistrictId, NameFull = x.Type + " " + x.Name }), "DistrictId", "NameFull", users.DistrictId);
+                }
+            }
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -72,13 +89,28 @@ namespace FashionGo.Controllers
                 FullName = data.FullName,
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                Order = order
             };
             return View(model);
         }
+        //fix cap nhat
+        public ActionResult UpdateAccount(IndexViewModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
 
-        [HttpPost]
+            user.FullName = model.Order.ReceiveName;
+            user.PhoneNumber = model.Order.ReceivePhone;
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+#pragma warning disable CS1998 // This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
         public async Task<ActionResult> Logout()
+#pragma warning restore CS1998 // This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie); // Đăng xuất người dùng
             return RedirectToAction("Index", "Home"); // Chuyển hướng sau khi đăng xuất
@@ -265,7 +297,7 @@ namespace FashionGo.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return Redirect("Index?Message="+ ManageMessageId.ChangePasswordSuccess);
+                return Redirect("Index?Message=" + ManageMessageId.ChangePasswordSuccess);
             }
             AddErrors(result);
             return View(model);
@@ -360,7 +392,7 @@ namespace FashionGo.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -411,6 +443,6 @@ namespace FashionGo.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

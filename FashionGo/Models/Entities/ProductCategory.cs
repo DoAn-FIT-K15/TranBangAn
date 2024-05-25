@@ -1,10 +1,8 @@
 ﻿namespace FashionGo.Models.Entities
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("ProductCategory")]
     public partial class ProductCategory
@@ -36,7 +34,7 @@
         [StringLength(250)]
         public string Banner { get; set; }
 
-        public int? DisplayOrder  { get; set; }
+        public int? DisplayOrder { get; set; }
 
         public int? ParentId { get; set; }
 
@@ -44,10 +42,10 @@
         public string MetaTitle { get; set; }
 
         [Display(Name = "Mô tả")]
-        public string MetaDescription  { get; set; }
+        public string MetaDescription { get; set; }
 
         [Display(Name = "Từ khóa")]
-        public string MetaKeyword  { get; set; }
+        public string MetaKeyword { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductCategory> SubCategories { get; set; }

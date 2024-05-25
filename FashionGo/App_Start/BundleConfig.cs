@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace FashionGo
 {
@@ -71,7 +70,7 @@ namespace FashionGo
                     "~/Assets/Frontend/components/com_eshop/assets/css/labels.css",
                     "~/Assets/Frontend/components/com_eshop/themes/fashionpro/css/style.css",
                     "~/Assets/Frontend/templates/eshop_fashion_pro/css/mod_eshop_producttabs.css",
-                    
+
                     "~/Assets/Frontend/modules/mod_os_testimonial/asset/css/style.css",
                     "~/Assets/Frontend/components/font-awesome/css/font-awesome.css",
                     "~/Assets/Frontend/modules/mod_os_testimonial/asset/vendor/bootstrap/css/testimonial.css",

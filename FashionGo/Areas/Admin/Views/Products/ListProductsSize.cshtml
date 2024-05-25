@@ -52,8 +52,8 @@
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>*@
                         <td>
-                            @Html.ActionLink("Edit", "UpdatePropertiesSize", new { id = item.SizeID }) |
-                            @Html.ActionLink("Delete", "DeleteProductsSize", new { id = item.SizeID })
+                            @Html.ActionLink("Sửa", "UpdatePropertiesSize", new { id = item.SizeID }, new { @class = "btn btn-xs btn-primary" }) |
+                            @Html.ActionLink("Xóa", "DeleteProductsSize", new { id = item.SizeID },new { @class = "btn btn-xs btn-danger" })
                         </td>
                     </tr>
                 }

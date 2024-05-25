@@ -1,10 +1,8 @@
 namespace FashionGo.Models.Entities
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Manufact")]
     public partial class Manufact
@@ -18,7 +16,7 @@ namespace FashionGo.Models.Entities
         public int Id { get; set; }
 
         [StringLength(250)]
-        [Display(Name ="Nhà Sx")]
+        [Display(Name = "Nhà Sx")]
         public string Name { get; set; }
 
         [StringLength(250)]

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FashionGo.Models.Entities;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FashionGo.Models;
-using FashionGo.Models.Entities;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -16,7 +12,7 @@ namespace FashionGo.Areas.Admin.Controllers
         // GET: Admin/Categories
         public ActionResult Index()
         {
-            var categories = db.Categories.OrderBy(c=>c.DisplayOrder).Include(c => c.ParentCategory);
+            var categories = db.Categories.OrderBy(c => c.DisplayOrder).Include(c => c.ParentCategory);
             return View(categories.ToList());
         }
 

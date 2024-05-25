@@ -1,15 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using FashionGo.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using FashionGo.Models;
-using FashionGo;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace FashionGo.Controllers
 {
@@ -23,7 +19,7 @@ namespace FashionGo.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +31,9 @@ namespace FashionGo.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -102,7 +98,7 @@ namespace FashionGo.Controllers
         // GET: /Account/Login
         [AllowAnonymous]
         [HttpPost]
-        public async Task<JsonResult> AjaxLogin(string Email, string Password, bool RememberMe  = false)
+        public async Task<JsonResult> AjaxLogin(string Email, string Password, bool RememberMe = false)
         {
             var result = await SignInManager.PasswordSignInAsync(Email, Password, RememberMe, shouldLockout: false);
             var info = new { Status = 0, Message = "" };
@@ -121,7 +117,7 @@ namespace FashionGo.Controllers
                     info = new { Status = 0, Message = "Email hoặc mật khẩu không đúng." };
                     break;
             }
-            
+
             return Json(info, JsonRequestBehavior.AllowGet);
         }
 
@@ -154,7 +150,7 @@ namespace FashionGo.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -186,17 +182,15 @@ namespace FashionGo.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                if (user.Email == model.Email)
+                {
+                    ModelState.AddModelError("Email", "Email đã tồn tại");
+                    return View(model);
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     Success("Chúc mừng bạn đã đăng ký tài khoản QFashion thành công!");
 
                     return RedirectToAction("Index", "Home");
@@ -314,7 +308,7 @@ namespace FashionGo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
-            
+
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
@@ -384,7 +378,7 @@ namespace FashionGo.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-        
+
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
@@ -517,7 +511,7 @@ namespace FashionGo.Controllers
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
-        } 
+        }
         #endregion
     }
 }

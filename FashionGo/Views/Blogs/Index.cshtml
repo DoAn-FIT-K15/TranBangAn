@@ -39,12 +39,12 @@
                             <!-- Aside -->
                             <aside class="article-aside clearfix">
                                 <dl class="article-info  muted">
-                                    <dt class="article-info-term">
+                                    <dt class="article-info-term" style="font-family:Arial;">
                                         Chi tiết bài viết
                                     </dt>
                                     <dd class="createdby hasTooltip" itemprop="author" itemscope="" itemtype="http://schema.org/Person" title="" data-original-title="Đăng bởi:">
                                         <span class="">Bởi: </span>
-                                        <span class="brand-primary-color" itemprop="name">FG</span> /
+                                        <span class="brand-primary-color" itemprop="name">QF</span> /
                                     </dd>
                                     <dd class="create text-muted hidden">
                                         <time datetime="@m.createDate" itemprop="dateCreated">
@@ -56,8 +56,8 @@
                                         </time>
                                     </dd>
                                     <dd class="category-name hasTooltip" title="" data-original-title="Chuyên mục: ">
-                                        <span class="">Chuyên mục</span>
-                                        <a href="@Url.RouteUrl("BlogCategory", new { slug = m.Category.Slug })" title="@m.Category.Name"><span itemprop="genre">@m.Category.Name</span></a>
+                                        <span class=""style="text-transform: none; font-family: Arial; font-weight: 100;text-align:center;">Chuyên mục</span>
+                                        <a href="@Url.RouteUrl("BlogCategory", new { slug = m.Category.Slug })" title="@m.Category.Name"><span itemprop="genre" style="font-family:Arial;">@m.Category.Name</span></a>
                                     </dd>
                                 </dl>
                             </aside>
@@ -71,7 +71,7 @@
                             <!-- footer -->
                             <section class="readmore">
                                 <a class="btn btn-primary" href="@Url.RouteUrl("BlogDetails", new { catslug = m.Category.Slug, slug = m.Slug })">
-                                    <span>
+                                    <span style="text-transform: none; font-family: Arial; font-weight: 100;">
                                         Đọc thêm ...
                                     </span>
                                 </a>

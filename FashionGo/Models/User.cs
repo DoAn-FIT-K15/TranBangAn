@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FashionGo.Models
+﻿namespace FashionGo.Models
 {
     public class User
     {

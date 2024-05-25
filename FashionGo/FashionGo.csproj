@@ -394,6 +394,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuCategoryViewModel.cs" />
+    <Compile Include="Models\ProductCategoryViewModel.cs" />
+    <Compile Include="Models\ProductCategoryViewModel1.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\User.cs" />
@@ -1868,7 +1870,6 @@
     <Content Include="Assets\Frontend\components\com_eshop\themes\fashionpro\css\style.css" />
     <Content Include="Assets\Frontend\components\com_eshop\themes\fashionpro\fonts\font-awesome\css\font-awesome.min.html" />
     <Content Include="Assets\Frontend\components\com_eshop\themes\fashionpro\images\arrow-down-hover.png" />
-    <Content Include="Assets\Frontend\components\com_eshop\themes\fashionpro\images\arrow-down.png" />
     <Content Include="Assets\Frontend\components\com_eshop\themes\fashionpro\images\arrow-up-hover.png" />
     <Content Include="Assets\Frontend\components\com_eshop\themes\fashionpro\images\arrow-up.png" />
     <Content Include="Assets\Frontend\components\com_eshop\themes\fashionpro\images\bx_loader.gif" />
@@ -2134,6 +2135,8 @@
     <Content Include="Content\AdminSite.css" />
     <Content Include="Content\contact-popup.css" />
     <Content Include="Content\images\ajax.gif" />
+    <Content Include="Content\images\Anoi.jpg" />
+    <Content Include="Content\images\Anoiui.jpg" />
     <Content Include="Content\images\banner-giao-hang-nhanh.png" />
     <Content Include="Content\images\bg_discount.png" />
     <Content Include="Content\images\blank.gif" />
@@ -4158,10 +4161,18 @@
     <Content Include="sitemap.xml" />
     <Content Include="Uploads\images\avatar\khanh-vi.jpg" />
     <Content Include="Uploads\images\avatar\lam.jpg" />
+    <Content Include="Uploads\images\banner\3cde53d8619069b98772edffe8c5dad1.jpg" />
+    <Content Include="Uploads\images\banner\6a9046db4e57451d6a417624baaa69fe.jpg" />
+    <Content Include="Uploads\images\banner\aHR0cDovL3MzLmFwLW5vcnRoZWFzdC0xLndhc2FiaXN5cy5jb20vaG5jLWNybS1zMy5nZXRjb252ZXJzaW9uLmNvL3dlYmVjb20vMjAyMy8wMi84MjU0ODJlMDVmOTM3ODIxMDgyNjNlZWYxOGRlMDEyMS5wbmc.jpg" />
+    <Content Include="Uploads\images\banner\An_bannner.jpg" />
     <Content Include="Uploads\images\banner\banner-1.jpg" />
     <Content Include="Uploads\images\banner\banner-2.jpg" />
     <Content Include="Uploads\images\banner\banner-2_23075_1388803138.jpg" />
+    <Content Include="Uploads\images\banner\banner-thoi-trang-tuoi.jpg" />
+    <Content Include="Uploads\images\banner\Banner-Thoi-Trang-–-1234.jpg" />
+    <Content Include="Uploads\images\banner\Banner-Thoi-Trang-–-TR1312202008.jpg" />
     <Content Include="Uploads\images\banner\banner-thoi-trang.jpg" />
+    <Content Include="Uploads\images\banner\banner-thoi-trângn.jpg" />
     <Content Include="Uploads\images\banner\banner03.gif" />
     <Content Include="Uploads\images\banner\CongNghe.png" />
     <Content Include="Uploads\images\banner\CongNghe2.jpg" />

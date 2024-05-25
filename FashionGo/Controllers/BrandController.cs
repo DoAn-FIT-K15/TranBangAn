@@ -6,7 +6,7 @@ namespace FashionGo.Controllers
     public class BrandController : BaseController
     {
         // GET: Brand
-       
+
         public ActionResult Index()
         {
             return View();

@@ -119,7 +119,7 @@
             });
         });
     </script>
-    <h1 class="eshop-category-title">@ViewBag.Category.Name</h1>
+    <h2 style="color: orangered; text-transform: none; font-family: Arial; font-weight: 100; font-size:25px;"><i class="fa-solid fa-ruler-vertical"></i>  @ViewBag.Category.Name</h2>
     <div class="eshop-products-list">
         <div id="products-list-container" class="products-list-container block grid">
             <div class="sortPagiBar row-fluid clearfix">
@@ -129,31 +129,63 @@
                         <a rel="list" href="#" class="btn list"><i class="icon-th-list"></i></a>
                     </div>
                 </div>
-                <div class="span9">
-                    <form method="post" name="adminForm" id="adminForm" action="">
-                        <div class="clearfix">
-                            <div class="eshop-product-show">
-                                <b>Xem: </b>
-                                <select id="limit" name="limit" class="inputbox input-mini" size="1" onchange="this.form.submit()" autocomplete="off">
-                                    <option value="15" selected="selected">15</option>
-                                    <option value="30">30</option>
-                                    <option value="45">45</option>
-                                    <option value="90">90</option>
-                                    <option value="0">Xem tất cả</option>
-                                </select>
-                            </div>
-                            <div class="eshop-product-sorting">
-                                <b>Sắp xếp theo: </b>
-                                <select id="sort_options" name="sort_options" class="inputbox input-xlarge" onchange="this.form.submit();" autocomplete="off">
-                                    <option value="b.product_name-ASC" selected="selected">Tên sản phẩm (A - Z)</option>
-                                    <option value="b.product_name-DESC">Tên sản phẩm (A - Z)</option>
-                                    <option value="a.product_price-ASC">Giá tăng dần</option>
-                                    <option value="a.product_price-DESC">Giá giảm dần</option>
-                                </select>
-                            </div>
+                @using (Html.BeginForm("ProductCategory", "Product", FormMethod.Get))
+                {
+                    <input name="a" id="id" type="hidden" value="@ViewBag.CateId" />
+                    <div class="clearfix">
+                        <div class="eshop-product-show">
+                            <b style="text-transform: none; font-family: Arial; font-weight: 100;">Xem: </b>
+                            <select id="limit" name="limit" class="inputbox input-mini" size="1" onchange="this.form.submit()" autocomplete="off">
+                                @if (ViewBag.CurrentFilters != null)
+                                {
+                                    <option value="@ViewBag.CurrentFilters" selected>Đang chọn @ViewBag.CurrentFilters </option>
+                                }
+                                <option value="10">10</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                                <option value="90">90</option>
+                                <option value="@Model.Count()">Xem tất cả</option>
+                            </select>
                         </div>
-                    </form>
-                </div>
+                        <div class="eshop-product-sorting">
+                            <b style="text-transform: none; font-family: Arial; font-weight: 100;">Sắp xếp theo: </b>
+                            @Html.DropDownList("sort_options", new SelectList(
+                                      new List<Object>{
+                                    new { value = "product_name-ASC", text = "Tên sản phẩm (A - Z)" },
+                                    new { value = "product_name-DESC", text = "Tên sản phẩm (Z - A)" },
+                                    new { value = "product_price-ASC", text = "Giá tăng dần" },
+                                    new { value = "product_price-DESC", text = "Giá giảm dần" }
+                                             }, "value", "text", ViewBag.CurrentSort),
+                                      new { @class = "inputbox input-xlarge", onchange = "this.form.submit();" })
+                        </div>
+                    </div>
+
+                }
+                @* <div class="span9">
+                        <form method="post" name="adminForm" id="adminForm" action="">
+                            <div class="clearfix">
+                                <div class="eshop-product-show">
+                                    <b style="text-transform: none; font-family: Arial; font-weight: 100;">Xem: </b>
+                                    <select id="limit" name="limit" class="inputbox input-mini" size="1" onchange="this.form.submit()" autocomplete="off">
+                                        <option value="15" selected="selected">15</option>
+                                        <option value="30">30</option>
+                                        <option value="45">45</option>
+                                        <option value="90">90</option>
+                                        <option value="0">Xem tất cả</option>
+                                    </select>
+                                </div>
+                                <div class="eshop-product-sorting">
+                                    <b style="text-transform: none; font-family: Arial; font-weight: 100;">Sắp xếp theo: </b>
+                                    <select id="sort_options" name="sort_options" class="inputbox input-xlarge" onchange="this.form.submit();" autocomplete="off">
+                                        <option value="b.product_name-ASC" selected="selected"style="text-transform: none; font-family: Arial; font-weight: 100;">Tên sản phẩm (A - Z)</option>
+                                        <option value="b.product_name-DESC"style="text-transform: none; font-family: Arial; font-weight: 100;">Tên sản phẩm (Z- A)</option>
+                                        <option value="a.product_price-ASC"style="text-transform: none; font-family: Arial; font-weight: 100;">Giá tăng dần</option>
+                                        <option value="a.product_price-DESC"style="text-transform: none; font-family: Arial; font-weight: 100;">Giá giảm dần</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>*@
             </div>
             <div id="products-list" class="row-fluid clearfix">
                 @{
@@ -181,7 +213,14 @@
 
                                     <div class="eshop-buttons">
                                         <p>
-                                            <a class="button" style="cursor: pointer;" onclick="addToWishList2(this,@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <a class="button" style="cursor: pointer;" onclick="toggleColor(this)" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
+                                            }
+                                            else
+                                            {
+                                                <a class="button" style="cursor: pointer;" onclick="alert('Bạn cần đăng nhập')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i><span class="text-hide">Yêu thích</span></a>
+                                            }
                                             <a class="button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="Xem chi tiết"><i class="fa fa-arrow-right"></i><span class="text-hide">Chi tiết</span></a>
                                         </p>
 
@@ -193,7 +232,7 @@
                             </div>
                             <div class="eshop-info col-md-8">
                                 <div class="eshop-info-block">
-                                    <h4 class="eshop-product-title">
+                                    <h4 class="eshop-product-title" style="font-family:Arial; text-transform:none;">
                                         <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">@item.Name</a>
                                     </h4>
                                     <div class="eshop-product-desc">
@@ -211,9 +250,9 @@
                                             <p>
                                                 @if (item.Discount.Value > 0)
                                                 {
-                                                    <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
+                                                    <span class="eshop-base-price" style="font-family:Arial;">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
                                                 }
-                                                <span class="eshop-sale-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
+                                                <span class="eshop-sale-price" style="font-family:Arial;">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
                                             </p>
                                         </div>
                                     </div>
@@ -233,7 +272,14 @@
                                             </button>
                                         </div>
                                         <p>
-                                            <a class="btn button" style="cursor: pointer;" onclick="addToWishList2(this,@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i>Đánh dấu Yêu thích</a>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <a class="btn button" style="cursor: pointer;" onclick="addToWishList2(this,@item.Id, '@WebConfigurationManager.AppSettings["SiteName"].ToString()')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i>Đánh dấu Yêu thích</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn button" style="cursor: pointer;" onclick="alert('Bạn cần đăng nhập')" title="Đánh dấu sản phẩm yêu thích"><i class="fa fa-heart"></i>Đánh dấu Yêu thích</a>
+                                            }
                                             <a class="btn button" style="cursor: pointer;" href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="Xem chi tiết">Chi tiết <i class="fa fa-arrow-right"></i></a>
                                         </p>
                                     </div>
@@ -247,8 +293,8 @@
                         @Html.Raw(clearfixDivEnd)
                     }
                     stt++;
-                }
 
+                }
                 <div class="row-fluid">
                     <div class="pagination">
                         @Html.PagedListPager(Model, page => Url.HttpRouteUrl("ProductCategory", new { slug = category.Slug, id = category.CatId, page = page }))
@@ -263,6 +309,15 @@
 
 </div>
 
+<script>
+    function toggleColor(element) {
+        if (element.style.color !== 'red') {
+            element.style.color = 'red';
+        } else {
+            element.style.color = '';
+        }
+    }
+</script>
 <script>
 
     function loadForm(id) {
@@ -279,7 +334,12 @@
         });
     }
     function addToWishList2(ele, itemId) {
-        ele.innerHTML = "<i class='fa fa-heart red'></i><span class='text-hide'>Yêu thích</span>";
+        var heartIcon = document.getElementById("icon_heart");
+        if (heartIcon.classList.contains("red")) {
+            heartIcon.classList.remove("red"); // Loại bỏ class "red" để trở về trạng thái mặc định
+        } else {
+            heartIcon.classList.add("red"); // Thêm class "red" để đổi màu trái tim thành đỏ
+        }
         jQuery.ajax({
             type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
             url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
@@ -293,6 +353,13 @@
         });
     }
     function addToWishList(itemId) {
+        var heartIcon = document.getElementById("icon_heart_" + itemId);
+        if (heartIcon.style.color === "red") {
+            heartIcon.style.color = ""; // Xóa thuộc tính màu để trở về màu mặc định
+        } else {
+            heartIcon.style.color = "red";
+        }
+
         jQuery.ajax({
             type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
             url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
@@ -325,5 +392,36 @@
     }
     console.log(selectedColor);
     console.log(selectedSize);
+
+</script>
+<script>
+    // Đảm bảo jQuery đã được tải và sẵn sàng sử dụng
+    $(document).ready(function () {
+        // Gắn sự kiện 'change' cho các dropdown menu
+        $('#limit, #sort_options').change(function () {
+            // Lấy dữ liệu từ form
+            var formData = {
+                limit: $('#limit').val(),
+                sortOption: $('#sort_options').val()
+                id: @ViewBag.CateId
+            };
+
+            // Gửi dữ liệu đến server sử dụng AJAX
+            $.ajax({
+                url: '/Product/SortAndFilter', // Thay thế 'ControllerName' và 'ActionName' bằng tên thực tế của bạn
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    // Cập nhật nội dung của trang với dữ liệu mới
+                    $('#products-list-container').html(data);
+                }
+            });
+        });
+    });
+
+
+
+// Hàm changeLayout được định nghĩa trong file layout.js
+// Đảm bảo rằng file layout.js đã được tải và có hàm changeLayout
 
 </script>

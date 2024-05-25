@@ -1,14 +1,13 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using System.Net;
+using System.Text;
 
 namespace MoMo
 {
     class PaymentRequest
     {
-        public PaymentRequest() {
+        public PaymentRequest()
+        {
         }
         public static string sendPaymentRequest(string endpoint, string postJsonString)
         {

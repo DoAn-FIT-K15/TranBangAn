@@ -2,27 +2,27 @@
 
 <div class="t3-module modul" id="Mod102">
     <div class="module-inner">
-        <h3 class="module-title "><span>Khuyến Mãi</span></h3>
+        <h3 class="module-title "style="font-family: Arial; text-transform:none; font-weight:100;text-align:center;"><span>Khuyến mãi</span></h3>
         <div class="module-ct">
             <div class="eshop-product">
                 <div class="top-seller-image-product">
                     @foreach (var item in Model)
                     {
                         <div id="wap-product" class="image" style="width: 100%">
-                            <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
+                            <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name" style="font-family: Arial; text-transform: none;">
                                 <img class="image img-responsive" alt="@item.Name" src="@item.FeaturedImage">
                             </a>
                             <div class="clear"></div>
                             <div class="product-infor">
                                 <h3>
-                                    <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" data-original-title="@item.Name">
+                                    <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" data-original-title="@item.Name" style="font-family: Arial; text-transform: none;">
                                         @item.Name
                                     </a>
                                 </h3>
                                 <div class="clear"></div>
                                 <p class="eshop-product-desc">@item.Description.LimitLength(55, "....")</p>
                                 <div class="clear"></div>
-                                <span class="price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
+                                <span class="price" style="font-family:Arial;">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
                                 <div class="clear"></div>
                             </div>
                         </div>

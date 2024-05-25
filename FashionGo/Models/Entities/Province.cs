@@ -1,10 +1,7 @@
 ﻿namespace FashionGo.Models.Entities
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Province
     {
@@ -22,6 +19,7 @@
         public string Name { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Loại tỉnh/thành")]
         public string Type { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,8 +1,4 @@
 ﻿using Commons.Libs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FashionGo.Controllers
@@ -21,14 +17,14 @@ namespace FashionGo.Controllers
             try
             {
                 var from = name + "<" + email + ">";
-                XMail.Send(from, "dangquyet.viajsc@gmail.com", "test", message);
+                XMail.Send(from, "ahann4960@gmail.com", "test", message);
             }
             catch
             {
 
             }
             return View();
-            
+
         }
     }
 }

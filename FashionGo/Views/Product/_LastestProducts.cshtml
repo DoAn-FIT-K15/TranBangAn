@@ -65,7 +65,7 @@
         <div class="container">
             <div class="t3-module module " id="Mod100">
                 <div class="module-inner">
-                    <h3 class="module-title "><span>Sản phẩm mới</span></h3>
+                    <p ><i class="fa-brands fa-shopify fa-2x" style="color:orangered;"></i><span style="font-family: Arial; font-size: 22px; color: orangered; text-transform: none;"  >SẢN PHẨM MỚI</span></p>
                     <div class="module-ct">
                         <div class="row eshop-product ">
                             <div class="customNavigation">
@@ -76,12 +76,12 @@
                                 @foreach (var item in Model)
                                 {
                                     <div class="image">
-                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
+                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name" style="font-family: Arial; text-transform: none;">
                                             <img id="product-image-@item.Id" class="image img-responsive" alt="@item.Name" src="@item.FeaturedImage">
                                         </a>
-                                        <div class="sale-flash">@item.Discount% Off*</div>
+                                        <div class="sale-flash" style="font-family:Arial;">@item.Discount% Off*</div>
                                         <h4 class="eshop-product-title">
-                                            <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" class="link" data-original-title="@item.Name">
+                                            <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" class="link" data-original-title="@item.Name" style="font-family: Arial; text-transform: none;">
                                                 @item.Name
                                             </a>
                                         </h4>
@@ -89,12 +89,12 @@
                                             <div class="col-lg-6 col-md-6 col-xs-6">
                                                 @if (item.Discount.Value > 0)
                                                 {
-                                                    <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
+                                                    <span class="eshop-base-price" style="font-family:Arial;">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
                                                 }
-                                                <span class="eshop-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
+                                                <span class="eshop-price" style="font-family:Arial;">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-xs-6">
-                                                <button onclick="loadForm('@item.Id')" class="btn btn-primary">Thêm vào giỏ</button>
+                                                <button onclick="loadForm('@item.Id')" class="btn btn-primary" style="font-family:Arial;">Thêm vào giỏ</button>
                                             </div>
                                         </div>
                                     </div>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Quản lý đơn hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Đơn Hàng Đã Mua</h2>
+<h2 style="text-transform: none; font-family: Arial; font-weight: 100; font-size:20px; margin:0px;">Đơn Hàng Đã Mua</h2>
 <div class="box">
     <table class="table table-bordered table-striped datatable">
         <thead>
@@ -29,28 +29,37 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+            <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReceiveName)
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiveName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceivePhone)
+                </td>
+                <td>
+                    @Html.FormatValue(item.TotalOrder, "{0:0,0}")
+                </td>
+                <td>
+                    <p class="" style="text-transform:none;">@Html.DisplayFor(modelItem => item.OrderStatus.Name)</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+
+                @if (item.OrderStatus.Id == 1)
+                {
+                    <td style="justify-content: center; display: flex; ">
+                        @Html.ActionLink("Hủy Đơn", "Delete", new { id = item.Id }, new { @class = "btn btn-xs btn-primary", onclick = "return confirm('Bạn có chắc muốn xóa?')" })
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReceivePhone)
+                }
+                else
+                {
+                    <td  style="justify-content: center; display: flex; ">
+                        @Html.ActionLink("Chi Tiết", "Detail", new { id = item.Id }, new { @class = "btn btn-xs btn-success" }) 
                     </td>
-                    <td>
-                        @Html.FormatValue(item.TotalOrder, "{0:0,0}")
-                    </td>
-                    <td>
-                        <p class="label label-success">@Html.DisplayFor(modelItem => item.OrderStatus.Name)</p>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderDate)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Chi Tiết", "Detail", new { id = item.Id }, new { @class = "btn btn-xs" }) |
-                        @Html.ActionLink("Hủy Đơn", "Delete", new { id = item.Id }, new { @class = "btn btn-xs", onclick = "return confirm('Bạn có chắc muốn xóa?')" })
-                    </td>
-                </tr>
+                }
+            </tr>
             }
         </tbody>
     </table>

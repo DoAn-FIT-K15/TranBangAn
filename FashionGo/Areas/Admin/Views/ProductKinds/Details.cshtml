@@ -1,14 +1,14 @@
 ﻿@model FashionGo.Models.Entities.ProductCategory
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi tiết danh mục";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <h4>ProductCategory</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -51,6 +51,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CatId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.CatId }, new { @class = "btn btn-warning" }) |
+    @Html.ActionLink("Quay lại trang ", "Index", null,new { @class = "btn btn-default" })
 </p>

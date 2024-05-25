@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<FashionGo.Models.Entities.Coupon>
 
 @{
-    ViewBag.Title = "Coupons Manage";
+    ViewBag.Title = "Quản lý khuyến mãi";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm mới", "Create",null, new { @class = "btn  btn-primary" })
 </p>
 <table class="table table-bordered datatable">
     <tr>
@@ -58,9 +58,9 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Code }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Code }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Code })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.Code }, new { @class = "btn btn-xs btn-primary" }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.Code }, new { @class = "btn btn-xs btn-warning" }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.Code }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }

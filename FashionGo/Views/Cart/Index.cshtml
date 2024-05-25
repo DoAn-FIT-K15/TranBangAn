@@ -7,20 +7,20 @@
 }
 
 <div class="eshop-shopping-cart">
-    <div class="page-header clearfix">
-        <h1 class="page-title">
+    <div class="page-header clearfix eshop-product-title">
+        <h1 class="page-title eshop-product-title" style="font-family: Arial; text-transform: none; font-weight:100;">
             @ViewBag.Title
         </h1>
     </div>
     <table class="table table-bordered">
-        <tr>
-            <th>ẢNH</th>
-            <th>SẢN PHẨM</th>
-            <th>MÀU</th>
-            <th>SIZE</th>
-            <th>GIÁ BÁN</th>
-            <th>SỐ LƯỢNG</th>
-            <th>THÀNH TIỀN</th>
+        <tr style="font-family:Arial;">
+            <th style="font-family: Arial; text-transform: none; font-weight:400;">ẢNH</th>
+            <th style="font-family: Arial; text-transform: none; font-weight:100;">SẢN PHẨM</th>
+            <th style="font-family: Arial; text-transform: none; font-weight:100;">MÀU</th>
+            <th style="font-family: Arial; text-transform: none; font-weight:100;">SIZE</th>
+            <th style="font-family: Arial; text-transform: none; font-weight:100;">GIÁ BÁN</th>
+            <th style="font-family: Arial; text-transform: none; font-weight:100;">SỐ LƯỢNG</th>
+            <th style="font-family: Arial; text-transform: none; font-weight:100;">THÀNH TIỀN</th>
         </tr>
         @foreach (Product p in Model)
         {
@@ -30,7 +30,7 @@
                 </td>
                 <td>
                     <h4 class="eshop-product-title">
-                        <a href="@Url.RouteUrl("ProductDetails", new { id = p.Id, slug = p.Name.ToAscii() })" target="_blank">
+                        <a href="@Url.RouteUrl("ProductDetails", new { id = p.Id, slug = p.Name.ToAscii() })" target="_blank" style="font-family:Arial;">
                             @p.Name
                         </a>
                     </h4>
@@ -58,26 +58,26 @@
                     </select>
                 </td>
 
-                <td>
-                    @Html.FormatValue(p.PriceAfter, "{0:0,0}")<sup>đ</sup>
+                <td class="price"data-price="@p.PriceAfter"  style="font-family:Arial;">
+                    @Html.FormatValue(p.PriceAfter, "{0:0,0}")<sup> đ</sup>
                 </td>
                 <td>
-                    <input type="number" min="1" onchange="updateQuantity(this)" class="input-mini quantity" value="@p.Amount" name="quantity[@p.Id]" data-id="@p.Id" id="quantity_@p.Id">
-                    <a class="eshop-remove-item-cart btn text-danger" href="#" data-id="@p.Id" onclick="return deleteFromCart(@p.Id);" title="Xóa khỏi giỏ hàng">
+                    <input type="number" min="1" onchange="updateQuantity(this)" class="input-mini quantity" value="@p.Amount" name="quantity[@p.Id]" data-id="@p.Id" id="quantity_@p.Id" style="font-family:Arial;" />
+                    <a class="eshop-remove-item-cart btn text-danger" href="#" data-id="@p.Id" onclick="return deleteFromCart(@p.Id);" title="Xóa khỏi giỏ hàng" style="font-family:Arial;">
                         <i class="fa fa-times"></i>
                     </a>
                 </td>
                 <td>
                     <span id="Amount-@p.Id">
                         @Html.FormatValue(p.PriceAfter * p.Amount, "{0:0,0}")
-                    </span><sup>đ</sup>
+                    </span><sup></sup>
                 </td>
             </tr>
         }
         <tr>
-            <th colspan="4" style="text-align:right">Tổng cộng:</th>
+            <th colspan="4" style="text-align:right" style="font-family:Arial;">Tổng cộng:</th>
             <th>
-                <strong><span class="brand-primary-color nn-cart-total">@Html.FormatValue(ShoppingCart.Cart.Total, "{0:0,0}")</span><sup>đ</sup></strong>
+                <strong><span class="brand-primary-color nn-cart-total" style="font-family:Arial;">@Html.FormatValue(ShoppingCart.Cart.Total, "{0:0,0}")</span><sup></sup></strong>
             </th>
         </tr>
     </table>
@@ -88,7 +88,7 @@
                 <thead>
                     <tr>
                         <td>
-                            <label for="coupon_code" class="control-label"><strong>Nhập mã Coupon: </strong></label>
+                            <label for="coupon_code" class="control-label" style="font-family:Arial; font-size:14px;"><strong style="font-family: Arial; text-transform: none;font-weight: 100;">Nhập mã Coupon: </strong></label>
                         </td>
                     </tr>
                 </thead>
@@ -98,7 +98,7 @@
                             <div>
                                 <div class="controls">
                                     <input type="text" id="coupon_code" name="coupon_code" class="input-large" value="">
-                                    <button type="button" class="btn btn-small btn-danger" onclick="applyCoupon();">Kiểm tra</button>
+                                    <button type="button" class="btn btn-small btn-danger" onclick="applyCoupon();" style="font-family: Arial; text-transform: none;font-weight: 100;">Kiểm tra</button>
                                 </div>
                             </div>
                         </td>
@@ -111,10 +111,10 @@
     <div class="eshop-cart-checkout">
 
         <form action="/Cart/Clear" method="post">
-            <a href="@Url.RouteUrl("Home")" class="btn btn-success pull-left">
+            <a href="@Url.RouteUrl("Home")" class="btn btn-success pull-left" style="font-family: Arial; text-transform: none;font-weight: 100;">
                 <i class="fa fa-shopping-bag"></i> THÊM SẢN PHẨM KHÁC
             </a>
-            <a href="@Url.RouteUrl("Checkout")" class="btn btn-primary pull-right">
+            <a href="@Url.RouteUrl("Checkout")" class="btn btn-primary pull-right" style="font-family: Arial; text-transform: none;font-weight: 100;">
                 <i class="fa fa-cart-arrow-down"></i> Đặt Hàng
             </a>
             <button class="btn btn-default pull-right" onclick="return confirm('Xác nhận bạn muốn xóa giỏ hàng?');">
@@ -164,11 +164,51 @@
 
                     }
                 }
-                
+
             });
         });
+
+
+
 </script>
 
+
+<script>
+    // Hàm cập nhật tổng tiền cho một sản phẩm
+    function updateTotalForProduct(productId, newQuantity) {
+        var price = parseFloat($(`#row-${productId}`).find('.price').data('price'));
+        var newTotal = price * newQuantity;
+        $(`#Amount-${productId}`).text(newTotal.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+    }
+
+    // Hàm cập nhật tổng tiền cho toàn bộ giỏ hàng
+    function updateCartTotal() {
+        var total = 0;
+        $('.quantity').each(function () {
+            var productId = $(this).data('id');
+            var quantity = parseInt($(this).val());
+            var price = parseFloat($(`#row-${productId}`).find('.price').data('price'));
+            total += price * quantity;
+        });
+        $('.nn-cart-total').text(total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+    }
+
+    // Hàm xử lý sự kiện change
+    function updateQuantity(element) {
+        var productId = $(element).data('id');
+        var newQuantity = parseInt($(element).val());
+        updateTotalForProduct(productId, newQuantity);
+        updateCartTotal();
+    }
+
+    // Gắn sự kiện change vào các input số lượng khi trang được tải
+    $(document).ready(function () {
+        $('.quantity').on('change', function () {
+            updateQuantity(this);
+        });
+        updateCartTotal();
+    });
+</script>
 
 
 

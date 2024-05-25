@@ -5,10 +5,9 @@
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
-<h2>Danh sách vai trò</h2>
 
 <p>
-    @Html.ActionLink("Tạo mới", "Create")
+    @Html.ActionLink("Tạo mới", "Create",null, new { @class = "btn btn-primary" })
 </p>
 <table class="table table-bordered table-striped datatable">
     <tr>
@@ -25,9 +24,9 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Sửa", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-primary" }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new { @class = "btn btn-xs btn-danger" })
             </td>
         </tr>
     }

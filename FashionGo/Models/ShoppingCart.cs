@@ -8,13 +8,20 @@
     public class ShoppingCart
     {
 
-        
+
         // Chứa các mặt hàng đã chọn
         public List<Product> Items = new List<Product>();
 
         public int Count { get; set; }
+        public int CountUniqueItems
+        {
+            get
+            {
+                return Items.Select(item => item.Id).Distinct().Count();
+            }
+        }
 
-        public double Total  { get; set; }
+        public double Total { get; set; }
         public int PaymentMethodId { get; set; }
 
 
@@ -22,7 +29,7 @@
 
         public Transport Transport { get; set; }
 
-        
+
 
         // Lấy giỏ hàng từ Session
         public static ShoppingCart Cart
@@ -42,8 +49,10 @@
             }
         }
 
-        public string CouponCode {
-            get {
+        public string CouponCode
+        {
+            get
+            {
                 if (Coupon != null)
                 {
                     return Coupon.Code;
@@ -111,11 +120,11 @@
         }
 
 
-        public double TransportCost 
+        public double TransportCost
         {
             get
             {
-                var cost = Transport == null ? 0 : Transport.Cost.Value; 
+                var cost = Transport == null ? 0 : Transport.Cost.Value;
                 //Nếu số tiền lớn hơn 300k hoặc số lượng mua từ 3 sản phẩm trở lên thì miễn phí vận chuyển
                 if (Total > 300000 || Count > 2)
                 {
@@ -127,7 +136,7 @@
         }
 
 
-        public void Add(int id, int soluong , string color , string size)
+        public void Add(int id, int soluong, string color, string size)
         {
             var db = new ApplicationDbContext();
             Product item = null;
@@ -138,7 +147,7 @@
             }
             catch // chưa có trong giỏ -> truy vấn CSDL và bỏ vào giỏ
             {
-                
+
                 item = db.Products.Find(id);
                 var colors = db.Colors.Where(c => c.ProductID == id).ToList();
                 var sizes = db.Sizes.Where(s => s.ProductID == id).ToList();
@@ -158,7 +167,7 @@
         public void Remove(int id)
         {
             var item = Items.Single(i => i.Id == id);
-            Total -= item.PriceAfter.Value*item.Amount.Value;
+            Total -= item.PriceAfter.Value * item.Amount.Value;
             Count -= item.Amount.Value;
             Items.Remove(item);
         }
@@ -173,7 +182,7 @@
         public void UpdateColor(int id, string newcolor)
         {
             var item = Items.Single(i => i.Id == id);
-            
+
             item.ColorDefaut = newcolor;
         }
 
@@ -199,7 +208,7 @@
             var item = Items.Single(i => i.Id == id);
             return item.Amount.Value;
         }
-                  
+
         public void Clear()
         {
             Coupon = null;

@@ -179,15 +179,17 @@ function flyToCart(pid) {
     quatity = jQuery('#quantity_' + pid).val();
     var color = null;
     var size = null;
+
     if (document.getElementsByClassName("colorButton").length == 0) {
         color = "default";
     }
     else {
-        if (selectedColor === "undefined") {
-            alert("Bạn Chưa Chọn Màu!");
+        if (document.getElementById("colorButton").length < 0) {
+            alert('Bạn phải chọn màu sắc.');
+            return false;
         }
         else {
-            color = selectedColor;
+            color = document.getElementById("colorButton");
         }
     }
     if (document.getElementsByClassName("sizeButton").length == 0) {
@@ -195,11 +197,12 @@ function flyToCart(pid) {
     }
     else
     {
-        if (selectedSize === "undefined") {
-            alert("Bạn Chưa Chọn Size!");
+        if (document.getElementById("sizeButton").length < 0) {
+            alert('Bạn phải chọn kích thước.');
+            return false;
         }
         else {
-            size = selectedSize;
+            size = document.getElementById("sizeButton");
         }
     }
 
@@ -210,7 +213,7 @@ function flyToCart(pid) {
     jQuery.ajax({
         type: 'GET', 
         dataType: 'json',
-        url: 'Cart/Add',
+        url: '/Cart/Add',
         data: { id: pid, quatity: quatity, color: color, size: size },
         beforeSend: function () {
             jQuery('.add-to-cart').attr('disabled', true);
@@ -235,7 +238,7 @@ function flyToCart(pid) {
         //Mở giỏ hàng
         //jQuery('.eshop-content').slideToggle();
         alert("Thêm Sản Phẩm Thành Công");
-
+        window.location.reload();
         //Đóng giỏ hàng sau 8s
         setTimeout(function () {
             //jQuery('.eshop-content').hide();
@@ -246,6 +249,72 @@ function flyToCart(pid) {
     });
 
     return false;
+}
+function flyToCart001(pid) {
+    var ty = jQuery("#add-to-cart_" + pid).closest('.product').find('#' + pid);
+    var img = jQuery("#product-image-" + pid);
+    var quatity = jQuery('#quantity_' + pid).val(); // Corrected typo
+    var selectedColor = document.querySelector('.colorButton.selected'); // Get the selected color
+    var selectedSize = document.querySelector('.sizeButton.selected'); // Get the selected size
+    var color = null;
+    var size = null;
+
+    // Check if there are color buttons
+    if (document.getElementsByClassName("colorButton").length == 0) {
+        color = "default";
+    } else {
+        if (!selectedColor) {
+            alert("Bạn chưa chọn màu!");
+            return; // Exit the function if color is not selected
+        }
+        color = selectedColor.getAttribute("data-color");
+    }
+
+    // Check if there are size buttons
+    if (document.getElementsByClassName("sizeButton").length == 0) {
+        size = "default";
+    } else {
+        if (!selectedSize) {
+            alert("Bạn chưa chọn size!");
+            return; // Exit the function if size is not selected
+        }
+        size = selectedSize.getAttribute("data-size");
+    }
+
+    // Check quantity
+    if (!quatity || quatity == 'undefined' || quatity == null) {
+        quatity = 1;
+    }
+
+    jQuery.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: 'Cart/Add',
+        data: { id: pid, quatity: quatity, color: color, size: size },
+        beforeSend: function () {
+            jQuery('.add-to-cart').attr('disabled', true);
+            jQuery('.add-to-cart').after('<span class="wait">&nbsp;<img src="Assets/Frontend/components/com_eshop/assets/images/loading.gif" /></span>');
+        },
+        complete: function () {
+            jQuery('.add-to-cart').attr('disabled', false);
+            jQuery('.wait').remove();
+        },
+        success: function (result) {
+            jQuery("#eshop-cart-total").text(result.Count);
+            jQuery("#cart-item").load("/Cart/_PartialCart");
+
+            flyToElement(jQuery(img), jQuery('#eshop-cart'));
+
+            alert("Thêm sản phẩm thành công");
+
+            setTimeout(function () {
+                //jQuery('.eshop-content').hide();
+            }, 8000);
+        },
+        error: function () {
+            alert("fail");
+        }
+    });
 }
 
 function flyToCart1(pid) {

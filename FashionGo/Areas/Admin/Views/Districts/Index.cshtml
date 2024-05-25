@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<FashionGo.Models.Entities.District>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý quận huyện ";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
-<h2>Index</h2>
+
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm mới", "Create",null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -42,9 +42,9 @@
             @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DistrictId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DistrictId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DistrictId })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.DistrictId }, new { @class = "btn btn-xs btn-primary" }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.DistrictId }, new { @class = "btn btn-xs btn-warning" }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.DistrictId }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }

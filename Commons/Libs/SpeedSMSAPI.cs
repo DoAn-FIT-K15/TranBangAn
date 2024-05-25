@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net;
 using System.IO;
+using System.Net;
 
 namespace Commons.Libs
 {
@@ -12,15 +12,18 @@ namespace Commons.Libs
         const String rootURL = "http://api.speedsms.vn/index.php";
         private String accessToken = "g2Q7N9-yJsEeySVuKROEjCev2wdJtawp";
 
-        public SpeedSMSAPI() {
+        public SpeedSMSAPI()
+        {
 
         }
 
-        public SpeedSMSAPI(String token) {
+        public SpeedSMSAPI(String token)
+        {
             this.accessToken = token;
         }
 
-        public String getUserInfo() {
+        public String getUserInfo()
+        {
             String url = rootURL + "/user/info";
             NetworkCredential myCreds = new NetworkCredential(accessToken, ":x");
             WebClient client = new WebClient();
@@ -30,7 +33,8 @@ namespace Commons.Libs
             return reader.ReadToEnd();
         }
 
-        public String sendSMS(String phone, String content, int type, String brandname) {
+        public String sendSMS(String phone, String content, int type, String brandname)
+        {
             String url = rootURL + "/sms/send";
             if (phone.Length <= 0 || phone.Length < 10 || phone.Length > 11)
                 return "";

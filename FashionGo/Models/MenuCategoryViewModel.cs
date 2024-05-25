@@ -3,8 +3,6 @@ namespace FashionGo.Models
 {
     using global::FashionGo.Models.Entities;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
 
     public class MenuCategoryViewModel
     {

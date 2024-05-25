@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
-using System.Web;
 using System.Web.Configuration;
-using Commons.Libs;
 
 namespace Commons.Libs
 {
@@ -16,7 +12,7 @@ namespace Commons.Libs
         public static int Port = Int32.Parse(WebConfigurationManager.AppSettings["Port"].ToString());
         public static string CredentialUserName = WebConfigurationManager.AppSettings["CredentialUserName"].ToString();
         public static string CredentialPassword = WebConfigurationManager.AppSettings["CredentialPassword"].ToString();
-        bool enablessl  = bool.Parse(WebConfigurationManager.AppSettings["EnabledSSL"].ToString());
+        bool enablessl = bool.Parse(WebConfigurationManager.AppSettings["EnabledSSL"].ToString());
 
         public static string EnableSsl = "False";
         public static bool ssl = true;

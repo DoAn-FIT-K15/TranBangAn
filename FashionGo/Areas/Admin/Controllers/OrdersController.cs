@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FashionGo.Models;
+using FashionGo.Models.Entities;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FashionGo.Models.Entities;
-using FashionGo.Models;
-using Microsoft.AspNet.Identity;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -75,7 +71,7 @@ namespace FashionGo.Areas.Admin.Controllers
         }
 
         // GET: Admin/Orders/Edit/5
-        public ActionResult Edit (int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {

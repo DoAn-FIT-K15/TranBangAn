@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Web;
 
 namespace Commons.Libs
 {
@@ -615,16 +613,16 @@ namespace Commons.Libs
         public static string ImageToBase64String(string filepath)
         {
             byte[] bytes = System.IO.File.ReadAllBytes(filepath); //System.Text.ASCIIEncoding.ASCII.GetBytes(data);
-            
+
             var filename = Path.GetFileName(filepath);
 
             //var minetype = GetType(filename);
             //Path.GetExtension(filepath);
-           var minetype= GetMimeType(Path.GetExtension(filepath));
-            
+            var minetype = GetMimeType(Path.GetExtension(filepath));
+
             string base64String = System.Convert.ToBase64String(bytes);
-           // base64String = base64String.Replace("/", "_");
-           // base64String = base64String.Replace("+", "-");
+            // base64String = base64String.Replace("/", "_");
+            // base64String = base64String.Replace("+", "-");
             var restult = "data:" + minetype + ";base64," + base64String;
             return restult;
 
@@ -644,16 +642,16 @@ namespace Commons.Libs
 
 
 
-       public static string GetType(string fileName)
-       {
-           string mimeType = "application/unknown";
-           string ext = System.IO.Path.GetExtension(fileName).ToLower();
-           Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
-           if (regKey != null && regKey.GetValue("Content Type") != null)
-               mimeType = regKey.GetValue("Content Type").ToString();
-           return mimeType;
-       }
-      
+        public static string GetType(string fileName)
+        {
+            string mimeType = "application/unknown";
+            string ext = System.IO.Path.GetExtension(fileName).ToLower();
+            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
+            if (regKey != null && regKey.GetValue("Content Type") != null)
+                mimeType = regKey.GetValue("Content Type").ToString();
+            return mimeType;
+        }
+
 
 
     }

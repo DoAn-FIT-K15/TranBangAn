@@ -6,17 +6,43 @@
     var quantityData = ViewBag.DataA;
 
 }
+@using System.Globalization;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 
 <h1>Thống kê sản phẩm bán chạy</h1>
-<span>Chọn số lượng sản phẩm muốn thống kê :</span>
-@using (Html.BeginForm("BestSeller", "Statistical", FormMethod.Post))
-{
-    <input type="number" name="sl" min="0" />   
-    <button type="submit">Chọn</button>
-}
+
+<div style="display: flex; height: 33px;">
+    @using (Html.BeginForm("BestSeller", "Statistical", FormMethod.Get))
+    {
+        <div style="display:flex; padding-left:30px;">
+
+            <input style="height: 33px;" type="number" placeholder="Nhập số lượng sản phẩm muốn thống kê" value="@ViewBag.SoLuong" name="sl" min="0" />
+            <select class="form-control" name="selectedMonthYear" style="width: 150px;">
+                @if (ViewBag.Sort != null)
+                {
+                    <option value="@ViewBag.Sort">@ViewBag.Sort</option>
+                }
+                else
+                {
+                    <option value="0">Tháng/Năm</option>
+                }
+                @for (int year = DateTime.Now.Year; year >= 1900; year--)
+                {
+                    for (int month = 1; month <= 12; month++)
+                    {
+                        string value = $"{month:00}-{year}";
+                        <option value="@value">@($"{value}")</option>
+                    }
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-filter"></i>
+            </button>
+        </div>
+    }
+</div>
 
 <div>
     <canvas id="lineChart" height="400" width="1000"></canvas>
@@ -28,21 +54,20 @@
     const ctx = document.getElementById('lineChart');
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'pie',
         data: {
             labels:  @Html.Raw(Json.Encode(productData)),
             datasets: [{
                 label: 'Quantity',
                 data: @Html.Raw(Json.Encode(quantityData)),
-                borderWidth: 1
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+            responsive: true,
+            maintainAspectRatio: false
+
+            // Bạn có thể thêm các tùy chọn khác ở đây nếu cần
         }
+
     });
 </script>

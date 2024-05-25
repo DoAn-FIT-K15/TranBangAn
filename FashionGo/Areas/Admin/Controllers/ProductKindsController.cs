@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FashionGo.Models.Dao;
+using FashionGo.Models.Entities;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using static System.Net.Mime.MediaTypeNames;
-using FashionGo.Models.Entities;
-using FashionGo.Models.Dao;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -17,7 +13,7 @@ namespace FashionGo.Areas.Admin.Controllers
         // GET: Admin/ProductCategories
         public ActionResult Index()
         {
-            var productCategories = db.ProductCategories.Where(x => x.ParentId == null).OrderBy(p=>p.DisplayOrder).Include(p => p.ParentCategory);
+            var productCategories = db.ProductCategories.Where(x => x.ParentId == null).OrderBy(p => p.DisplayOrder).Include(p => p.ParentCategory);
             return View(productCategories.ToList());
         }
 
@@ -61,7 +57,7 @@ namespace FashionGo.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ParentId = ViewBag.ParentId = ProductCategoryDao.listCategory(productCategory.ParentId, productCategory.CatId); 
+            ViewBag.ParentId = ViewBag.ParentId = ProductCategoryDao.listCategory(productCategory.ParentId, productCategory.CatId);
             return View(productCategory);
         }
 

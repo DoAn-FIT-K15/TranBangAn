@@ -4,7 +4,7 @@
     <div class="container">
         <div class="t3-module module " id="Mod103">
             <div class="module-inner">
-                <h3 class="module-title"><span>Tin Tức Nổi Bật</span></h3><div class="module-ct">
+                <p><i class="fa-brands fa-hacker-news fa-2x" style="color:orangered;"></i> <span style="font-family: Arial; font-size: 22px; color: orangered;font-weight:100;">TIN TỨC NỔI BẬT</span></p><div class="module-ct">
                     <ul class="nav">
                         <div class="row">
                             @foreach (var m in Model)
@@ -14,7 +14,7 @@
                                         <img src="@m.Image" alt="@m.Title" style="height: 210px;max-height:210px;">
                                     </div>
                                     <p>
-                                        <span class="mod-articles-category-date">
+                                        <span class="mod-articles-category-date" style="font-family:Arial;">
                                             <i class="fa fa-calendar">&nbsp;</i>
                                             @if (m.createDate.HasValue)
                                             {
@@ -23,18 +23,18 @@
                                         </span>
                                     </p>
 
-                                    <p class="article-title" style="height:50px">
-                                        <a class="mod-articles-category-title" href="@Url.RouteUrl("BlogDetails", new { CatSlug = m.Category.Name.ToAscii(), Slug = m.Slug })" title="@m.Title">
+                                    <p class="article-title" style="height:50px" style="font-family:Arial;">
+                                        <a class="mod-articles-category-title" href="@Url.RouteUrl("BlogDetails", new { CatSlug = m.Category.Name.ToAscii(), Slug = m.Slug })" title="@m.Title" style="text-transform: none; font-family: Arial; font-weight: 100;padding:0px;">
                                             @m.Title
                                         </a>
                                     </p>
 
-                                    <p class="mod-articles-category-introtext">
+                                    <p class="mod-articles-category-introtext" style="font-family:Arial;">
                                         @m.Content.StripTagsRegex().LimitLength(88, "...")
                                     </p>
 
                                     <p class="mod-articles-category-readmore">
-                                        <a class="btn btn-primary mod-articles-category-title" href="@Url.RouteUrl("BlogDetails", new { CatSlug = m.Category.Name.ToAscii(), Slug = m.Slug })" title="@m.Title">
+                                        <a class="btn btn-primary mod-articles-category-title" href="@Url.RouteUrl("BlogDetails", new { CatSlug = m.Category.Name.ToAscii(), Slug = m.Slug })" title="@m.Title" style="text-transform: none; font-family: Arial; font-weight: 100;">
                                             Đọc thêm ...
                                         </a>
                                     </p>

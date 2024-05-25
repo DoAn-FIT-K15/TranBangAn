@@ -55,13 +55,17 @@
         background-color: #f2533d;
         color: #fff;
     }
+    .xyz{
+        padding-top:20px;
+    }
 </style>
 
 <nav class="wrap t3-shop-by-cat ">
     <div class="container">
         <div class="t3-module module " id="Mod98">
             <div class="module-inner">
-                <h3 class="module-title "><span>Danh mục sản phẩm</span></h3><div class="module-ct">
+                <p style="color:orangered;">
+                   <p class="eshop-product-title"> <i class="fa-brands fa-shopify fa-2x " style="color:orangered;"></i><span style="line-height:50px; font-size:22px; color:orangered;" class="xyz">DANH MỤC SẢN PHẨM</span></p><div class="module-ct">
                     <div class="eshop-product-tabs">
                         <div class="row-fluid">
                             <div class="span12">
@@ -75,7 +79,7 @@
                                         {
                                             var activeClass = rel == 0 ? "active" : "";
 
-                                            <li class="@activeClass"><a href="#category-tab-@rel@data" rel="@rel" data="@data" data-toggle="tab">@cat.Name</a></li>
+                                            <li class="@activeClass"><a class="eshop-product-title" href="#category-tab-@rel@data" rel="@rel" data="@data" data-toggle="tab" style="font-family: Arial; text-transform: none; font-weight: 100;">@cat.Name</a></li>
 
                                             rel++;
                                         }
@@ -90,9 +94,9 @@
                                             <input type="hidden" id="setcount-@rel" name="setcount-@rel" value="0" />
                                             <div class="tab-pane @activeClass row-fluid " id="category-tab-@rel@data">
                                                 <div class="category-desc span3">
-                                                    <p>@Html.Raw(cat.Description)</p>
+                                                    <p style="font-family:Arial;">@Html.Raw(cat.Description)</p>
                                                     <div class="category-view-all">
-                                                        <a class="btn btn-primary" href="@Url.RouteUrl("ProductCategory", new { slug = cat.Name.ToAscii(), id = cat.CatId })" title="Xem danh mục @cat.Name">
+                                                        <a class="btn btn-primary" href="@Url.RouteUrl("ProductCategory", new { slug = cat.Name.ToAscii(), id = cat.CatId })" title="Xem danh mục @cat.Name" style="font-family:Arial;">
                                                             Xem thêm...
                                                         </a>
                                                     </div>
@@ -105,10 +109,10 @@
                                                                 <div class="eshop-image-block">
                                                                     <div class="image">
                                                                         <span class="overlay-background-color">&nbsp;</span>
-                                                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
+                                                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name" style="font-family: Arial; text-transform: none;">
                                                                             <img class="image img-responsive" alt="@item.Name" src="@item.FeaturedImage">
                                                                         </a>
-                                                                        <div class="sale-flash">@item.Discount% Off*</div>
+                                                                        <div class="sale-flash" style="font-family:Arial;">@item.Discount% Off*</div>
                                                                     </div>
                                                                     <div class="eshop-buttons">
                                                                         <p>
@@ -117,8 +121,8 @@
                                                                         </p>
                                                                     </div>
                                                                 </div>
-                                                                    <h4 class="eshop-product-title">
-                                                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" class="link" data-original-title="@item.Name">
+                                                                    <h4 style="font-family: Arial; text-transform: none; font-size: 16px;">
+                                                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" class="link" data-original-title="@item.Name" style=" color: #48484e; padding-right:40px;" >
                                                                             @item.Name
                                                                         </a>
                                                                     </h4>
@@ -126,13 +130,13 @@
                                                                         <div class="col-lg-6 col-md-6 col-xs-6">
                                                                             @if (item.Discount.Value > 0)
                                                                             {
-                                                                                <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
+                                                                                <span class="eshop-base-price" style="font-family:Arial;">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
                                                                             }
-                                                                            <span class="eshop-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
+                                                                            <span class="eshop-price" style="font-family:Arial;">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
 
                                                                         </div>
                                                                         <div class="col-lg-6 col-md-6 col-xs-6">
-                                                                            <button onclick="loadForm('@item.Id')" class="btn btn-primary">Thêm vào giỏ</button>
+                                                                            <button onclick="loadForm('@item.Id')" class="btn btn-primary" style="font-family:Arial;">Thêm vào giỏ</button>
                                                                         </div>
                                                                     </div>
                                                             </li>
@@ -211,21 +215,32 @@
         });
     }
     function addToWishList2(ele,itemId) {
-        ele.innerHTML = "<i class='fa fa-heart red'></i><span class='text-hide'>Yêu thích</span>";
+        var heartIcon = document.getElementById("icon_heart");
+        if (heartIcon.classList.contains("red")) {
+            heartIcon.classList.remove("red"); // Loại bỏ class "red" để trở về trạng thái mặc định
+        } else {
+            heartIcon.classList.add("red"); // Thêm class "red" để đổi màu trái tim thành đỏ
+        }
         jQuery.ajax({
             type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
             url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
             data: { id: itemId },
             success: function (response) {
-                // Xử lý kết quả trả về sau khi gọi controller thành công
+               
             },
             error: function () {
                 // Xử lý lỗi (nếu có)
             }
         });
     }
-    function addToWishList(ele, itemId) {
-        ele.innerHTML = "<i class='fa fa-heart red'></i><span class='text-hide'>Yêu thích</span>";
+    function addToWishList(itemId) {
+        var heartIcon = document.getElementById("icon_heart_"+itemId);
+        if (heartIcon.style.color === "red") {
+            heartIcon.style.color = ""; // Xóa thuộc tính màu để trở về màu mặc định
+        } else {
+            heartIcon.style.color = "red";
+        }
+
         jQuery.ajax({
             type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
             url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể

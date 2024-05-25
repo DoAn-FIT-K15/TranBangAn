@@ -11,14 +11,25 @@
                             <div class="footer-logo" style="margin-bottom: 15px;">
                                 <p>
                                     <a href="/" title="FashionGo.VN">
-                                        <img src="~/Content/images/logo-footer.png" alt="FashionGo.VN" height="65" class="img-logo img-responsive" />
+                                        <img src="~/Content/images/Anoiui.jpg" alt="FashionGo.VN" height="40" class="img-logo img-responsive" />
                                     </a>
                                 </p>
                             </div><!-- /.footer-logo -->
                             <div class="custom">
-                                <p>Lý Nhân-Hà Nam-Hà Nội</p>
-                                <p><strong>Hotline: </strong>0375.021.901 - 0123.456.789</p>
-                                <p><a href="mailto:info@fashiongo.vn">ahan4960@gmail.com</a></p>
+                                <p style="font-family:Arial;">
+                                    Số ĐKKD: 0107574310,  <br />ngày cấp: 23/09/2016 <br /> Nơi cấp: Sở Kế hoạch và đầu tư Hà Nội
+
+                                    <br /> Địa chỉ trụ sở tại số 688 Đường Quang Trung, Phường La Khê, Quận Hà Đông, Thành phố Hà Nội.
+
+                                    <br />Địa chỉ liên hệ: P301, tầng 3, tòa nhà GP Invest, số 170 La Thành, Phường Ô Chợ Dừa, Quận Đống Đa, Thành Phố Hà Nội.
+
+                                    <br /> Điện thoại: +8424 - 7303.0222
+
+                                    <br />  Fax: +8424 - 6277.6419
+
+                                    <br /> Email: hello@canifa.com
+                                </p>
+                               
                                 <p>
                                     <a href="http://facebook.com"><span class="social-icons"><i class="fa-brands fa-facebook"><span class="text-hide">face</span></i></span></a>&nbsp;
                                     <a href="htpp://plus.google.com"><span class="social-icons"><i class="fa-brands fa-google"><span class="text-hide">g+</span></i></span></a>
@@ -34,11 +45,11 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="t3-module module " id="Mod107">
                     <div class="module-inner">
-                        <h3 class="module-title "><span>Giới thiệu</span></h3><div class="module-ct">
-                            <ul class="nav nav-pills nav-stacked">
+                        <h3 class="module-title " style="padding-left:80px;"><span style="text-transform: none; font-family: Arial; font-weight: 100; font-size: 20px;">Giới thiệu</span></h3><div class="module-ct">
+                            <ul class="nav nav-pills nav-stacked"style="margin-left:80px;">
                                 @foreach (Menu m in ViewBag.MenuGioiThieu)
                                 {
-                                    <li class="item-@m.Id"><a href="@m.Url" title="@Html.Raw(m.Text)" target="@m.Target">@Html.Raw(m.Text)</a></li>
+                                    <li class="item-@m.Id"><a href="@m.Url" title="@Html.Raw(m.Text)" target="@m.Target"style=" text-align :left;">@Html.Raw(m.Text)</a></li>
                                 }
                             </ul>
                         </div>
@@ -48,13 +59,14 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="t3-module module " id="Mod108">
                     <div class="module-inner">
-                        <h3 class="module-title "><span>Hướng dẫn - Trợ giúp</span></h3>
+                        <h3 class="module-title " style="padding-left:50px;"><span style="text-transform: none; font-family: Arial; font-weight: 100;font-size:20px;">Hướng dẫn - Trợ giúp</span></h3>
                         <div class="module-ct">
-                            <ul class="nav nav-pills nav-stacked">
+                            <ul class="nav nav-pills nav-stacked"style="margin-left:20px;" >
                                 @foreach (Menu m in ViewBag.MenuTroGiup)
                                 {
-                                    <li class="item-@m.Id"><a href="@m.Url" title="@Html.Raw(m.Text)" target="@m.Target">@Html.Raw(m.Text)</a></li>
+                                    <li class="item-@m.Id"><a href="@m.Url" title="@Html.Raw(m.Text)" target="@m.Target"style=" text-align: left; padding-left: 30px; ">@Html.Raw(m.Text)</a></li>
                                 }
+
                             </ul>
                         </div>
                     </div>
@@ -63,9 +75,9 @@
 
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="">
                 <div class="">
-                    <h5 class="module-title"><span>Đăng ký nhận thông tin</span></h5>
+                    <h5 class="module-title"><span style="text-transform: none; font-family: Arial; font-weight: 100;">Đăng ký nhận thông tin</span></h5>
                     <div class="input-group mb-3">
-                        <label for="emailInput" class="form-label">Bạn muốn giải đáp thắc mắc hay góp ý để nâng cao chất lượng. Bạn có thể để lại email để chúng tôi liên hệ với bạn</label>
+                        <label for="emailInput" class="form-label"style="text-transform: none; font-family: Arial; font-weight: 100;">Bạn muốn giải đáp thắc mắc hay góp ý để nâng cao chất lượng. Bạn có thể để lại email để chúng tôi liên hệ với bạn</label>
                         <br />
                         <div style="display: flex;">
                             <img src="~/Content/images/Screenshot 2023-05-15 095349.png" style="width:40px" id="submit-button" onclick="GuiGmail()">
@@ -84,7 +96,7 @@
             <div class="row">
                 <div class="col-md-6 copyright">
                     <div class="module">
-                        <p><strong>Copyright &#169; @DateTime.Now.Year FashionGo - By Trần Bằng An.</strong></p>
+                        <p><strong>Copyright &#169; @DateTime.Now.Year QFashion - By Trần Bằng An.</strong></p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-6 text-hide footer-right">

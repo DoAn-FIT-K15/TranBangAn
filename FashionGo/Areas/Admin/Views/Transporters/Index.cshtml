@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<FashionGo.Models.Entities.Transporter>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý vận chuyển";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
-<h2>Index</h2>
+
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm mới", "Create",null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -30,7 +30,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Active)
         </th>
-        <th></th>
+        <th>Tác vụ</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -54,9 +54,9 @@
             @Html.DisplayFor(modelItem => item.Active)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.Id }, new { @class = "btn btn-xs btn-primary" }) |
+            @Html.ActionLink("Chi tiét", "Details", new { id=item.Id }, new { @class = "btn btn-xs btn-warning" }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.Id }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }

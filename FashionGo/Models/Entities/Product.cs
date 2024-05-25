@@ -1,11 +1,9 @@
 ﻿namespace FashionGo.Models.Entities
 {
-    using Entities;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Product
     {
@@ -65,6 +63,7 @@
 
         [Display(Name = "Giá gốc")]
         public double? Price { get; set; }
+        [Required(ErrorMessage = "Khog duoc bo trong")]
 
         [Display(Name = "Giảm giá (%)")]
         public int? Discount { get; set; }
@@ -132,8 +131,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductMeta> ProductMetas { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
-
+        public virtual ICollection<Order> Orders { get; set; } 
         public List<Colors> Color { get; set; }
         public List<Sizes> Size { get; set; }
         public string ColorDefaut { get; set; }

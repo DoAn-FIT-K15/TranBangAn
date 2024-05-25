@@ -50,7 +50,7 @@
     text-decoration: none;
 }
 .eshop-category ul li ul li:last-child a {
-	padding: 0 27px 12px;
+	padding: 10px 27px 12px;
 }
 .eshop-category > ul > li ul > li > a.active {
     font-weight: bold;

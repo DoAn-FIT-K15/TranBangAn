@@ -9,14 +9,14 @@
         {
 
             <li class="dropdown-submenu">
-                <a class="dropdown-toggle" href="/danh-muc/@item.Name.ToAscii()-@item.CatId" style="background: url(@item.Image) 15px center no-repeat; background-size: 20px auto; padding-left: 45px;">@Html.Raw(item.Name)</a>
+                <a class="dropdown-toggle" href="/danh-muc/@item.Name.ToAscii()-@item.CatId" style="background: url(@item.Image) 15px center no-repeat; background-size: 20px auto; text-transform: none; font-family: Arial; font-weight: 100;">@Html.Raw(item.Name)</a>
 
                 @if (item.SubCategories != null && item.SubCategories.Count() > 0)
                 {
                     <ul class="dropdown-menu">
                         @foreach (var subcat in item.SubCategories)
                         {
-                            <li><a href="/danh-muc/@subcat.Name.ToAscii()-@subcat.CatId">@Html.Raw(subcat.Name)</a></li>
+                            <li><a href="/danh-muc/@subcat.Name.ToAscii()-@subcat.CatId" style="font-family:Arial;">@Html.Raw(subcat.Name)</a></li>
                         }
                     </ul>
                 }

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using FashionGo.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FashionGo.Models
 {
@@ -14,6 +15,7 @@ namespace FashionGo.Models
 
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public Order Order { get; set; }
     }
 
     public class ManageLoginsViewModel

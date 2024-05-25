@@ -4,6 +4,9 @@
     string path = HttpContext.Current.Request.Url.AbsolutePath;
 }
 <style>
+    body{
+        font-family:Arial;
+    }
     .sale-flash {
         position: absolute;
         top: 10px;
@@ -14,6 +17,7 @@
         text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
         border-radius: 2px;
         z-index: 5;
+        
     }
 
         .sale-flash.out-of-stock {
@@ -30,20 +34,20 @@
         if (count == 2)
         {
             <li class="li @(!path.Contains("nam") && !path.Contains("nu") && !path.Contains("brand")? "current active" : "")" onclick="active(this)" data-id="@item.Id" data-level="1">
-                <a class="" href="/" data-target="@item.Target">@item.Text </a>
+                <a class="" href="/" data-target="@item.Target"style="text-transform:none; font-family:Arial;font-weight:100;">@item.Text </a>
             </li>
         }
         if (count == 3)
         {
             <li class="li dropdown mega @(path.Contains("nam")? "current active" : "")  " onclick="active(this)" data-id="@item.Id" data-level="1">
-                <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown">
+                <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown"style="text-transform: none; font-family: Arial; font-weight: 150;">
                     @item.Text <b class="caret"></b>
                 </a>
 
                 <div class="nav-child dropdown-menu mega-dropdown-menu">
                     <div class="mega-dropdown-inner">
-                        <a class="dropdown-header mega-group-title" href="#" data-target="#" style="margin-left:35px">
-                            Thời Trang Nam
+                        <a href="@Url.RouteUrl("ProductCategory", new { Cateid = item.Catld })" style="font-size: 20px; font-weight: 100;">
+                            <i class="fa-brands fa-shopify fa-2x"style="color:orangered;"></i> Thời Trang Nam
                         </a>
                         <div class="row" style="display:flex">
                             @foreach (var data in Model.procate.Skip(1).Take(1))
@@ -88,7 +92,7 @@
                                             <div class="module-ct">
                                                 <div class="custom">
                                                     <p>
-                                                        <img src="~/Uploads/images/banner/banner-2.jpg" alt="" />
+                                                        <img src="~/Uploads/images/banner/3cde53d8619069b98772edffe8c5dad1.jpg" alt="" />
                                                     </p>
                                                 </div>
                                             </div>
@@ -104,14 +108,14 @@
         if (count == 4)
         {
             <li class="li dropdown mega @(path.Contains("nu")? "current active" : "") " onclick="active(this)" data-id="@item.Id" data-level="1">
-                <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown">
+                <a class="dropdown-toggle" href="@item.Url-@item.Catld" data-target="@item.Target" data-toggle="dropdown"style="text-transform: none; font-family: Arial; font-weight: 100;">
                     @item.Text <b class="caret"></b>
                 </a>
 
                 <div class="nav-child dropdown-menu mega-dropdown-menu">
                     <div class="mega-dropdown-inner">
-                        <a class="dropdown-header mega-group-title" href="#" data-target="#" style="margin-left:35px">
-                            Thời Trang Nữ
+                        <a href="@Url.RouteUrl("ProductCategory", new {Cateid = item.Catld })" style="font-size:20px;">
+                            <i class="fa-brands fa-shopify fa-2x" style="color:orangered;"></i>Thời Trang Nữ
                         </a>
                         <div class="row" style="display:flex">
                             @foreach (var data in Model.procate.Take(1))
@@ -177,7 +181,7 @@
                 <a class="dropdown-toggle"
                    href="#"
                    data-target="#"
-                   data-toggle="dropdown">
+                   data-toggle="dropdown" style="text-transform: none; font-family: Arial; font-weight: 100;">
                     Sale Off 50%<b class="caret"></b>
                 </a>
 
@@ -213,18 +217,18 @@
                                                                             </p>
                                                                             <div class="eshop-cart-area">
                                                                                 @*<button id="add-to-cart-@item.Id" class="btn btn-primary" onclick="flyToCart(@item.Id); ">Thêm vào giỏ</button>*@
-                                                                                <button onclick="loadForm('@pro.Id')" class="btn btn-primary">Thêm vào giỏ</button>
+                                                                                <button onclick="loadForm('@pro.Id')" class="btn btn-primary" style="font-family:Arial;">Thêm vào giỏ</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <h4 class="eshop-product-title" style="display:flex; justify-content:space-between">
                                                                         <div>
-                                                                            <a href="girls/melange-sweater.html" style="padding-right:30px" class="link" data-original-title=" Suspendisse risus odio, posuere a, volutpat ac, adipiscing pellentesque, diam">
+                                                                            <a href="@Url.RouteUrl("ProductDetails", new { slug = pro.Name.ToAscii(), id = pro.Id })" title="@pro.Name" style="text-transform: none; font-family: Arial; font-weight: 100;">
                                                                                 @pro.Name
                                                                             </a>
                                                                         </div>
                                                                         <div>
-                                                                            <span class="eshop-price">@Html.FormatValue(pro.PriceAfter, "{0:0,0}")đ</span>
+                                                                            <span class="eshop-price"style="text-transform: none; font-family: Arial; font-weight: 100;">@Html.FormatValue(pro.PriceAfter, "{0:0,0}")đ</span>
                                                                         </div>
                                                                     </h4>
                                                                 </div>
@@ -262,8 +266,8 @@
 
     }
     <li data-id="186" data-level="1">
-        <a class="" href="Home/Contact" data-target="#">
-            Contact us
+        <a class="" href="Home/Contact" data-target="#"style="text-transform:none; font-family:Arial;font-weight:100;">
+            Cửa hàng <i class="fa-solid fa-caret-down"style="font-size:10px;"></i>
         </a>
     </li>
 </ul>

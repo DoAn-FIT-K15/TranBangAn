@@ -1,9 +1,8 @@
-﻿using System.Data.Entity;
+﻿using FashionGo.Models.Entities;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using FashionGo.Models;
-using FashionGo.Models.Entities;
 
 namespace FashionGo.Areas.Admin.Controllers
 {

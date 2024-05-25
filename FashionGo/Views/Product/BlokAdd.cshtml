@@ -9,7 +9,7 @@
         <div class="row sign-list">
             <div class="sign-header" style="display:flex;justify-content:space-between">
                 <div class="sign-header-list">
-                    <h3 class="sign-header-name">Thêm Vào Giỏ Hàng</h3>
+                    <h3 class="sign-header-name" style="text-transform: none; font-family: Arial; font-weight: 100; ">Thêm Vào Giỏ Hàng</h3>
                 </div>
                 <div class="sign-header-close" style="padding-top:10px;padding-right:10px;cursor:pointer">
                     <i class="fa-solid fa-xmark" onclick="document.getElementById('sign').style.display= 'none'"></i>
@@ -17,10 +17,10 @@
             </div>
             <div itemscope="" itemtype="http://schema.org/Product" style="display: none;">
                 <span itemprop="brand">QFashion</span>
-                <span itemprop="name">@Model.Name</span>
+                <span itemprop="name"style="text-transform: none; font-family: Arial; font-weight: 100; ">@Model.Name</span>
                 <img id="product-img-@Model.Id" itemprop="image" src="@Model.FeaturedImage">
-                <span itemprop="description">@Model.Description</span>
-                Product #: <span itemprop="mpn">FG-@Model.Id</span>
+                <span itemprop="description"style="text-transform: none; font-family: Arial; font-weight: 100; ">@Model.Description</span>
+                Product #: <span itemprop="mpn">QF-@Model.Id</span>
                 @*<span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
                         <span itemprop="ratingValue"><img src="FashonPro/components/com_eshop/assets/images/stars-4.png"></span> based on <span itemprop="reviewCount">2</span> reviews
                     </span>*@
@@ -39,6 +39,7 @@
                         </h1>
                     </div>
                 </div>
+
                 <div class="row-fluid">
                     <div class="span7">
                         <div class="image-additional hidden-xs slick-initialized slick-slider slick-vertical">
@@ -65,9 +66,10 @@
                                         }
                                     }
                                 </div>
+
                             </div>
                             <button type="button" data-role="none" class="slick-prev slick-disabled" style="display: inline-block;">Quay lại</button>
-                            <button type="button" data-role="none" class="slick-next" style="display: block;">Tiếp theo</button>
+                            
                         </div>
                         <div class="image" id="main-image-area">
                             <a class="product-image cboxElement" href="@firstImage" title="@Model.Name">
@@ -92,24 +94,25 @@
                                     }
                                 </div>
                             </div>
+
                             <button type="button" data-role="none" class="slick-prev slick-disabled" style="display: inline-block;">Quay lại</button>
-                            <button type="button" data-role="none" class="slick-next" style="display: block;">Tiếp theo</button>
+                            
                         </div>
                     </div>
                     <div class="span5">
                         <div class="row-fluid hidden-xs">
                             <div class="span12">
-                                <h3 class="eshop-product-details-title">
+                                <h3 class="eshop-product-title" style="font-family:Arial; text-transform:none;margin :0px; ">
                                     @Model.Name
                                 </h3>
                             </div>
-                        </div>
+                        </div><br />
                         <div class="row-fluid">
                             <div class="product-review">
                                 <p>
                                     @*<img src="FashonPro/components/com_eshop/themes/fashionpro/images/stars-4.png">*@
-                                    <i class="fa fa-eye" aria-hidden="true"></i>@Model.Views
-                                    | <a href="@Request.Url#reviews" style="cursor: pointer;">Viết nhận xét</a>
+                                    <i class="fa fa-eye" aria-hidden="true"></i>@Model.Views|Giảm:@Model.Discount%
+                                    
                                 </p>
                             </div>
                             <div>
@@ -117,19 +120,19 @@
                                     <address>
                                         <!-- Các phần khác của mã HTML -->
 
-                                        <h5>Danh sách Màu</h5>
+                                        <h5 class="eshop-product-title" style="font-family:Arial; text-transform:none; font-size:16px;">Danh sách Màu</h5>
                                         <div id="colorContainer">
                                             @foreach (var item in Model.Color)
                                             {
-                                                <button class="colorButton" data-color="@item.ColorName" onclick="toggleColorButton(this)">@item.ColorName</button>
+                                                <button class="eshop-product-title btn-sm rounded-circle colorButton rounded-circle" id="colorButton" data-color="@item.ColorName" onclick="toggleColorButton(this)"style="font-family:Arial;border:thin; border-radius:inherit;">@item.ColorName</button>
                                             }
                                         </div>
 
-                                        <h5>Danh sách Size</h5>
+                                        <h5   class="eshop-product-title" style="font-family:Arial; text-transform:none; font-size:16px;">Danh sách Size</h5>
                                         <div id="sizeContainer">
                                             @foreach (var item in Model.Size)
                                             {
-                                                <button class="sizeButton" data-size="@item.SizeName" onclick="toggleSizeButton(this)">@item.SizeName</button>
+                                                <button class="eshop-product-title btn-sm rounded-circle sizeButton rounded-circle " id="sizeButton" data-size="@item.SizeName" onclick="toggleSizeButton(this)"style="font-family:Arial;border:thin; border-radius:inherit;">@item.SizeName</button>
                                             }
                                         </div>
 
@@ -141,10 +144,10 @@
                                 <div class="product-price" id="product-price">
                                     <h2>
                                         <strong>
-                                            <span class="eshop-price">@Html.FormatValue(Model.PriceAfter, "{0:0,0}") đ</span>
+                                            <span class="eshop-price" style="font-family:Arial; text-transform:none;">@Html.FormatValue(Model.PriceAfter, "{0:0,0}")đ</span>
                                             @if (Model.Discount.Value > 0)
                                             {
-                                                <span class="eshop-base-price">@Html.FormatValue(Model.Price, "{0:0,0}")đ</span>
+                                                <span class="eshop-base-price"style="font-family:Arial; text-transform:none;">@Html.FormatValue(Model.Price, "{0:0,0}")đ</span>
                                             }
                                         </strong>
                                         <br>
@@ -162,36 +165,32 @@
                                         </div>
                                         <div class="pull-left">
                                             <p>
-                                                <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích" style="cursor: pointer;" onclick="addToWishList2(this,@Model.Id, '@WebConfigurationManager.AppSettings["SiteUrl"].ToString()')"><i class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span></a>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích" style="cursor: pointer;" onclick="addToWishList(@Model.Id, '@WebConfigurationManager.AppSettings["SiteUrl"].ToString()')"><i id="icon_heart" class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span></a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích " style="cursor: pointer;" onclick="alert('Vui lòng đăng nhập')">
+                                                        <i class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span>
+                                                    </a>
+                                                }
                                             </p>
                                         </div>
                                     </div>
                                     
                                 </div>
                             </div>
-                            <div>
-                                <div class="product-share">
-                                    <div class="ps_area clearfix">
-                                        <div class="ps_facebook_like">
-                                            <div class="fb-like fb_iframe_widget" data-send="true" data-width="650" data-show-faces="1" vdata-font="arial" data-colorscheme="light" layout="button_count" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=372958799407679&amp;color_scheme=light&amp;container_width=122&amp;href=@Request.Url.IsAbsoluteUri.ToString()?layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;send=true&amp;show_faces=true&amp;width=650">
-                                                <span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;">
-                                                    <iframe name="f354a70ee36c244" width="650px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="https://www.facebook.com/plugins/like.php?app_id=660103526272412&amp;channel=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2FLcj5EtQ5qmD.js%3Fversion%3D42%23cb%3Df390d41f5181b8%26domain%3D%26origin%3Dfile%253A%252F%252F%252Ff1639006458995c%26relation%3Dparent.parent&amp;color_scheme=light&amp;container_width=122&amp;href=@Request.Url.IsAbsoluteUri.ToString()?layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;send=true&amp;show_faces=true&amp;width=650" style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe>
-                                                </span>
-                                            </div>
-                                        </div>
 
-                                    </div>
-                                </div>
+                            <div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
+
         </div>
     </div>
 </div>
-
-
-
-

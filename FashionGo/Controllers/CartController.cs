@@ -1,8 +1,7 @@
-﻿using System.Linq;
+﻿using FashionGo.Models;
+using System;
+using System.Linq;
 using System.Web.Mvc;
-using FashionGo.Models.Entities;
-using FashionGo.Models;
-using System.Collections.Generic;
 
 namespace FashionGo.Controllers
 {
@@ -18,37 +17,52 @@ namespace FashionGo.Controllers
 
             var cart = ShoppingCart.Cart;
             return View(cart.Items);
-            
+
         }
         public ActionResult OrderDetail()
-        { 
+        {
             var cart = ShoppingCart.Cart;
             return PartialView("Partials/_OrderDetail", cart.Items);
         }
-        
+
 
         public ActionResult _PartialCart()
         {
             var cart = ShoppingCart.Cart;
             return PartialView(cart.Items);
         }
-        
 
-        public ActionResult Add(int id, int quatity , string color , string size)
+        public ActionResult Add(int id, int quatity, string color, string size)
         {
             var cart = ShoppingCart.Cart;
 
-            cart.Add(id, quatity , color , size);
+            cart.Add(id, quatity, color, size);
 
             var info = new { Count = cart.Count, Total = cart.Total };
             return Json(info, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult AddCartInDetail(int id, int quantity, string color, string size)
+        {
+            try
+            {
+                var cart = ShoppingCart.Cart;
+                cart.Add(id, quantity, color, size);
+
+                return Json(new { success = true, Count = cart.Count, Total = cart.Total });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
 
         public ActionResult Remove(int id)
         {
             var cart = ShoppingCart.Cart;
             cart.Remove(id);
-            if(cart.Total == 0)
+            if (cart.Total == 0)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -66,7 +80,7 @@ namespace FashionGo.Controllers
             {
                 Count = cart.Count,
                 Total = cart.Total,
-                quantity=quantity,
+                quantity = quantity,
                 Amount = p.PriceAfter.Value * p.Amount
             };
             return Json(info, JsonRequestBehavior.AllowGet);
@@ -106,7 +120,7 @@ namespace FashionGo.Controllers
 
         public ActionResult Clear()
         {
-            
+
             var cart = ShoppingCart.Cart;
             cart.Clear();
             return RedirectToAction("Index");

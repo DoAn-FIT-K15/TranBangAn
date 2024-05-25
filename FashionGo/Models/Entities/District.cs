@@ -1,10 +1,7 @@
 ﻿namespace FashionGo.Models.Entities
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class District
     {
@@ -17,16 +14,19 @@
         public string Name { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Loại quận/huyện")]
         public string Type { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Địa điểm")]
         public string Location { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Mã tỉnh/thành")]
         public string ProvinceId { get; set; }
 
         public virtual Province Province { get; set; }
 
-        public virtual List<Transport> Transports  { get; set; }
+        public virtual List<Transport> Transports { get; set; }
     }
 }

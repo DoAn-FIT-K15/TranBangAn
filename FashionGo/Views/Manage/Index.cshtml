@@ -1,6 +1,8 @@
 ﻿@model FashionGo.Models.IndexViewModel
+@using FashionGo.Models.Entities
+@using FashionGo.Models
 @{
-    ViewBag.Title = "Trang Quản Lý";
+    ViewBag.Title = "Thông tin cá nhân";
 }
 <style>
     /* CSS for banner area */
@@ -102,55 +104,44 @@
             margin-top: 60px;
         }
 </style>
-<h2>@ViewBag.Title.</h2>
+<h2 style="font-family:Arial; margin:0;">@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <section class="contact-page-area section-gap" style="padding-top:10px!important">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <dl class="dl-horizontal">
-                    <dt>Phone Number:</dt>
-    <dd style="display:flex ; margin-right:20px">
-        <div>@(Model.PhoneNumber ?? "None")</div>
+                <form action="/Manage/UpdateAccount" method="get">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="control-label" style="font-family:Arial;">Họ và tên</label>
+                            @Html.TextBoxFor(model => model.Order.ReceiveName, new { @class = "form-control", placeholder = "Nhập tên người nhận hàng..." })
+                            @Html.ValidationMessageFor(model => model.Order.ReceiveName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" style="font-family:Arial;">Số điện thoại</label>
+                            @Html.TextBoxFor(model => model.Order.ReceivePhone, new { @class = "form-control", placeholder = "Số điện thoại" })
+                            @Html.ValidationMessageFor(model => model.Order.ReceivePhone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        @if (Model.PhoneNumber != null)
-        {
-            <br />
-            <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-            using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-            }
-        }
-        else
-        {
-            <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-        }
-    </dd>
-
-    <dt>FullName:</dt>
-    <dd style="display:flex ; margin-right:20px">
-        <div>@(Model.FullName ?? "None")</div>
-
-        @if (Model.FullName != null)
-        {
-            <br />
-            <text>&nbsp;&nbsp;@Html.ActionLink("Change", "AddFullName")&nbsp;&nbsp;]</text>
-            using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-            }
-        }
-        else
-        {
-            <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddFullName")&nbsp;&nbsp;]</text>
-        }
-    </dd>
-</div>
-        </div>
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label class="control-label" for="Email" style="font-family:Arial;">Địa chỉ Email</label>
+                                @Html.TextBox("Email", null, new { @class = "form-control", Type = "email", placeholder = "Địa chỉ email có thực để nhận thông tin đơn hàng..." })
+                                @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                    
+                    <input type="submit" value="Lưu" class="form-control btn btn-primary"style="text-transform: none; font-family: Arial; font-weight: 100;margin-bottom:10px;" />
+                </div>
+                    </form>
+                </div>
+            </div>
         <div class="row">
             <div class="col-lg-4 d-flex flex-column">
                 <a class="contact-btns" href="/Order/OderPurchased">

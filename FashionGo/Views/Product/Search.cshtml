@@ -31,7 +31,7 @@
         });
     });
     </script>
-    <h1 class="eshop-category-title">@ViewBag.Title</h1>
+    <h1 class="eshop-category-title"style="text-transform: none; font-family: Arial; font-weight: 100;">@ViewBag.Title</h1>
     <div class="eshop-products-list">
         <div id="products-list-container" class="products-list-container block grid">
             <div class="sortPagiBar row-fluid clearfix">
@@ -42,26 +42,33 @@
                     </div>
                 </div>
                 <div class="span9">
-                    <form method="post" name="adminForm" id="adminForm" action="">
+                    <form action="/Product/Search" method="get">
+                        <input type="hidden" value="@ViewBag.keyword" name="keyword" />
                         <div class="clearfix">
                             <div class="eshop-product-show">
                                 <b>Xem: </b>
                                 <select id="limit" name="limit" class="inputbox input-mini" size="1" onchange="this.form.submit()" autocomplete="off">
-                                    <option value="15" selected="selected">15</option>
+                                    @if (ViewBag.CurrentFilters != null)
+                                    {
+                                        <option value="@ViewBag.CurrentFilters" selected>Đang chọn @ViewBag.CurrentFilters </option>
+                                    }
+                                    <option value="10">10</option>
                                     <option value="30">30</option>
                                     <option value="45">45</option>
                                     <option value="90">90</option>
-                                    <option value="0">Xem tất cả</option>
+                                    <option value="@Model.Count()">Xem tất cả</option>
                                 </select>
                             </div>
                             <div class="eshop-product-sorting">
                                 <b>Sắp xếp theo: </b>
-                                <select id="sort_options" name="sort_options" class="inputbox input-xlarge" onchange="this.form.submit();" autocomplete="off">
-                                    <option value="b.product_name-ASC" selected="selected">Tên sản phẩm (A - Z)</option>
-                                    <option value="b.product_name-DESC">Tên sản phẩm (A - Z)</option>
-                                    <option value="a.product_price-ASC">Giá tăng dần</option>
-                                    <option value="a.product_price-DESC">Giá giảm dần</option>
-                                </select>
+                                @Html.DropDownList("sort_options", new SelectList(
+                        new List<Object>{
+                      new { value = "product_name-ASC", text = "Tên sản phẩm (A - Z)" },
+                      new { value = "product_name-DESC", text = "Tên sản phẩm (Z - A)" },
+                      new { value = "product_price-ASC", text = "Giá tăng dần" },
+                      new { value = "product_price-DESC", text = "Giá giảm dần" }
+                               }, "value", "text", ViewBag.CurrentSort),
+                        new { @class = "inputbox input-xlarge", onchange = "this.form.submit();" })
                             </div>
                         </div>
                     </form>
@@ -106,8 +113,8 @@
                             </div>
                             <div class="eshop-info col-md-8">
                                 <div class="eshop-info-block">
-                                    <h4 class="eshop-product-title">
-                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">@item.Name</a>
+                                    <h4 class="eshop-product-title "style="text-transform: none; font-family: Arial; font-weight: 100;">
+                                        <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name"style="text-transform: none; font-family: Arial; font-weight: 100;">@item.Name</a>
                                     </h4>
                                     <div class="eshop-product-desc">
                                         @item.Description

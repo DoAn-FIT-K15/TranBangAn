@@ -52,8 +52,8 @@
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>*@
                         <td>
-                            @Html.ActionLink("Edit", "UpdatePropertiesColor", new { id = item.ColorID }) |
-                            @Html.ActionLink("Delete", "DeleteProductsColor", new { id = item.ColorID })
+                            @Html.ActionLink("Sửa", "UpdatePropertiesColor", new { id = item.ColorID }, new { @class = "btn btn-xs btn-primary" }) |
+                            @Html.ActionLink("Xóa", "DeleteProductsColor", new { id = item.ColorID }, new { @class = "btn btn-xs btn-danger" })
                         </td>
                     </tr>
                 }

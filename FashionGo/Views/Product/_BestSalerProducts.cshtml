@@ -4,7 +4,7 @@
 }
 <div class="t3-module module " id="Mod101">
     <div class="module-inner">
-        <h3 class="module-title "><span>Sản phẩm bán chạy</span></h3><div class="module-ct">
+        <p><i class="fa-brands fa-shopify fa-2x "  style="color:orangered;"></i> <span style="font-family:Arial; font-size:22px;color:orangered;">TOP 5 SẢN PHẨM ĐƯỢC XEM NHIỀU NHẤT</span></p><div class="module-ct">
             <div class="eshop-product list">
                 <div id="products-list" class="row clearfix">
                     <div class="eshop-product-row clearfix">
@@ -15,24 +15,24 @@
                                     <div class="row">
                                         <div class="eshop-image image col-xs-3 col-md-3 col-lg-3">
                                             <div class="image">
-                                                <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
+                                                <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name" style="font-family: Arial; text-transform: none;">
                                                     <img class="image img-responsive" alt="@item.Name" src="@item.FeaturedImage">
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="product-infor-block eshop-info-block col-xs-9 col-md-9 col-lg-9">
-                                            <h4 class="eshop-product-title">
-                                                <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name">
+                                        <div class=" eshop-info-block col-xs-9 col-md-9 col-lg-9">
+                                            <h4 class="eshop-product-title" style="font-family: Arial; text-transform: none; font-size: 16px;">
+                                                <a href="@Url.RouteUrl("ProductDetails", new { slug = item.Name.ToAscii(), id = item.Id })" title="@item.Name" style="color: #48484e; ">
                                                     @item.Name
                                                 </a>
                                             </h4>
 
                                             @if (item.Discount.Value > 0)
                                             {
-                                                <span class="eshop-base-price">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
+                                                <span class="eshop-base-price" style="font-family:Arial;">@Html.FormatValue(item.Price, "{0:0,0}")đ</span>
                                             }
                                             
-                                            <span class="eshop-price">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
+                                            <span class="eshop-price" style="font-family:Arial; color:orangered;">@Html.FormatValue(item.PriceAfter, "{0:0,0}")đ</span>
 
                                             <div class="eshop-product-desc">@item.Description.LimitLength(80, "....")</div>
 

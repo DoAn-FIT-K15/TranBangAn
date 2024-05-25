@@ -6,7 +6,7 @@
 }
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm mới", "Create",null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -35,9 +35,9 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.Id }, new { @class = "btn btn-xs btn-primary" }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.Id }, new { @class = "btn btn-xs btn-warning" }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.Id }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }

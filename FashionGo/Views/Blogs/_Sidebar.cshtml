@@ -4,17 +4,17 @@
 
 <div class="t3-module module" id="Mod130">
     <div class="module-inner">
-        <h3 class="module-title "><span>Chuyên mục</span></h3>
+        <h3 class="module-title "style="text-align:center;"><span style="text-transform: none; font-family: Arial; font-weight: 100;">Chuyên mục</span></h3>
         <div class="module-ct">
-            <ul class="categories-module">
+            <ul class="categories-module"">
                 @foreach (Category c in ViewBag.Cats)
                 {
                     <li>
-                        <h4>
-                            <a href="@Url.RouteUrl("BlogCategory", new { slug = c.Slug })" title="@Html.Raw(c.Name)">
+                        <h4style="text-align:left;>
+                            <a href="@Url.RouteUrl("BlogCategory", new { slug = c.Slug })" title="@Html.Raw(c.Name)"style="text-transform: none; font-family: Arial; font-weight: 100;">
                                 @Html.Raw(c.Name)
                             </a>
-                        </h4>
+                        </h4style="text-align:left;>
                     </li>
                 }
             </ul>
@@ -26,13 +26,13 @@
 
 <div class="t3-module module " id="Mod129">
     <div class="module-inner">
-        <h3 class="module-title "><span>Tags</span></h3><div class="module-ct">
+        <h3 class="module-title "style="text-align:center;"><span  style="text-transform: none; font-family: Arial; font-weight: 100;" >Tags</span></h3><div class="module-ct">
             <div class="tagspopular">
                 <ul>
                     @foreach (Category c in ViewBag.Cats)
                     {
                         <li>
-                            <a href="@Url.RouteUrl("BlogCategory", new { slug = c.Slug })" title="@Html.Raw(c.Name)">
+                            <a href="@Url.RouteUrl("BlogCategory", new { slug = c.Slug })" title="@Html.Raw(c.Name)"style="text-transform: none; font-family: Arial; font-weight: 100;">
                                 @Html.Raw(c.Name)
                             </a>
                         </li>

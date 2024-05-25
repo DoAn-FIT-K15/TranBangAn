@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Order
     {
@@ -17,7 +16,7 @@
 
         public int Id { get; set; }
 
-        
+
         [Display(Name = "Khách hàng")]
         public string UserId { get; set; }
 
@@ -25,7 +24,7 @@
         public int? StatusId { get; set; }
 
         [Display(Name = "Mã Giảm giá")]
-        public string Coupon  { get; set; }
+        public string Coupon { get; set; }
 
         [Display(Name = "Giảm giá")]
         public double? Discount { get; set; }
@@ -39,7 +38,6 @@
         [Display(Name = "Tổng đơn hàng(đ)")]
         public double? TotalOrder { get; set; }
 
-        [Required]
         public int? TransportId { get; set; }
 
         public int? PaymentMethodId { get; set; }
@@ -58,7 +56,7 @@
         [Display(Name = "Số điện thoại")]
         public string ReceivePhone { get; set; }
 
-        [Column(TypeName ="ntext")]
+        [Column(TypeName = "ntext")]
         [Display(Name = "Ghi chú đơn hàng")]
         public string Note { get; set; }
 

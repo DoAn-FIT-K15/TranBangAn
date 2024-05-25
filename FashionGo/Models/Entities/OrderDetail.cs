@@ -1,10 +1,7 @@
 ﻿namespace FashionGo.Models.Entities
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("OrderDetail")]
     public partial class OrderDetail
@@ -21,7 +18,7 @@
 
 
         [Display(Name = "Giá bán")]
-        public double PriceAfter  { get; set; }
+        public double PriceAfter { get; set; }
 
         [Display(Name = "Giảm giá")]
         public double Discount { get; set; }
@@ -32,13 +29,13 @@
         [Column(TypeName = "ntext")]
         [Display(Name = "Ghi chú")]
         public string Note { get; set; }
-        [Display(Name = "Color")] 
+        [Display(Name = "Color")]
 
         public string Color { get; set; }
         [Display(Name = "Size")]
         public string Size { get; set; }
 
-        public virtual Order Order { get; set; } 
+        public virtual Order Order { get; set; }
 
         public virtual Product Product { get; set; }
     }

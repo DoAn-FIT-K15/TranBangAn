@@ -1,12 +1,11 @@
-﻿using System;
+﻿using FashionGo.Models;
+using FashionGo.Models.Entities;
+using FashionGo.Others;
+using System;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
-using FashionGo.Models.Entities;
-using FashionGo.Models;
-using FashionGo.Others;
-using System.Configuration;
 
 namespace FashionGo.Controllers
 {
@@ -17,14 +16,14 @@ namespace FashionGo.Controllers
         public ActionResult Index()
         {
             //Saleoff product
-            var saleOffProducts = db.Products.Where(p=>p.Actived == true).Where(p => p.IsSpecial == true).Take(20);
+            var saleOffProducts = db.Products.Where(p => p.Actived == true).Where(p => p.IsSpecial == true).Take(20);
             ViewBag.saleOffProducts = saleOffProducts;
 
             //Lastest Product
-            var lastProducts = db.Products.Where(p => p.Actived == true).OrderByDescending(p=>p.IsNew).OrderBy(p => p.CreateDate).Take(20);
+            var lastProducts = db.Products.Where(p => p.Actived == true).OrderByDescending(p => p.IsNew).OrderBy(p => p.CreateDate).Take(20);
             ViewBag.lastProducts = lastProducts;
 
-            var model = db.ProductCategories.Where(c=>c.ParentId == null).OrderBy(c=>c.DisplayOrder);
+            var model = db.ProductCategories.Where(c => c.ParentId == null).OrderBy(c => c.DisplayOrder);
 
             return View(model);
         }
@@ -137,7 +136,7 @@ namespace FashionGo.Controllers
 
         public ActionResult _SliderShow()
         {
-            var model = db.Sliders.OrderByDescending(s=>s.Id).Take(8).ToList();
+            var model = db.Sliders.OrderByDescending(s => s.Id).Take(8).ToList();
             return PartialView(model);
         }
 
@@ -161,7 +160,7 @@ namespace FashionGo.Controllers
 
         public ActionResult Footer()
         {
-            ViewBag.MenuGioiThieu = db.Menus.Where(m=>m.LocationId ==1).ToList();
+            ViewBag.MenuGioiThieu = db.Menus.Where(m => m.LocationId == 1).ToList();
             ViewBag.MenuTroGiup = db.Menus.Where(m => m.LocationId == 2).ToList();
 
             return PartialView("Partials/_Footer");

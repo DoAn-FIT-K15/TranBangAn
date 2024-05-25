@@ -1,30 +1,28 @@
 ﻿@model IEnumerable<FashionGo.Models.Entities.Category>
 
 @{
-    ViewBag.Title = "Category Manager";
+    ViewBag.Title = "Quản lý chuyên mục tin tức";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm mới", "Create",null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
         
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+           Tên chuyên mục
+        </th>
+       
+        <th>
+            Mã chuyên mục
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ParentCategory.Name)
+            Mô tả
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Slug)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DisplayOrder)
+            Thứ tự hiển thị
         </th>
         <th></th>
     </tr>
@@ -34,9 +32,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ParentCategory.Name)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Slug)
         </td>
@@ -47,9 +43,9 @@
             @Html.DisplayFor(modelItem => item.DisplayOrder)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.Id }, new { @class = "btn btn-xs btn-primary" }) |
+            @Html.ActionLink("chỉnh sửa", "Details", new { id=item.Id }, new { @class = "btn btn-xs btn-warning" }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.Id }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }

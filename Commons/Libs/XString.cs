@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
 
 static public class Xstring
 {
@@ -30,8 +25,8 @@ static public class Xstring
     {
         if (s == null) return "";
 
-        String[][] symbols = { 
-                                 new String[] { "[áàảãạăắằẳẵặâấầẩẫậ]", "a" }, 
+        String[][] symbols = {
+                                 new String[] { "[áàảãạăắằẳẵặâấầẩẫậ]", "a" },
                                  new String[] { "[đ]", "d" },
                                  new String[] { "[éèẻẽẹêếềểễệ]", "e" },
                                  new String[] { "[íìỉĩị]", "i" },

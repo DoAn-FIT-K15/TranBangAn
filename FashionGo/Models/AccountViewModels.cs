@@ -64,7 +64,7 @@ namespace FashionGo.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Không được bỏ trống!!!!")]
         [EmailAddress]
         [Display(Name = "Địa chỉ Email")]
         [System.Web.Mvc.Remote("IsUserExists", "ValidatingController", ErrorMessage = "{0} đã tồn tại!")]
@@ -75,7 +75,7 @@ namespace FashionGo.Models
         [Compare("Email", ErrorMessage = "Email xác nhận không khớp.")]
         public string ConfirmEmail { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Không được bỏ trống!!!!")]
         [StringLength(100, ErrorMessage = "Độ dài {0} yêu cầu lớn hơn {2} ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]

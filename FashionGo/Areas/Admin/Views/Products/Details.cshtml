@@ -1,13 +1,13 @@
-﻿@model Common.Models.Product
+﻿@model FashionGo.Models.Entities.Product
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi tiết sản phẩm ";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
-<h2>Details</h2>
 
 <div>
-    <h4>Product</h4>
+   
+   
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -150,5 +150,5 @@
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Quay lại", "Index",null, new { @class = "btn btn-xs btn-primary" })
 </p>

@@ -37,8 +37,8 @@
                     <div class="module-inner">
                         <div class="module-ct">
                             <div id="currency" class="eshop-currency">
-                                <a class="active" title="Follow Us">
-                                    Follow Us
+                                <a class="active" title="Theo dõi"style="text-transform: none; font-family: Arial; font-weight: 100;">
+                                    Theo dõi
                                 </a>
                                 <a title="Facebook">
                                     <i class="fa-brands fa-facebook"></i>
@@ -66,11 +66,18 @@
                     <div class="module-inner">
                         <div class="module-ct">
                             <ul class="nav  nav-pills  nav-pills">
-                                <li class="item-109"><a href="@Url.RouteUrl("ProductFavorite")"><i class="icon fa fa-heart"></i> Sản phẩm yêu thích</a></li>
-                                <li class="item-108"><a href="@Url.RouteUrl("ShopingCart")"><i class="fa fa-shopping-bag"></i> Giỏ hàng</a></li>
                                 @if (Request.IsAuthenticated)
-                                { 
-                                    <li class="item-107"><a href="@Url.RouteUrl("AccountManage")"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                {
+                                    <li class="item-109"><a href="@Url.RouteUrl("ProductFavorite")" style="text-transform:none;"><i class="icon fa fa-heart"></i> Sản phẩm yêu thích</a></li>
+                                }
+                                else
+                                {
+                                    <li class="item-109"><a href="#" onclick = "alert('Vui lòng đăng nhập')" style="text-transform:none;"><i class="icon fa fa-heart"></i> Sản phẩm yêu thích</a></li>
+                                    }
+                                <li class="item-108"><a href="@Url.RouteUrl("ShopingCart")" style="text-transform:none;"><i class="fa fa-shopping-bag" style="text-transform:none;"></i> Giỏ hàng</a></li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <li class="item-107"><a href="@Url.RouteUrl("AccountManage")" style="text-transform:none;"><i class="fa fa-user" style="text-transform:none;"></i> Tài khoản</a></li>
 
                                 }
                             </ul>          
@@ -231,27 +238,19 @@
                         <div class="t3-module module" id="Mod141">
                             <div class="module-inner">
                                 <div class="module-ct">
-                                    <ul class="nav nav-pills nav-stacked">
+                                    <ul class="nav nav-pills nav-stacked" style="text-align:left;">
                                         <li class="item-101 current active">
-                                            <a href="index.html">Home</a>
+                                            <a href="index.html">Trang chủ</a>
                                         </li>
                                         <li class="item-144 parent">
-                                            <a href="men.html">Men</a>
+                                            <a href="men.html">Thời trang nam</a>
                                         </li>
                                         <li class="item-147 parent">
-                                            <a href="women.html">Women</a>
+                                            <a href="women.html">Thời trang nữ</a>
                                         </li>
-                                        <li class="item-168">
-                                            <a href="girls.html">Girls</a>
-                                        </li>
-                                        <li class="item-198"><a href="boys.html">Boys</a></li>
-                                        <li class="item-150">
-                                            <a href="our-brands.html">Our Brands</a>
-                                        </li>
-                                        <li class="item-181"><a href="#">Sale Off</a></li>
-                                        <li class="item-196"><a href="blog.html">Blog</a></li>
+                                        <li class="item-196"><a href="blog.html">Sale of%</a></li>
                                         <li class="item-186">
-                                            <a href="contact-us.html">Contact us</a>
+                                            <a href="contact-us.html">Cửa hàng</a>
                                         </li>
                                     </ul>
                                 </div>

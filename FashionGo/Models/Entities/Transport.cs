@@ -1,10 +1,8 @@
 ﻿namespace FashionGo.Models.Entities
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Transport
     {
@@ -19,7 +17,7 @@
 
         public int? TransporterId { get; set; }
 
-        public int? TransportTypeId  { get; set; }
+        public int? TransportTypeId { get; set; }
 
         [StringLength(255)]
         public string DistrictId { get; set; }
@@ -39,7 +37,7 @@
 
         public virtual Transporter Transporter { get; set; }
 
-        public virtual TransportType TransportType  { get; set; }
+        public virtual TransportType TransportType { get; set; }
 
     }
 }

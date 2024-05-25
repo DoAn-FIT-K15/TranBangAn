@@ -1,4 +1,4 @@
-﻿ @model FashionGo.Models.Entities.Product
+﻿@model FashionGo.Models.Entities.Product
 @using FashionGo.Models.Entities
 @using System.Web.Configuration
 
@@ -25,6 +25,14 @@
     .selected {
         background-color: #f2533d;
         color: #fff;
+    }
+
+    body {
+        font-family: Arial;
+    }
+
+    .eshop-information {
+        padding-top: 200px;
     }
 </style>
 
@@ -144,8 +152,8 @@
             <div class="span5">
                 <div class="row-fluid hidden-xs">
                     <div class="span12">
-                        <h1 class="eshop-product-details-title">
-                            @Model.Name
+                        <h1 class=" eshop-product-title" style="font-family: Arial; text-transform: none; font-size: 27px;  color: crimson;letter-spacing:normal; margin-top:0px;">
+                            @Model.Name<br />
                         </h1>
                     </div>
                 </div>
@@ -153,36 +161,36 @@
                     <div class="product-review">
                         <p>
                             @*<img src="FashonPro/components/com_eshop/themes/fashionpro/images/stars-4.png">*@
+
                             <i class="fa fa-tag" aria-hidden="true"></i>@rd.Next(10)
-                            <i class="fa fa-eye" aria-hidden="true"></i>@Model.Views
-                            | <a href="@Request.Url#reviews" style="cursor: pointer;">Viết nhận xét</a>
+                            <i class="fa fa-eye" aria-hidden="true" style="padding-left:3px;"></i>@Model.Views| Giảm: @Model.Discount%
+
                         </p>
                     </div>
                     <div>
-                        <div class="product-desc">
+                        <div class="product-desc ">
                             <address>
-                                <strong>Mã sản phẩm:</strong>
-                                <span>FG-@Model.Id</span>
-                                <br>
-                                <div class="product-availability">
-                                    <strong>Trạng thái:</strong>
-                                    <span class="label label-success">Còn hàng</span>
-                                </div>
+                                <p class="eshop-product-title" style="font-family:Arial; text-transform:none; font-size:16px;">Mã sản phẩm:   <span>QF-@Model.Id</span></p>
 
-                                <h5>Danh sách Màu</h5>
-                                <div id="colorContainer">
-                                    @foreach (var item in Model.Color)
+                                <p class="eshop-product-title" style="font-family:Arial; text-transform:none; font-size:16px;">Trạng thái:<span class="label label-success">Còn hàng</span></p>
+                                <p class="eshop-product-title" style="font-family:Arial; text-transform:none; font-size:16px;">Số lượng: <span> @Model.Amount </span></p>
+
+                                <p class="eshop-product-title" style="font-family:Arial; text-transform:none; font-size:16px;">
+                                    Danh sách màu:@foreach (var item in Model.Color)
                                     {
-                                        <button class="colorButton" data-color="@item.ColorName">@item.ColorName</button>
+                                        <button class="eshop-product-title btn-sm rounded-circle colorButton rounded-circle " data-color="@item.ColorName" style="font-family: Arial; border: thin; border-radius: inherit; word-break: initial; text-transform: none;  font-weight: 100;">@item.ColorName</button>
+
                                     }
-                                </div>
-                                <h5>Danh sách Size</h5>
-                                <div id="sizeContainer">
-                                    @foreach (var item in Model.Size)
+                                </p>
+
+
+
+                                <p class="eshop-product-title" style="font-family:Arial; text-transform:none; font-size:16px;">
+                                    Danh sách kích thước: @foreach (var item in Model.Size)
                                     {
-                                        <button class="sizeButton" data-size="@item.SizeName">@item.SizeName</button>
+                                        <button class="btn-sm rounded-circle sizeButton rounded-circle eshop-product-title" data-size="@item.SizeName" style=" border: thin; border-radius: inherit; text-transform: none; font-family: Arial; font-weight: 100;">@item.SizeName</button>
                                     }
-                                </div>
+                                </p>
 
                             </address>
                         </div>
@@ -191,16 +199,16 @@
                         <div class="product-price" id="product-price">
                             <h2>
                                 <strong>
-                                    <span class="eshop-price">@Html.FormatValue(Model.PriceAfter, "{0:0,0}") đ</span>
+                                    <span class="eshop-price" style="font-family:Arial;">@Html.FormatValue(Model.PriceAfter, "{0:0,0}")đ</span>
                                     @if (Model.Discount.Value > 0)
                                     {
-                                        <span class="eshop-base-price">@Html.FormatValue(Model.Price, "{0:0,0}")đ</span>
+                                        <span class="eshop-base-price" style="font-family:Arial;">@Html.FormatValue(Model.Price, "{0:0,0}")đ</span>
                                     }
                                 </strong>
                                 <br>
                             </h2>
                         </div>
-                    </div> 
+                    </div>
                     <div class="row-fluid">
                         <div class="product-cart clearfix">
                             <div class="pull-left no_margin_left">
@@ -215,50 +223,62 @@
                                         </span>
                                     </span>
                                 </div>
-                                <button id="add-to-cart_@Model.Id" class="btn btn-primary add-to-cart" onclick="flyToCart1(@Model.Id)" type="button">Thêm vào giỏ</button>
+                                <button id="add-to-cart_@Model.Id" class="btn btn-primary add-to-cart" type="button" style="font-family:Arial;">Thêm vào giỏ</button>
                             </div>
                             <div class="pull-left">
                                 <p>
-                                    <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích" style="cursor: pointer;" onclick="addToWishList(@Model.Id, '@WebConfigurationManager.AppSettings["SiteUrl"].ToString()')"><i id="icon_heart" class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span></a></p>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích" style="cursor: pointer;" onclick="addToWishList(@Model.Id, '@WebConfigurationManager.AppSettings["SiteUrl"].ToString()')"><i id="icon_heart_@Model.Id" class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn" data-toggle="tooltip" data-original-title="Thêm vào danh sách yêu thích" title="Thêm vào danh sách yêu thích " style="cursor: pointer;" onclick="alert('Vui lòng đăng nhập')">
+                                            <i class="icon-heart"></i><span class="text-hide">Thêm vào danh sách yêu thích</span>
+                                        </a>
+                                    }
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div>
                         <div class="product-share">
                             <div class="ps_area clearfix">
-                                <div class="ps_facebook_like">
-                                    <div class="fb-like fb_iframe_widget" data-send="true" data-width="650" data-show-faces="1" vdata-font="arial" data-colorscheme="light" layout="button_count" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=372958799407679&amp;color_scheme=light&amp;container_width=122&amp;href=@Request.Url.IsAbsoluteUri.ToString()?layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;send=true&amp;show_faces=true&amp;width=650">
-                                        <span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;">
-                                            <iframe name="f354a70ee36c244" width="650px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="https://www.facebook.com/plugins/like.php?app_id=660103526272412&amp;channel=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2FLcj5EtQ5qmD.js%3Fversion%3D42%23cb%3Df390d41f5181b8%26domain%3D%26origin%3Dfile%253A%252F%252F%252Ff1639006458995c%26relation%3Dparent.parent&amp;color_scheme=light&amp;container_width=122&amp;href=@Request.Url.IsAbsoluteUri.ToString()?layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;send=true&amp;show_faces=true&amp;width=650" style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe>
-                                        </span>
-                                    </div>     
+                                <div class="eshop-product-title">
+                                    <p style="font-family:Arial; text-transform:none; font-size:16px;"><i class="fa-brands fa-font-awesome" style="color:orangered;"></i> Mô tả<br />  @Html.Raw(HttpUtility.HtmlDecode(Model.Description))</p>
+
                                 </div>
-                                <div class="ps_twitter">
-                                    <span style="margin-left:23px; padding-top:100px;"></span>
-                                    <iframe  id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="https://platform.twitter.com/widgets/tweet_button.a9003d9964444592507bbb36b98c709b.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=href=@Request.Url.IsAbsoluteUri.ToString()?related=anywhereTheJavascriptAPI&amp;size=m&amp;text=Cotton%20Shirt%20-%20EShop%20Fashion%20Pro%20Template&amp;time=1471027511079&amp;type=share&amp;url=href=@Request.Url.IsAbsoluteUri.ToString()" style="position: static; visibility: visible; width: 60px;  padding-top: 3px;" data-url="href=@Request.Url.IsAbsoluteUri.ToString()"></iframe>
-                                </div>
-                               
+
+
+
                             </div>
+
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
+
         <div class="eshop-information">
             <div class="eshop-wrap-desc">
-                <h3 class="eshop-info-title eshop-desc"><span class="title-block">Chi tiết sản phẩm</span></h3>
-                <div class="description" id="description">
-                    <div class="eshop-description">
-                        @Html.Raw(HttpUtility.HtmlDecode(Model.Detail))
+                <p style="font-size:22px; color:orangered; font-family:Arial;">
+                    <i class="fa-solid fa-cart-shopping"></i> <span class="title-block">CHI TIẾT SẢN PHẨM</span></h3>
+                    <hr style="background-color:black;" />
+                    <div class="description" id="description">
+                        <div class="eshop-description">
+                            @Html.Raw(HttpUtility.HtmlDecode(Model.Detail))
+                        </div>
                     </div>
-                </div>
             </div>
 
+
             @*<div class="eshop-wrap-reviews">
-                <h3 class="eshop-info-title eshop-reviews"><span class="title-block">Bình luận Facebook</span></h3>
-                <div class="addthis_native_toolbox"></div>
-                <div class="fb-comments" data-href="@HttpContext.Current.Request.Url.AbsoluteUri" data-width="815" data-numposts="5"></div>
-            </div>*@
+                    <h3 class="eshop-info-title eshop-reviews"><span class="title-block">Bình luận Facebook</span></h3>
+                    <div class="addthis_native_toolbox"></div>
+                    <div class="fb-comments" data-href="@HttpContext.Current.Request.Url.AbsoluteUri" data-width="815" data-numposts="5"></div>
+                </div>*@
         </div>
     </div>
 </div>
@@ -269,8 +289,31 @@
 @section scripts{
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5728669d60870d14"></script>
 
+    <script>
+        function addToWishList(itemId) {
+            var heartIcon = document.getElementById("icon_heart_"+itemId);
+            if (heartIcon.style.color === "red") {
+                heartIcon.style.color = ""; // Xóa thuộc tính màu để trở về màu mặc định
+            } else {
+                heartIcon.style.color = "red";
+            }
+
+            jQuery.ajax({
+                type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
+                url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
+                data: { id: itemId },
+                success: function (response) {
+                    // Xử lý kết quả trả về sau khi gọi controller thành công
+                },
+                error: function () {
+                    // Xử lý lỗi (nếu có)
+                }
+            });
+        }
+    </script>
+
     <!-- facebook comments -->
-   
+
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".product-image").colorbox({
@@ -286,8 +329,6 @@
                 });
             });
         });
-    </script>
-    <script>
         var selectedColor = null;
         var selectedSize = null;
 
@@ -320,21 +361,142 @@
             });
         });
 
-    </script>
-    <script>
-        function addToWishList(itemId) {
-            document.getElementById("icon_heart").style.color = "red";
-            jQuery.ajax({
-                type: "POST", // Hoặc "GET" nếu bạn muốn sử dụng GET request
-                url: "/Product/AddToWishList", // Thay thế "ControllerName" và "ActionName" bằng tên controller và action cụ thể
-                data: { id: itemId },
-                success: function (response) {
-                    // Xử lý kết quả trả về sau khi gọi controller thành công
-                },
-                error: function () {
-                    // Xử lý lỗi (nếu có)
-                }
-            });
+    document.addEventListener('DOMContentLoaded', function() {
+    // Hàm kiểm tra số lượng mua và xác thực lựa chọn kích thước và màu sắc
+    function validatePurchase() {
+        var purchaseQuantity = parseInt(document.getElementById('quantity_@Model.Id').value);
+        var stockQuantity = @Model.Amount; // Số lượng tồn kho
+        var selectedColor = document.querySelector('.colorButton.selected'); // Lựa chọn màu sắc
+        var selectedSize = document.querySelector('.sizeButton.selected'); // Lựa chọn kích thước
+
+        // Kiểm tra nếu người dùng chưa chọn màu sắc
+        if (!selectedColor) {
+            alert('Bạn phải chọn màu sắc.');
+            return false;
         }
+
+        // Kiểm tra nếu người dùng chưa chọn kích thước
+        if (!selectedSize) {
+            alert('Bạn phải chọn kích thước.');
+            return false;
+        }
+
+        // Kiểm tra nếu số lượng mua vượt quá số lượng tồn kho
+        if (purchaseQuantity > stockQuantity) {
+            alert('Số lượng mua không thể vượt quá số lượng tồn kho.');
+            return false; // Trả về false để ngăn chặn thêm vào giỏ hàng
+        }
+
+        return true; // Trả về true nếu tất cả kiểm tra đều hợp lệ
+    }
+
+    // Gắn hàm validatePurchase vào sự kiện click của nút 'Thêm vào giỏ'
+    var addToCartButton = document.getElementById('add-to-cart_@Model.Id');
+    addToCartButton.addEventListener('click', function(event) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của nút
+        if (validatePurchase() == true) {
+            var purchaseQuantity = parseInt(document.getElementById('quantity_@Model.Id').value);
+            var selectedColor = document.querySelector('.colorButton.selected').getAttribute('data-color');
+            var selectedSize = document.querySelector('.sizeButton.selected').getAttribute('data-size');
+
+            // Nếu hợp lệ, tiến hành thêm vào giỏ hàng
+            console.log(selectedColor, selectedSize);
+            const data = {
+                id: @Model.Id,
+                quantity: purchaseQuantity,
+                color: selectedColor,
+                size: selectedSize
+            };
+
+            // Gửi yêu cầu AJAX
+            fetch('/Cart/AddCartInDetail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Sản phẩm đã được thêm vào giỏ hàng.');
+                        // Thực hiện điều hướng nếu cần thiết
+                        window.location.reload();
+                    } else {
+                        alert('Có lỗi xảy ra: ' + data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                    alert('Lỗi khi gửi yêu cầu: ' + error.message);
+                });
+        }
+    });
+
+    // Thêm sự kiện để chọn màu sắc và kích thước
+    document.querySelectorAll('.colorButton').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.colorButton').forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+
+    document.querySelectorAll('.sizeButton').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.sizeButton').forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+});
+
+
+    // Giả sử đây là hàm thêm vào giỏ hàng, bạn cần thay thế nó bằng hàm thực tế của bạn
+        function addToCart(productId, quantity, color, size) {
+            // Tạo dữ liệu để gửi
+            const data = {
+                id: productId,
+                quantity: quantity,
+                color: color,
+                size: size
+            };
+
+            // Gửi yêu cầu AJAX
+            fetch('/Cart/AddCartInDetail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Sản phẩm đã được thêm vào giỏ hàng.');
+                        // Thực hiện điều hướng nếu cần thiết
+                        window.location.reload()
+                    } else {
+                        alert('Có lỗi xảy ra: ' + data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                    alert('Lỗi khi gửi yêu cầu: ' + error.message);
+                });
+        }
+
+
     </script>
+
+
+
 }

@@ -1,14 +1,12 @@
-﻿using System;
+﻿using FashionGo.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FashionGo.Models.Entities;
-using FashionGo.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FashionGo.Areas.Admin.Controllers
 {
@@ -19,7 +17,7 @@ namespace FashionGo.Areas.Admin.Controllers
         // GET: Admin/Users
         public class UserModel
         {
-           public string Id { get; set; }
+            public string Id { get; set; }
             public string FullName { get; set; }
             public string UserName { get; set; }
             public string PhoneNumber { get; set; }
@@ -37,19 +35,19 @@ namespace FashionGo.Areas.Admin.Controllers
             List<UserModel> users = new List<UserModel>();
             foreach (var item in identityUsers)
             {
-                var roleId = listUserRole.Where(x => x.UserId == item.Id).FirstOrDefault()!= null ? 
+                var roleId = listUserRole.Where(x => x.UserId == item.Id).FirstOrDefault() != null ?
                     listUserRole.Where(x => x.UserId == item.Id).FirstOrDefault().RoleId : "";
                 users.Add(new UserModel
                 {
                     Id = item.Id,
                     FullName = item.FullName,
                     UserName = item.UserName,
-                        
+
                     PhoneNumber = item.PhoneNumber,
                     Email = item.Email,
                     Address = item.Address,
-                    DistrictName =item.District!=null ?item.District.Name:"",
-                    Role = roleId != "" ? listRole.Where(x=>x.Id == roleId).FirstOrDefault().Name
+                    DistrictName = item.District != null ? item.District.Name : "",
+                    Role = roleId != "" ? listRole.Where(x => x.Id == roleId).FirstOrDefault().Name
                     : ""
                 });
             }
@@ -64,7 +62,7 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser =  db.Users.Find(id);
+            ApplicationUser applicationUser = db.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -88,17 +86,19 @@ namespace FashionGo.Areas.Admin.Controllers
         public ActionResult Create(ApplicationUser applicationUser, string RoleId)
         {
             applicationUser.Id = Guid.NewGuid().ToString();
-                 db.Users.Add(applicationUser);
-                    db.SaveChanges();
-                IdentityUserRole identityUserRole = new IdentityUserRole();
-                identityUserRole.RoleId = RoleId;
-                identityUserRole.UserId = applicationUser.Id;
-                db.IdentityUserRoles.Add(identityUserRole);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            
+            db.Users.Add(applicationUser);
+            db.SaveChanges();
+            IdentityUserRole identityUserRole = new IdentityUserRole();
+            identityUserRole.RoleId = RoleId;
+            identityUserRole.UserId = applicationUser.Id;
+            db.IdentityUserRoles.Add(identityUserRole);
+            db.SaveChanges();
+            return RedirectToAction("Index");
 
+
+#pragma warning disable CS0162 // Unreachable code detected
             ViewBag.DistrictId = new SelectList(db.Districts, "DistrictId", "Name", applicationUser.DistrictId);
+#pragma warning restore CS0162 // Unreachable code detected
             return View(applicationUser);
         }
 
@@ -109,7 +109,7 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser =  db.Users.Find(id);
+            ApplicationUser applicationUser = db.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -132,16 +132,23 @@ namespace FashionGo.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(applicationUser).State = EntityState.Modified;
+                var user = db.Users.Where(x => x.Id == applicationUser.Id).FirstOrDefault();
+                user.Email = applicationUser.Email;
+                user.PhoneNumber = applicationUser.PhoneNumber;
+                user.UserName = applicationUser.UserName;
+                user.FullName = applicationUser.FullName;
+                user.Address = applicationUser.Address;
+                user.DistrictId = applicationUser.DistrictId;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                IdentityUserRole identityUserRole = db.IdentityUserRoles.Where(x=>x.UserId == applicationUser.Id).FirstOrDefault();
-                if(identityUserRole == null )
+                IdentityUserRole identityUserRole = db.IdentityUserRoles.Where(x => x.UserId == applicationUser.Id).FirstOrDefault();
+                if (identityUserRole == null)
                 {
                     db.IdentityUserRoles.Add(new IdentityUserRole
                     {
                         RoleId = RoleId,
                         UserId = applicationUser.Id,
-                        
+
                     });
                     db.SaveChanges();
                 }
@@ -154,7 +161,7 @@ namespace FashionGo.Areas.Admin.Controllers
                     db.IdentityUserRoles.Add(UserRole);
                     db.SaveChanges();
 
-                }    
+                }
 
                 return RedirectToAction("Index");
             }
@@ -169,7 +176,7 @@ namespace FashionGo.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser =  db.Users.Find(id);
+            ApplicationUser applicationUser = db.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -182,10 +189,10 @@ namespace FashionGo.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            ApplicationUser applicationUser =  db.Users.Find(id);
-             db.Users.Remove(applicationUser);
+            ApplicationUser applicationUser = db.Users.Find(id);
+            db.Users.Remove(applicationUser);
             db.SaveChanges();
-            List<IdentityUserRole> identityUserRole = db.IdentityUserRoles.Where(x=>x.UserId == id).ToList();
+            List<IdentityUserRole> identityUserRole = db.IdentityUserRoles.Where(x => x.UserId == id).ToList();
             db.IdentityUserRoles.RemoveRange(identityUserRole);
             db.SaveChanges();
 
